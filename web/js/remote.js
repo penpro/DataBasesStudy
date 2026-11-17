@@ -10,6 +10,8 @@
   var settingsTimer = null;
 
   function request(method, url, body) {
+    // On the public GitHub Pages copy there is no server: demo.js answers the same calls from browser storage.
+    if (CS.demo && CS.demo.active) return CS.demo.handle(method, url, body);
     return fetch(url, {
       method: method,
       headers: body === undefined ? {} : { "Content-Type": "application/json" },
@@ -43,6 +45,7 @@
 
   CS.remote = {
     state: null,
+    demo: !!(CS.demo && CS.demo.active),
 
     // Load the bank (units, questions, choices) and this learner's state.
     init: function () {

@@ -147,7 +147,7 @@ System diagram (the numbers **1** and **2** mark where the exam code lives, see 
 `question_state` (where I stand on each question, kept in the *same transaction* as the log row), `flag`, and the
 mock-exam tables. Added the API server so the browser no longer keeps its own data, and the Dashboard reports
 (streaks, unit mastery, weakest topics, most-missed questions), which are computed by queries and never stored. Added a test suite
-(40 tests) that runs against a separate test database, so I can prove constraints and transactions really work.
+(43 tests) that runs against a separate test database, so I can prove constraints and transactions really work.
 
 Prettier versions of both Week 10 diagrams (Mermaid, GitHub draws them): [er-diagram.md](er-diagram.md) and
 [system-diagram.md](system-diagram.md).

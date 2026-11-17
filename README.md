@@ -7,6 +7,11 @@ built by migrations); a small Express API sits between the page and the database
 Final project for CS 330 (Databases). The question bank is from Dr. Foster's course:
 <https://srfoster.github.io/oc-classes/page.html?class=cs330&page=homepage>.
 
+**Live demo:** <https://penpro.github.io/DataBasesStudy/>. GitHub Pages cannot run Node or MySQL, so the demo runs
+in your browser and saves progress in that browser only (`web/js/demo.js` answers the same API calls from browser
+storage; a test runs the same actions against it and against the real API and requires identical results). The real
+version is the MySQL one below. After changing questions, run `npm run build:demo` and commit `web/demo/bank.json`.
+
 ## Start here if you are studying for the final
 
 [docs/final-exam-study-sheet.md](docs/final-exam-study-sheet.md): the filled-out exam (what the system does, diagrams
@@ -34,7 +39,8 @@ npm start                            # http://127.0.0.1:3340
 | `npm run import` | load units, cards, questions, tags and options (safe to run again) |
 | `node scripts/fetch-bank.js` | re-download the course question files into `data/yaml/`, then `npm run import` |
 | `npm start` | API and study page on 127.0.0.1 only |
-| `npm test` | 40 tests against the separate `cs330_study_test` database |
+| `npm run build:demo` | refresh `web/demo/bank.json` (the question snapshot the live demo loads) from the database |
+| `npm test` | 43 tests against the separate `cs330_study_test` database |
 | `npm run db:reset` | drop every table, re-migrate and re-import the bank (**erases all progress**) |
 
 ## Layout
@@ -45,7 +51,7 @@ db/queries/      named SQL statements the API runs
 db/setup.sql     one-time database and user creation
 scripts/         migrate, import-bank, fetch-bank, reset-db
 server/          Express API (app.js), data layer (store.js), pool (db.js), shared rules (engine.js)
-web/             the study page (served by the API)
+web/             the study page (served by the API, and published as the demo)
 data/            question files, answer choices, unit titles
 test/            integration tests (schema, import, API)
 docs/            diagrams, study sheet, design notes

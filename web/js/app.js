@@ -11,6 +11,7 @@
   function boot(loaded) {
     state = loaded;
     CS.remote.onError(showSaveError);
+    if (CS.remote.demo) applyDemoMode();
     applyTheme();
     wireNav();
     wireSettings();
@@ -30,8 +31,10 @@
     if ($("storage-warning")) return;
     var bar = el("div", "storage-warning");
     bar.id = "storage-warning";
-    bar.innerHTML = "⚠️ <strong>That change was not saved to the database.</strong> (" + esc(e.message) + ") " +
-      "Check that the server is still running (<code>npm start</code>), then reload. " +
+    bar.innerHTML = (CS.remote.demo
+      ? "⚠️ <strong>That change was not saved.</strong> (" + esc(e.message) + ") "
+      : "⚠️ <strong>That change was not saved to the database.</strong> (" + esc(e.message) + ") " +
+        "Check that the server is still running (<code>npm start</code>), then reload. ") +
       "<button type=\"button\" id=\"sw-dismiss\">dismiss</button>";
     document.body.insertBefore(bar, document.body.firstChild);
     $("sw-dismiss").addEventListener("click", function () { bar.remove(); });
@@ -42,6 +45,17 @@
     document.querySelector("main").innerHTML = '<div class="card"><h2>Can&#8217;t reach the study server</h2>' +
       "<p>" + esc(e.message) + "</p><p class=\"muted\">Start MySQL, then run <code>npm start</code> in the project folder and open " +
       "<code>http://localhost:3340</code>.</p></div>";
+  }
+
+  // The public GitHub Pages copy has no server and no MySQL: say so, and fix the wording that mentions them.
+  function applyDemoMode() {
+    var bar = el("div", "demo-bar");
+    bar.innerHTML = "<strong>Demo copy.</strong> This page runs entirely in your browser, and your progress is saved in this browser only. " +
+      'The real version keeps everything in a MySQL database behind a small API: <a href="https://github.com/penpro/DataBasesStudy" target="_blank" rel="noopener">see the project on GitHub</a>.';
+    document.body.insertBefore(bar, document.body.firstChild);
+    var note = $("db-report-note"); if (note) note.textContent = "(in the real version these come from MySQL queries; here the page works them out)";
+    var data = $("data-note"); if (data) data.textContent = "Your answers, settings, flags and mock exams are saved in this browser. Export downloads a copy as a file; Reset deletes them from this browser.";
+    var about = $("about-note"); if (about) about.textContent = "This is the demo copy of the database edition. Questions come from the course's own question bank (Dr. Foster's CS 330 course page).";
   }
 
   function saveSettings() { CS.remote.saveSettings(state.settings); }
@@ -663,7 +677,9 @@
       var html = '<div class="dash-stats db-kpis">' +
         stat(r.streaks.best_streak, "best streak") + stat(r.streaks.current_streak, "current streak") +
         stat(r.neverAttempted + " / " + CS.BANK.length, "never attempted") + "</div>";
-      html += '<p class="muted small">Streaks come from a window function over your answer log; "never attempted" is a NOT EXISTS subquery.</p>';
+      html += '<p class="muted small">' + (CS.remote.demo
+        ? "Worked out from your answer log. (In the real version: streaks use a window function and \"never attempted\" is a NOT EXISTS subquery.)"
+        : 'Streaks come from a window function over your answer log; "never attempted" is a NOT EXISTS subquery.') + "</p>";
       html += '<h4>Mastery by unit <span class="muted small">(JOIN + GROUP BY)</span></h4><ul class="weak-list">' +
         r.unitMastery.map(function (u) {
           var pct = u.questions ? Math.round(100 * u.mastered / u.questions) : 0;
@@ -843,7 +859,8 @@
       var row = document.querySelector("#view-settings .btn-row");
       if (row) row.parentNode.appendChild(stat2);
     }
-    stat2.innerHTML = 'Progress saving: <strong style="color:var(--good)">on</strong> — every answer and setting is stored in the MySQL database.';
+    stat2.innerHTML = 'Progress saving: <strong style="color:var(--good)">on</strong> — ' +
+      (CS.remote.demo ? "every answer and setting is saved in this browser (demo copy)." : "every answer and setting is stored in the MySQL database.");
   }
 
   function wireSettings() {
@@ -861,7 +878,7 @@
     });
     $("export-btn").addEventListener("click", function () { CS.remote.exportState(); });
     $("reset-btn").addEventListener("click", function () {
-      if (!confirm("Erase all progress and start over? This deletes your answers, flags and exam history from the database and cannot be undone (use Export first if unsure).")) return;
+      if (!confirm("Erase all progress and start over? This deletes your answers, flags and exam history from " + (CS.remote.demo ? "this browser" : "the database") + " and cannot be undone (use Export first if unsure).")) return;
       CS.remote.reset().then(function (fresh) {
         if (!fresh) return;
         state = fresh; applyTheme(); buildFocusOptions(); refreshHeader(); renderSettings(); showView("study"); nextQuestion();

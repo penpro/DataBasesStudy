@@ -83,7 +83,7 @@
         <ul class="weak-list" id="exam-history"></ul>
       </div>
       <div class="weak-wrap">
-        <h3>From the database <span class="muted">(worked out by MySQL, not by this page)</span></h3>
+        <h3>From the database <span class="muted" id="db-report-note">(worked out by MySQL, not by this page)</span></h3>
         <div id="db-report"></div>
       </div>
     </section>
@@ -142,7 +142,7 @@
       <div class="setting">
         <div class="setting-label">
           <strong>Your data</strong>
-          <p class="muted">Your answers, settings, flags and mock exams are stored in the MySQL database. Export downloads a copy as a file; Reset deletes them from the database.</p>
+          <p class="muted" id="data-note">Your answers, settings, flags and mock exams are stored in the MySQL database. Export downloads a copy as a file; Reset deletes them from the database.</p>
         </div>
         <div class="btn-row">
           <button class="btn" id="export-btn">Export a copy</button>
@@ -150,7 +150,7 @@
         </div>
       </div>
 
-      <p class="muted small">Runs on your own computer: this page talks to a small server (npm start) that talks to MySQL. Questions come from the course's own question bank, loaded into the database by scripts/import-bank.js.</p>
+      <p class="muted small" id="about-note">Runs on your own computer: this page talks to a small server (npm start) that talks to MySQL. Questions come from the course's own question bank, loaded into the database by scripts/import-bank.js.</p>
     </section>
   </main>
 
@@ -164,6 +164,7 @@
   <script src="js/config.js"></script>
   <script src="js/highlight.js"></script>
   <script src="js/engine.js"></script>
+  <script src="js/demo.js"></script>
   <script src="js/remote.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/app.js"></script>

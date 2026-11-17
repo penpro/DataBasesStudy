@@ -319,6 +319,12 @@ pre.codeblock:hover .copy-btn, .copy-btn:focus { opacity: 1; }
   border-radius: 7px; padding: .15rem .6rem; cursor: pointer; font: inherit; font-size: .8rem;
 }
 
+.demo-bar {
+  background: var(--panel-2); color: var(--ink); border-bottom: 1px solid var(--line);
+  padding: .55rem 1.2rem; font-size: .85rem; line-height: 1.5; text-align: center;
+}
+.demo-bar a { color: var(--brand); }
+
 /* ---------- reference ---------- */
 #reference-body { columns: 2 340px; column-gap: 1.4rem; }
 .ref-block { break-inside: avoid; margin: 0 0 1.3rem; }
@@ -368,7 +374,7 @@ pre.codeblock:hover .copy-btn, .copy-btn:focus { opacity: 1; }
   .exam-head, .exam-tally { position: static; }
 }
 @media print {
-  .topbar, .footer, .study-controls, #ref-print, .storage-warning, .nav { display: none !important; }
+  .topbar, .footer, .study-controls, #ref-print, .storage-warning, .demo-bar, .nav { display: none !important; }
   .main { max-width: none; padding: .3rem; }
   .copy-btn { display: none; }
 }
