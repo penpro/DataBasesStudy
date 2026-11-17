@@ -1,0 +1,1768 @@
+{
+ "c01-1": {
+  "r": [
+   "Schema: how the database organizes and models its data",
+   "CRUD: working with the data inside that schema"
+  ],
+  "w": [
+   "Hardware: choosing servers and storage for the database",
+   "Networking: how clients connect to remote servers",
+   "Front-end design: styling the pages that show the data"
+  ]
+ },
+ "c01-2": {
+  "r": [
+   "Relational databases",
+   "Document databases",
+   "Key-value stores",
+   "Graph databases"
+  ],
+  "w": [
+   "Spreadsheet files (Excel / CSV)",
+   "Time-series databases",
+   "Hierarchical (tree) file-system databases"
+  ]
+ },
+ "c01-3": {
+  "r": [
+   "The structure of a database: its tables, columns, types, and how the tables relate"
+  ],
+  "w": [
+   "The data currently stored in the rows of all of a database's tables at one point in time",
+   "A saved SQL query that can be re-run later to produce the same result set",
+   "The set of permissions that decides which users can connect to the server",
+   "A backup copy of the whole database that can be restored after a failure"
+  ]
+ },
+ "c01-4": {
+  "p": "CRUD stands for Create, Read, Update, Delete. Which mapping to SQL statements is correct?",
+  "r": [
+   "Create = `INSERT`, Read = `SELECT`, Update = `UPDATE`, Delete = `DELETE`"
+  ],
+  "w": [
+   "Create = `CREATE TABLE`, Read = `SELECT`, Update = `ALTER`, Delete = `DROP`",
+   "Create = `INSERT`, Read = `WHERE`, Update = `SET`, Delete = `REMOVE`",
+   "Create = `SELECT`, Read = `INSERT`, Update = `UPDATE`, Delete = `DELETE`",
+   "Create = `INSERT`, Read = `SELECT`, Update = `INSERT`, Delete = `DROP`"
+  ]
+ },
+ "c01-5": {
+  "r": [
+   "Relational favors structure and integrity; NoSQL stores favor flexibility or scale for particular access patterns"
+  ],
+  "w": [
+   "NoSQL stores favor structure and integrity; relational databases favor flexibility and scale for any access pattern",
+   "Relational databases can't store relationships between data, while NoSQL stores can model them directly",
+   "They don't trade off anything; they differ only in query-language syntax and the file format used on disk",
+   "Relational databases only suit small data sets, while NoSQL stores are strictly better at every data size"
+  ]
+ },
+ "c02-1": {
+  "p": "Which are core relational concepts covered in this course? (Select all that apply.)",
+  "r": [
+   "Tables, rows, and keys",
+   "Normalization"
+  ],
+  "w": [
+   "Graph traversal",
+   "Embedding documents",
+   "Caching with key-value pairs"
+  ]
+ },
+ "c02-2": {
+  "p": "Which groups of statements are CRUD operations (working with data) rather than schema operations? (Select all that apply.)",
+  "r": [
+   "`SELECT`, `WHERE`, `JOIN`",
+   "`INSERT`, `UPDATE`, `DELETE`"
+  ],
+  "w": [
+   "`CREATE TABLE`, `DROP TABLE`",
+   "Primary keys and foreign keys",
+   "The normal forms 1NF, 2NF, 3NF"
+  ]
+ },
+ "c02-3": {
+  "p": "Which of these are *schema* operations (they change structure rather than data)? (Select all that apply.)",
+  "r": [
+   "`CREATE TABLE`",
+   "`DROP TABLE`"
+  ],
+  "w": [
+   "`SELECT`",
+   "`UPDATE`",
+   "`INSERT`",
+   "`DELETE`"
+  ]
+ },
+ "c02-4": {
+  "p": "Which of these statements modify data, rather than only reading it? (Select all that apply.)",
+  "r": [
+   "`INSERT`",
+   "`UPDATE`",
+   "`DELETE`"
+  ],
+  "w": [
+   "`SELECT`",
+   "`SELECT ... WHERE ...`",
+   "`SELECT ... ORDER BY ...`"
+  ]
+ },
+ "c02-5": {
+  "r": [
+   "Redundancy: the same fact stored in many places, which causes update and delete anomalies"
+  ],
+  "w": [
+   "Slow network connections between the web application and the database server it talks to, especially under heavy load",
+   "Queries that return their rows in the wrong order unless an ORDER BY clause is added",
+   "Tables that are missing a primary key, so individual rows can't be told apart",
+   "Data being lost whenever the database server is restarted or crashes unexpectedly"
+  ]
+ },
+ "c03-1": {
+  "r": [
+   "A thing you store data about, e.g. a Card or a Deck"
+  ],
+  "w": [
+   "A single column that uniquely identifies each row",
+   "A query that retrieves rows from a table",
+   "A link between two tables made with a foreign key",
+   "A rule that restricts the values a column may hold, such as NOT NULL"
+  ]
+ },
+ "c03-2": {
+  "r": [
+   "A link between rows of different tables, stored using foreign keys"
+  ],
+  "w": [
+   "A copy of one table's rows stored inside another table",
+   "A query that must be re-run every time you want to see the link between rows",
+   "A separate database that holds only the links",
+   "A sort order applied to the rows of a table"
+  ]
+ },
+ "c03-3": {
+  "r": [
+   "Has-many / belongs-to (one-to-many)",
+   "Many-to-many, through a junction table"
+  ],
+  "w": [
+   "Inheritance between parent and child table types",
+   "Self-referencing recursive relationships only",
+   "Relationships stored as lists of ids inside a single cell"
+  ]
+ },
+ "c03-4": {
+  "r": [
+   "It keeps the model free of redundancy and anomalies"
+  ],
+  "w": [
+   "It makes every query faster by adding more indexes",
+   "It encrypts sensitive columns",
+   "It lets a table have more than one primary key",
+   "It converts a relational database into a document database"
+  ]
+ },
+ "c03-5": {
+  "p": "A school stores students and classes. Which description of the entities and their relationship is correct?",
+  "r": [
+   "Entities Student and Class; many-to-many (a student takes many classes, a class has many students), stored in a junction table like `enrollments`"
+  ],
+  "w": [
+   "Entities Student and Class; one-to-many, stored by putting a `class_id` column on each student row so that every student points at exactly one class",
+   "Entities Student and Class; one-to-many, stored by putting a list of student ids in a single column on each class row",
+   "Only one entity, Student, since the classes a student takes are simply a text column holding the class names",
+   "Entities Student and Class; many-to-many, stored by repeating the full class title and room on every student row"
+  ]
+ },
+ "c04-1": {
+  "r": [
+   "Recalling something quickly and effortlessly, without needing to look it up"
+  ],
+  "w": [
+   "Memorizing a definition word for word so you can repeat it on one exam",
+   "Being able to look the right answer up very quickly in your notes or online",
+   "Understanding why something works after reading about it once or twice",
+   "Typing code very fast without worrying about whether it is correct"
+  ]
+ },
+ "c04-2": {
+  "r": [
+   "Fluent recall of concepts, e.g. what a foreign key is or what normalization means"
+  ],
+  "w": [
+   "Writing a query that joins two tables to answer a given question about the data stored in them",
+   "Drawing an ER diagram from a written description of an application's data",
+   "Translating a written spec into a correct set of `CREATE TABLE` statements"
+  ]
+ },
+ "c04-3": {
+  "r": [
+   "Reading and writing SQL, schemas, and ER diagrams, including turning a spec into them"
+  ],
+  "w": [
+   "Reciting the definitions of database terms from memory without looking anything up in your notes",
+   "Installing, configuring and administering a database server on a machine",
+   "Designing the visual look and layout of the application's user interface",
+   "Memorizing the full list of SQL keywords and the order they appear in"
+  ]
+ },
+ "c04-4": {
+  "p": "Which of these are *knowledge* skills (as opposed to practical skills)? (Select all that apply.)",
+  "r": [
+   "Saying what a primary key is without looking it up",
+   "Explaining what normalization is"
+  ],
+  "w": [
+   "Writing a query that joins two tables",
+   "Drawing an ER diagram from a description",
+   "Translating a spec into `CREATE TABLE` statements"
+  ]
+ },
+ "c04-5": {
+  "r": [
+   "Understanding is reading existing SQL, schemas and ER diagrams; writing is turning a spec into new ones"
+  ],
+  "w": [
+   "Understanding is writing SQL queries; writing is only drawing ER diagrams from a description",
+   "Understanding means memorizing definitions; writing means typing those definitions back from memory on a quiz",
+   "They are the same skill, and the course uses two different words only to mark exam questions",
+   "Understanding applies to relational databases only; writing applies to NoSQL databases only"
+  ]
+ },
+ "c05-1": {
+  "r": [
+   "A named collection of rows that all have the same columns"
+  ],
+  "w": [
+   "A named collection of databases that all share one server and one set of users",
+   "A single record, such as one specific flashcard",
+   "A named field that every record in the table has",
+   "A request that retrieves rows from a table"
+  ]
+ },
+ "c05-2": {
+  "r": [
+   "One record / instance, e.g. one specific flashcard"
+  ],
+  "w": [
+   "A named field every record has, e.g. `question` or `answer` in the cards table",
+   "A collection of related tables",
+   "A column that uniquely identifies a record",
+   "A saved query result"
+  ]
+ },
+ "c05-3": {
+  "r": [
+   "A named field that every row has, e.g. `question` or `answer`"
+  ],
+  "w": [
+   "One record, e.g. one specific flashcard in a deck",
+   "A named collection of rows that share the same fields",
+   "A request that filters rows by some condition",
+   "A value that uniquely identifies each row in the table, such as an `id` number"
+  ]
+ },
+ "c05-4": {
+  "r": [
+   "A column (or set of columns) that uniquely identifies each row"
+  ],
+  "w": [
+   "A column that stores the id of a row from a different table, linking the two tables together",
+   "A column that can never be left empty but may repeat values",
+   "The first column listed in every table, by definition",
+   "A password that must be supplied to read the table"
+  ]
+ },
+ "c05-5": {
+  "r": [
+   "Sending it a request to retrieve, filter, or sort rows"
+  ],
+  "w": [
+   "Creating a new table with named columns",
+   "Linking one table to another with a foreign key so rows can be matched",
+   "Deleting every row from a table",
+   "Restarting the database server"
+  ]
+ },
+ "c05-6": {
+  "r": [
+   "A database is a collection of related tables; a table is just one of them"
+  ],
+  "w": [
+   "A table is a collection of related databases; a database is only one small piece of a table",
+   "They are the same thing: a database is a table that has keys",
+   "A database holds the rows; a table holds only the column names",
+   "A database is a query; a table is its result"
+  ]
+ },
+ "c06-5": {
+  "r": [
+   "3 and 4"
+  ],
+  "w": [
+   "2, 3, and 4",
+   "1, 2, 3, and 4",
+   "3 only",
+   "4 only"
+  ]
+ },
+ "c06-6": {
+  "r": [
+   "`SELECT *` returns every column; naming columns returns only those columns, in the order listed"
+  ],
+  "w": [
+   "`SELECT *` returns every row; naming columns returns only the first row",
+   "`SELECT *` returns only the primary key column; naming columns returns all of the columns in the table",
+   "They are identical; naming columns is just a style choice",
+   "`SELECT *` sorts the output; naming columns leaves it unsorted"
+  ]
+ },
+ "c07-5": {
+  "r": [
+   "B, then D"
+  ],
+  "w": [
+   "D, then B",
+   "C, then A",
+   "A, then B",
+   "B, then A"
+  ]
+ },
+ "c08-3": {
+  "r": [
+   "(a) Beta only; (b) Alpha, Beta, and Gamma"
+  ],
+  "w": [
+   "(a) Alpha and Beta; (b) Beta only",
+   "(a) Beta only; (b) Alpha, Beta, Gamma, and Delta",
+   "(a) Alpha, Beta, and Gamma; (b) Beta only",
+   "(a) Alpha only; (b) Alpha, Beta, and Gamma"
+  ]
+ },
+ "c08-4": {
+  "r": [
+   "'10', '100', '9'"
+  ],
+  "w": [
+   "'9', '10', '100'",
+   "'100', '10', '9'",
+   "'9', '100', '10'"
+  ]
+ },
+ "c09-1": {
+  "r": [
+   "A column that stores the primary key of a row in another table, linking the two"
+  ],
+  "w": [
+   "A column that uniquely identifies each row in the table that contains it, and may not repeat",
+   "A column that can never hold NULL and is checked on every insert",
+   "A column copied from another table so queries run faster later",
+   "A table that holds the keys of other tables and nothing else"
+  ]
+ },
+ "c09-2": {
+  "r": [
+   "One row (a deck) is referenced by many rows in another table (its cards)"
+  ],
+  "w": [
+   "The decks table stores a list of all of its card ids in a single column of each deck row",
+   "A deck row has many columns, one per card",
+   "One card row points at many decks",
+   "The decks table has many rows"
+  ]
+ },
+ "c09-3": {
+  "r": [
+   "The card has a foreign key pointing at exactly one deck row"
+  ],
+  "w": [
+   "The deck row stores a list of the card's ids",
+   "The card row stores a list of deck ids it belongs to",
+   "The card row contains a copy of all the deck's columns",
+   "The two tables share a primary key column with the same name"
+  ]
+ },
+ "c09-4": {
+  "r": [
+   "It avoids duplicating deck information on every card row"
+  ],
+  "w": [
+   "Integers sort faster than text, which is the only reason",
+   "The database refuses to store text in a table that has a foreign key",
+   "It lets one card belong to many decks at once",
+   "It removes the need for a `decks` table"
+  ]
+ },
+ "c09-5": {
+  "r": [
+   "The \"many\" side (belongs-to): each card row stores `deck_id`"
+  ],
+  "w": [
+   "The \"one\" side: each deck row stores a list of the ids of all the cards in it",
+   "Both tables, so they point at each other",
+   "Neither; foreign keys are only needed for many-to-many",
+   "Whichever table was created first"
+  ]
+ },
+ "c10-4": {
+  "r": [
+   "`cards.deck_id` references `decks(id)`, so `decks` must already exist when it's declared"
+  ],
+  "w": [
+   "Tables must always be created in alphabetical order, whatever the references between them",
+   "The first table created in a database automatically becomes its primary table",
+   "SQL requires tables with fewer columns to be created before tables with more columns",
+   "A foreign key can only point at a table that is created after the table holding it"
+  ]
+ },
+ "c10-5": {
+  "r": [
+   "Every `deck_id` must be the `id` of an existing deck (or NULL), linking each card to a deck"
+  ],
+  "w": [
+   "Every `deck_id` must be unique, so no two cards can ever share the same deck",
+   "`deck_id` is the primary key of `cards`, so it uniquely identifies each card",
+   "A deck's id must also be copied into the deck's own `name` column so the two can be matched later",
+   "The database should store each deck's rows inside the `cards` table itself"
+  ]
+ },
+ "c11-4": {
+  "r": [
+   "The card's `deck_id` must refer to a deck row that already exists"
+  ],
+  "w": [
+   "`INSERT` statements always run in alphabetical table order",
+   "A card can't be inserted until its `answer` column has been filled with a non-empty value",
+   "The `decks` table has fewer columns, so it must come first",
+   "The database locks the `cards` table until `decks` has rows"
+  ]
+ },
+ "c11-5": {
+  "r": [
+   "It is rejected with a foreign key violation: no deck with `id` 99 exists"
+  ],
+  "w": [
+   "It succeeds and creates deck 99 automatically to match the reference, copying the card's text into it",
+   "It succeeds, leaving `deck_id` as 99 with no deck that matches it",
+   "It succeeds but silently changes `deck_id` to NULL instead of 99",
+   "It is rejected because card `id` 2 is already taken by another card"
+  ]
+ },
+ "c12-3": {
+  "r": [
+   "A gym has many members; a member belongs to a gym; the foreign key goes on `members`, since each member points at one gym"
+  ],
+  "w": [
+   "A member has many gyms and each gym belongs to one member; the foreign key goes on `gyms`, pointing at exactly one member row",
+   "A gym has many members; the foreign key goes on `gyms` as a comma-separated list of its member ids",
+   "Gyms and members each belong to the other; a foreign key is needed on both tables, pointing both ways",
+   "A gym has many members; the foreign key goes on `members` as a list of the gym ids it belongs to"
+  ]
+ },
+ "c12-4": {
+  "p": "Which ER diagram description correctly models a playlist that has many songs?",
+  "r": [
+   "`playlists` (id, name) one-to-many `songs` (id, title, playlist_id); `playlist_id` is the foreign key"
+  ],
+  "w": [
+   "`playlists` (id, name, song_id) holding one song id per playlist; `songs` (id, title)",
+   "`playlists` (id, name, song_ids) with a comma-separated list of song ids; `songs` (id, title) with no foreign key at all",
+   "`songs` (id, title) as the \"one\" side and `playlists` (id, name, song_id) as the \"many\" side"
+  ]
+ },
+ "c12-5": {
+  "r": [
+   "The insert is rejected with a foreign key constraint error and the row is not saved"
+  ],
+  "w": [
+   "The row is saved, and the missing parent row is created automatically to match",
+   "The row is saved with the foreign key silently set to NULL instead of the bad value",
+   "The row is saved and the database logs a warning that someone should fix it later"
+  ]
+ },
+ "c12-6": {
+  "r": [
+   "Put it on the \"many\" (belongs-to) side: the table whose rows each point at one row of the other"
+  ],
+  "w": [
+   "Put it on the \"one\" side, as a column that lists the ids of all of its related rows",
+   "Put it on whichever table has more columns, since it can hold the extra column",
+   "Put it on whichever table was created first, since the other table can then point back at it by name",
+   "Put it on both tables so each row can find its related rows in either direction"
+  ]
+ },
+ "c13-1": {
+  "r": [
+   "It combines rows from two tables based on a matching column"
+  ],
+  "w": [
+   "It copies one table's rows into another table permanently, so the second table holds both",
+   "It stacks the results of two queries into one list",
+   "It adds a new column to an existing table",
+   "It deletes rows that appear in both tables"
+  ]
+ },
+ "c13-2": {
+  "r": [
+   "`cards` only holds `deck_id`, a number; you need to JOIN to `decks` to get the name"
+  ],
+  "w": [
+   "Reading a foreign key column always requires a JOIN",
+   "The deck name is stored in `cards` but hidden until you use `WHERE`",
+   "`cards` is missing a primary key, so its columns can't be read on their own without a JOIN to `decks`"
+  ]
+ },
+ "c13-3": {
+  "r": [
+   "INNER keeps only rows that match in both tables; LEFT keeps all rows from the left table, matched or not"
+  ],
+  "w": [
+   "INNER keeps all rows from the left table whether or not they match; LEFT keeps only rows that match in both",
+   "INNER removes duplicate rows from the joined result; LEFT keeps every duplicate that appears",
+   "INNER joins exactly two tables together; LEFT is used to join three or more tables",
+   "They return the same rows; LEFT just lists the left table's columns first in the result"
+  ]
+ },
+ "c13-4": {
+  "r": [
+   "The row is kept, and the right-side columns come back as `NULL`"
+  ],
+  "w": [
+   "The row is dropped from the result",
+   "The row is kept, and the right-side columns come back as 0 or empty strings",
+   "The query fails with an error",
+   "The row is kept, and the right-side columns repeat the previous row's values"
+  ]
+ },
+ "c13-5": {
+  "r": [
+   "LEFT JOIN: 4 rows; INNER JOIN: 3 rows"
+  ],
+  "w": [
+   "LEFT JOIN: 3 rows; INNER JOIN: 3 rows",
+   "LEFT JOIN: 3 rows; INNER JOIN: 2 rows",
+   "LEFT JOIN: 4 rows; INNER JOIN: 2 rows",
+   "LEFT JOIN: 6 rows; INNER JOIN: 3 rows"
+  ]
+ },
+ "c14-5": {
+  "r": [
+   "The `ON` clause is missing, so the database can't tell which rows match"
+  ],
+  "w": [
+   "`INNER JOIN` must be written as `JOIN INNER` in standard SQL syntax",
+   "The `SELECT` list can't name columns from two different tables at once; each table needs its own query",
+   "The `decks` table needs a table alias before it can be joined",
+   "`WHERE` is required whenever two tables are joined in the same query"
+  ]
+ },
+ "c15-5": {
+  "r": [
+   "`NULL` means \"unknown\", so comparing anything to it with `=` is never true; use `IS NULL`"
+  ],
+  "w": [
+   "`= NULL` is slower than `IS NULL` but returns exactly the same rows in the end",
+   "`NULL` is just the number zero, so `= NULL` matches only rows whose value is zero",
+   "`= NULL` is valid only on primary key columns; `IS NULL` is meant for every other kind of column",
+   "`IS NULL` is needed only inside LEFT JOINs; `= NULL` works everywhere else"
+  ]
+ },
+ "c16-5": {
+  "r": [
+   "12 rows"
+  ],
+  "w": [
+   "7 rows (3 + 4)",
+   "4 rows",
+   "3 rows",
+   "0 rows"
+  ]
+ },
+ "c16-6": {
+  "r": [
+   "(b) What is the name of each card's deck?"
+  ],
+  "w": [
+   "(a) How many cards are there in total?",
+   "Both (a) and (b) need a JOIN to answer",
+   "Neither (a) nor (b) needs a JOIN to answer at all"
+  ]
+ },
+ "c17-1": {
+  "r": [
+   "The same fact stored in more than one row; it wastes space and lets the copies disagree"
+  ],
+  "w": [
+   "Storing a table's data in two different databases for backup; it only affects speed, never correctness",
+   "A column that is NULL in most rows; it makes primary keys stop being unique",
+   "A table that has more than one primary key defined; it makes joins ambiguous",
+   "Rows that show up in the result of a LEFT JOIN with no matching row on the right"
+  ]
+ },
+ "c17-2": {
+  "r": [
+   "Fixing a duplicated fact means updating many rows; miss one and the data disagrees"
+  ],
+  "w": [
+   "An UPDATE that fails because the new value violates a constraint on that column of the table",
+   "An UPDATE with no WHERE clause that accidentally changes every row in the table",
+   "Two users updating the same row at once so one overwrites the other's change"
+  ]
+ },
+ "c17-3": {
+  "r": [
+   "Deleting the only row holding some information also deletes that information, unintentionally"
+  ],
+  "w": [
+   "A DELETE with no WHERE clause, which removes every single row in the table at once, with no way to undo it",
+   "A DELETE that fails because a foreign key in another table still points at the row",
+   "Dropping a whole table while other tables in the database still reference it"
+  ]
+ },
+ "c17-4": {
+  "r": [
+   "Organizing tables to minimize redundancy and prevent update and delete anomalies"
+  ],
+  "w": [
+   "Sorting every table's rows into alphabetical order by their primary key",
+   "Converting all of the columns in the database to the same data type",
+   "Copying data into additional tables so that common queries need fewer joins and run faster",
+   "Making every table have exactly one column so nothing can repeat"
+  ]
+ },
+ "c17-5": {
+  "r": [
+   "More JOINs are needed to answer simple questions: a real performance and complexity cost"
+  ],
+  "w": [
+   "Facts end up duplicated in more places, so a single update is easier to miss, causing anomalies",
+   "Primary keys stop being unique once tables are split into smaller ones",
+   "Tables can no longer have foreign keys, so relationships can't be stored",
+   "Updates and deletes become more error-prone because data is spread out"
+  ]
+ },
+ "c17-6": {
+  "r": [
+   "`customer_name` and `customer_address`: Ada's address appears once per order"
+  ],
+  "w": [
+   "`order_id` and `item`, since each order has its own id and item",
+   "Only `item`, because the same items are repeated across orders",
+   "Only `customer_address`; `customer_name` is not repeated in the table",
+   "Nothing: every row is different, so there is no redundancy in the table at all"
+  ]
+ },
+ "c18-2": {
+  "r": [
+   "`tag_name` and `tag_description`, repeated on every card that has that tag"
+  ],
+  "w": [
+   "`id` and `question`, repeated on every tag",
+   "`question` and `tag_name`, because the question depends on the tag that is attached to it",
+   "Only `tag_name`; each description is unique to its card",
+   "None: a flat table has no redundancy"
+  ]
+ },
+ "c18-4": {
+  "r": [
+   "There is no single answer: the table now disagrees with itself (an update anomaly)"
+  ],
+  "w": [
+   "The first row inserted is the truth, since it was written to the table before the other row was",
+   "The most recently inserted row is the truth, since it replaces the older one",
+   "The longer description is the truth, since it carries more information",
+   "The database quietly picks one of them and discards the other description"
+  ]
+ },
+ "c18-5": {
+  "r": [
+   "1,000 rows in `cards_flat`; 1 row in a `tags` table"
+  ],
+  "w": [
+   "1 row in `cards_flat`; 1 row in a `tags` table",
+   "1,000 rows in `cards_flat`; 1,000 rows in a `tags` table",
+   "500 rows in `cards_flat`; 1 row in a `tags` table",
+   "1,000 rows in `cards_flat`; 2 rows in a `tags` table"
+  ]
+ },
+ "c19-5": {
+  "r": [
+   "Every card whose question contains the text \"loop\" anywhere in it"
+  ],
+  "w": [
+   "Only cards whose question is exactly \"loop\"",
+   "Only cards whose question starts with \"loop\"",
+   "Only cards whose question ends with \"loop\"",
+   "Every card whose question contains the literal text `%loop%`, including the percent signs"
+  ]
+ },
+ "c20-1": {
+  "r": [
+   "`customer_name` and `customer_address`: they repeat on every order that customer places"
+  ],
+  "w": [
+   "`order_id` and `product`, which both repeat on every row of the table",
+   "Only `product`, since the same products are ordered again and again",
+   "Only `customer_address`; `customer_name` is unique per customer so it can't repeat on any order",
+   "Nothing is redundant, since each row has its own different `order_id` value"
+  ]
+ },
+ "c20-4": {
+  "r": [
+   "40 times; 40 rows must change"
+  ],
+  "w": [
+   "40 times; 1 row must change",
+   "1 time; 40 rows must change",
+   "80 times; 40 rows must change",
+   "1 time; 1 row must change"
+  ]
+ },
+ "c21-1": {
+  "r": [
+   "Every column holds a single value: no comma-separated lists in one cell"
+  ],
+  "w": [
+   "Every table has exactly one primary key and no foreign keys at all",
+   "Every non-key column depends on the whole primary key, not just part of it",
+   "No non-key column depends on another non-key column in the table",
+   "Every table has only one column, so no value can be repeated"
+  ]
+ },
+ "c21-2": {
+  "r": [
+   "A value that can't be meaningfully divided further: one value per cell"
+  ],
+  "w": [
+   "A value that never changes once it has been inserted into a row",
+   "A value that is stored only in the primary key column of the table it belongs to",
+   "A value that is unique across every row of the whole table",
+   "A numeric value that is stored as a number rather than text"
+  ]
+ },
+ "c21-3": {
+  "r": [
+   "1NF, plus every non-key column depends on the whole primary key"
+  ],
+  "w": [
+   "1NF, plus no non-key column depends on another non-key column in the table",
+   "1NF, plus every table has a foreign key",
+   "1NF, plus every column is UNIQUE",
+   "Every cell holds a single value, with no lists"
+  ]
+ },
+ "c21-4": {
+  "r": [
+   "2NF, plus no non-key column depends on another non-key column"
+  ],
+  "w": [
+   "2NF, plus every non-key column depends on the whole primary key",
+   "1NF, plus every table has at most three columns",
+   "2NF, plus every column has a foreign key",
+   "2NF, plus every table has exactly three columns"
+  ]
+ },
+ "c21-5": {
+  "p": "Which of these tables violates 1NF?",
+  "r": [
+   "A `cards` table whose `tags` column holds \"loops, syntax\" in one cell"
+  ],
+  "w": [
+   "A `cards` table with a `tag_id` column holding exactly one number per row of the table",
+   "A `card_tags` table with one row per (card, tag) pair",
+   "A `decks` table with an `id` and a `name`, one value per cell",
+   "A `tags` table where each tag name appears once"
+  ]
+ },
+ "c21-6": {
+  "r": [
+   "2NF: `product_name` depends only on `product_id`, which is just part of the key"
+  ],
+  "w": [
+   "1NF: `quantity` is a repeated value",
+   "3NF: `quantity` depends on `product_name`",
+   "None: a composite key makes the table fine",
+   "2NF: `quantity` depends only on `order_id`, which is just part of the composite key"
+  ]
+ },
+ "c21-7": {
+  "r": [
+   "3NF: a non-key column (`tag_category`) depends on another non-key column"
+  ],
+  "w": [
+   "1NF: the table holds a whole list of values in one single cell",
+   "2NF: a non-key column depends on only part of a composite key",
+   "None: both columns are in the same table, so it is fine as designed and needs no change"
+  ]
+ },
+ "c22-4": {
+  "r": [
+   "Each card/tag pair should appear at most once, and the pair itself uniquely identifies the row"
+  ],
+  "w": [
+   "Each card can have only one tag, so `card_id` alone would be enough to identify the row in the table",
+   "`tag_id` alone would already be unique, so `card_id` is only added to speed up lookups",
+   "SQL itself forbids a junction table from having a single-column primary key of any kind"
+  ]
+ },
+ "c22-5": {
+  "r": [
+   "The database sees one text value, so you can't easily find, count, or validate tags"
+  ],
+  "w": [
+   "Comma-separated values can't be stored in a text column in any SQL database, so tags must be numbers",
+   "SQL has no way to display or return a cell that contains a comma character",
+   "It only becomes a problem once a table has grown to more than 1,000 rows",
+   "Primary keys can't be assigned to a table with a comma-separated column"
+  ]
+ },
+ "c23-4": {
+  "r": [
+   "3 rows: A with loops, A with syntax, and B with syntax"
+  ],
+  "w": [
+   "3 rows: A, B, and C, each with one tag",
+   "2 rows: A with loops and B with syntax",
+   "4 rows: A with loops, A with syntax, B with syntax, and C with NULL",
+   "2 rows: A with loops and A with syntax"
+  ]
+ },
+ "c24-3": {
+  "r": [
+   "3 rows: one junction row per student/class pair"
+  ],
+  "w": [
+   "1 row, because the student appears once",
+   "6 rows, one for each direction of the relationship",
+   "0 rows, since `enrollments` only stores classes"
+  ]
+ },
+ "c24-4": {
+  "r": [
+   "1NF: one value per cell; 2NF: no non-key columns to depend on part of the key; 3NF: nothing depends on a non-key"
+  ],
+  "w": [
+   "1NF: `student_id` is unique per row; 2NF: the table contains a foreign key; 3NF: the table has exactly two columns and no more",
+   "It violates 2NF, because the primary key of `enrollments` has two columns instead of one",
+   "It violates 1NF, because a student can appear in many rows of the `enrollments` table",
+   "It holds 1NF and 2NF but violates 3NF, because `student_id` depends on `class_id`"
+  ]
+ },
+ "c24-5": {
+  "r": [
+   "It shouldn't be there: move that fact and its determining column into their own table"
+  ],
+  "w": [
+   "It should be duplicated into every other table that needs the same information",
+   "It is perfectly fine as long as the table's primary key is made a composite key of both columns",
+   "It should be merged into the primary key so that the key carries both columns",
+   "It should be stored in the same cell as a comma-separated list of values"
+  ]
+ },
+ "c25-1": {
+  "r": [
+   "A column (or set of columns) that uniquely identifies each row; one per table"
+  ],
+  "w": [
+   "A column that may repeat across many rows but can never hold a NULL value in any row",
+   "A column that stores the key of a row that lives in a different table",
+   "Any column that the table's rows happen to be sorted by when displayed",
+   "A table can have several of them, one for each unique column in it"
+  ]
+ },
+ "c25-2": {
+  "r": [
+   "Yes: a primary key can span multiple columns"
+  ],
+  "w": [
+   "No: a primary key must be a single column",
+   "Yes, but only if the columns are all integers",
+   "No: only a UNIQUE constraint can span multiple columns"
+  ]
+ },
+ "c25-3": {
+  "r": [
+   "A primary key made of two or more columns together"
+  ],
+  "w": [
+   "A key made of a column plus a foreign key from another database",
+   "Two separate primary keys on the same table",
+   "A unique column that is allowed to be NULL",
+   "A key shared by two tables with the same name"
+  ]
+ },
+ "c25-4": {
+  "r": [
+   "No two rows may share the same value in that column"
+  ],
+  "w": [
+   "The column can never be left empty",
+   "The column's values are generated automatically by the database on every insert",
+   "The column becomes the table's primary key",
+   "The column must hold a number"
+  ]
+ },
+ "c25-5": {
+  "r": [
+   "The column can never be left empty"
+  ],
+  "w": [
+   "No two rows may share the same value in that column",
+   "The column's value can never change after the insert",
+   "The column must hold a number greater than zero",
+   "The column becomes the primary key"
+  ]
+ },
+ "c25-6": {
+  "r": [
+   "The database rejects the INSERT/UPDATE with an error and the row is not saved"
+  ],
+  "w": [
+   "The row is saved anyway, and the database writes a warning to its log",
+   "The row is saved with the offending value quietly replaced by NULL",
+   "The row is saved but flagged as invalid until someone fixes the value",
+   "The whole table is locked until the constraint has been removed by an administrator"
+  ]
+ },
+ "c27-4": {
+  "r": [
+   "Unchanged: the statement is rejected and no partial row is saved"
+  ],
+  "w": [
+   "A partial row is saved with the offending column set to NULL and the rest of the values kept",
+   "The row is saved and removed later by a background cleanup",
+   "The table is locked until the error is acknowledged"
+  ]
+ },
+ "c27-5": {
+  "r": [
+   "The insert fails with a duplicate-key error, because a primary key must be unique"
+  ],
+  "w": [
+   "The new row silently replaces the existing row",
+   "Both rows are kept, and the database picks one when queried",
+   "The insert succeeds, and the new row's key is changed automatically to avoid a clash with the old row"
+  ]
+ },
+ "c28-1": {
+  "r": [
+   "`id` is the PRIMARY KEY; `email` is UNIQUE (and NOT NULL); `name` is NOT NULL"
+  ],
+  "w": [
+   "`email` is the PRIMARY KEY; `id` is UNIQUE; `name` is NOT NULL",
+   "`id` is the PRIMARY KEY; `name` is UNIQUE, since two members can't share a name",
+   "`id` is the PRIMARY KEY; `email` must stay nullable, since it is optional",
+   "All four columns are PRIMARY KEY, so every column is unique"
+  ]
+ },
+ "c28-5": {
+  "r": [
+   "When the first two columns can legitimately repeat, e.g. `(student_id, class_id, term)` for retakes"
+  ],
+  "w": [
+   "Whenever a table has grown to more than 10 rows, so that each row stays uniquely identifiable by its key",
+   "Whenever the table already has a foreign key that points at some third table",
+   "Never: a primary key can't be made of more than two columns in any SQL database",
+   "When the first two columns are both allowed to be NULL in some rows"
+  ]
+ },
+ "c29-1": {
+  "r": [
+   "It adds new row(s) to a table"
+  ],
+  "w": [
+   "It changes existing values in matching rows",
+   "It removes matching rows",
+   "It adds a new column to a table",
+   "It reads rows from a table"
+  ]
+ },
+ "c29-2": {
+  "r": [
+   "It changes existing column values on matching rows"
+  ],
+  "w": [
+   "It adds brand new rows to the table",
+   "It removes the matching rows entirely from the table",
+   "It creates a new table with the same name",
+   "It renames a column across the whole table"
+  ]
+ },
+ "c29-3": {
+  "r": [
+   "It removes matching rows entirely"
+  ],
+  "w": [
+   "It removes the table and its structure",
+   "It sets the matching rows' columns to NULL",
+   "It removes matching columns from every row",
+   "It hides matching rows from SELECT but keeps them"
+  ]
+ },
+ "c29-4": {
+  "r": [
+   "Without `WHERE`, UPDATE and DELETE apply to every row in the table"
+  ],
+  "w": [
+   "`WHERE` is required syntax; the statement won't run without it",
+   "Without `WHERE`, they apply only to the first row",
+   "Without `WHERE`, they apply only to the most recently inserted rows",
+   "`WHERE` only makes the statement faster; it doesn't change which rows are affected"
+  ]
+ },
+ "c29-5": {
+  "r": [
+   "It deletes every row in the table"
+  ],
+  "w": [
+   "It deletes only the first row",
+   "It deletes the table itself, including its columns",
+   "It fails because DELETE requires a WHERE clause",
+   "It sets every column in every row to NULL"
+  ]
+ },
+ "c29-6": {
+  "r": [
+   "Run the equivalent `SELECT ... WHERE ...` first to see exactly which rows would change"
+  ],
+  "w": [
+   "Run the UPDATE or DELETE twice in a row, then compare what changed in each run",
+   "Add `LIMIT 1` to every statement so that only a single row can ever be affected by a mistake",
+   "Run it on a much larger copy of the table first to check that it scales",
+   "Remove the `WHERE` clause so that no matching row is ever missed by mistake"
+  ]
+ },
+ "c30-5": {
+  "r": [
+   "3, 4, 5"
+  ],
+  "w": [
+   "3, 4, 6",
+   "2, 3, 5",
+   "3, 3, 5",
+   "4, 5, 6"
+  ]
+ },
+ "c31-4": {
+  "r": [
+   "Only the 2024-12-31 row"
+  ],
+  "w": [
+   "The 2024-12-31 and 2025-01-01 rows",
+   "All three rows",
+   "The 2025-01-01 and 2025-06-01 rows",
+   "None of them"
+  ]
+ },
+ "c31-6": {
+  "r": [
+   "There is no `WHERE`, so every review's rating becomes 5"
+  ],
+  "w": [
+   "`SET` can't be used without a `WHERE` clause",
+   "It only updates the first row, since no `WHERE` is given",
+   "It should use `INSERT` instead of `UPDATE` to change a rating"
+  ]
+ },
+ "c33-1": {
+  "r": [
+   "It collapses rows sharing a value into one summary row per group"
+  ],
+  "w": [
+   "It sorts the rows by a column",
+   "It removes any row that has a duplicate anywhere in the table and keeps only the first copy",
+   "It joins rows from two tables on a shared value",
+   "It filters rows before they are returned"
+  ]
+ },
+ "c33-2": {
+  "r": [
+   "`ORDER BY` just reorders rows; `GROUP BY` merges rows into groups"
+  ],
+  "w": [
+   "`GROUP BY` only reorders the rows; `ORDER BY` is what merges rows into groups",
+   "They do the same thing; `GROUP BY` is just an older keyword for `ORDER BY`",
+   "`ORDER BY` filters out rows; `GROUP BY` sorts the rows that are left",
+   "`GROUP BY` requires a join first, while `ORDER BY` does not"
+  ]
+ },
+ "c33-3": {
+  "p": "Which of these are aggregate functions (they compute one value from many rows)? (Select all that apply.)",
+  "r": [
+   "`COUNT`",
+   "`SUM`",
+   "`AVG`",
+   "`MAX`"
+  ],
+  "w": [
+   "`WHERE`",
+   "`LIMIT`",
+   "`ORDER BY`",
+   "`JOIN`"
+  ]
+ },
+ "c33-4": {
+  "r": [
+   "`HAVING` filters groups (after aggregation); `WHERE` filters individual rows (before aggregation)"
+  ],
+  "w": [
+   "`HAVING` filters individual rows before any grouping happens; `WHERE` filters groups after aggregation",
+   "They are interchangeable; `HAVING` is just newer syntax",
+   "`HAVING` sorts the groups; `WHERE` sorts the rows",
+   "`HAVING` can only be used in a query without `GROUP BY`"
+  ]
+ },
+ "c33-5": {
+  "r": [
+   "`WHERE` runs before grouping, so the aggregate doesn't exist yet; use `HAVING`"
+  ],
+  "w": [
+   "Aggregates are only allowed in the `SELECT` list and never in any filter or condition",
+   "`WHERE` only works on text columns, so it can't test numeric results",
+   "`WHERE` runs after grouping, but it can't read the results of functions",
+   "SQL forbids filtering rows using any numeric comparison at all"
+  ]
+ },
+ "c34-4": {
+  "r": [
+   "Two rows: deck 1 with count 3, deck 2 with count 1"
+  ],
+  "w": [
+   "Two rows: deck 1 with count 1, deck 2 with count 3",
+   "Four rows, one per card, each with count 1",
+   "One row: deck 1 with count 3",
+   "Two rows: deck 1 with count 2, deck 2 with count 2"
+  ]
+ },
+ "c34-5": {
+  "r": [
+   "A card with no reviews still gives one NULL row: `COUNT(*)` counts it as 1, `COUNT(reviews.id)` gives 0"
+  ],
+  "w": [
+   "`COUNT(*)` is not allowed to follow a `LEFT JOIN`, so a named column always has to be counted instead of it",
+   "`COUNT(reviews.id)` counts duplicate reviews of the same card only once instead of each time",
+   "`COUNT(*)` counts only those rows in which every single column of the joined row is NULL",
+   "They give identical results; which one you use is only a matter of style preference"
+  ]
+ },
+ "c35-4": {
+  "r": [
+   "`WHERE` can't use an aggregate because it runs before grouping; use `HAVING COUNT(*) > 10` after `GROUP BY`"
+  ],
+  "w": [
+   "`COUNT(*)` can't be selected in the same query as the column `deck_id`; each of them has to be selected separately",
+   "`GROUP BY` has to be written before the `FROM` clause, so the clauses are in the wrong order",
+   "The condition should use `>=` instead of `>`, since `COUNT(*) > 10` can never be true",
+   "The query needs an `ORDER BY` clause before it is allowed to use `COUNT(*)` at all"
+  ]
+ },
+ "c35-5": {
+  "r": [
+   "Cards 1 and 3"
+  ],
+  "w": [
+   "Card 3 only",
+   "Cards 1, 2, and 3",
+   "Cards 2 and 3",
+   "Card 1 only"
+  ]
+ },
+ "c36-5": {
+  "r": [
+   "`WHERE` filters rows, then `GROUP BY` forms groups, then `HAVING` filters groups, which needs aggregates"
+  ],
+  "w": [
+   "`GROUP BY`, then `WHERE`, then `HAVING`, since groups have to exist before any individual rows can be filtered out",
+   "`HAVING`, then `GROUP BY`, then `WHERE`, in whatever order is easiest for the engine to compute",
+   "They all run at the same time, so the order in which they are written never matters",
+   "`WHERE`, then `HAVING`, then `GROUP BY`, because `HAVING` is only a stricter version of `WHERE`"
+  ]
+ },
+ "c37-1": {
+  "r": [
+   "A query nested inside another query"
+  ],
+  "w": [
+   "A query that has been saved under a name",
+   "A query that returns no rows",
+   "A query that runs against a second database",
+   "A query that can only use `SELECT *`"
+  ]
+ },
+ "c37-2": {
+  "r": [
+   "In a `WHERE` clause",
+   "In a `FROM` clause",
+   "In a `SELECT` list"
+  ],
+  "w": [
+   "Only in a `LIMIT` clause",
+   "Nowhere: they must be written as separate statements",
+   "Only inside a `CREATE TABLE` statement"
+  ]
+ },
+ "c37-3": {
+  "r": [
+   "It references a column from the outer query, so it re-runs for each outer row; a regular one runs once"
+  ],
+  "w": [
+   "It joins two tables together, while a regular subquery only ever reads rows from a single table at a time",
+   "It always returns exactly one row, while a regular subquery is allowed to return many rows",
+   "It runs before the outer query, while a regular subquery runs after the outer query",
+   "It can only be used together with `UNION`, while a regular subquery can be used anywhere"
+  ]
+ },
+ "c37-4": {
+  "r": [
+   "It combines the results of two queries, removing duplicates"
+  ],
+  "w": [
+   "It returns only rows that appear in both queries' results",
+   "It returns rows in the first query but not the second",
+   "It joins two tables on a matching column",
+   "It combines the results of two queries, keeping every duplicate"
+  ]
+ },
+ "c37-5": {
+  "r": [
+   "It returns only rows that appear in both queries' results"
+  ],
+  "w": [
+   "It combines both results, removing duplicates",
+   "It returns rows in the first query's results but not the second's",
+   "It returns every pairing of rows from both queries",
+   "It returns rows that appear in only one of the two queries"
+  ]
+ },
+ "c37-6": {
+  "r": [
+   "It returns rows in the first query's results but not the second's"
+  ],
+  "w": [
+   "It returns rows that appear in both queries' results",
+   "It returns rows in either query, but not both",
+   "It returns rows in the second query's results but not the first's",
+   "It combines both results, removing duplicates"
+  ]
+ },
+ "c37-7": {
+  "r": [
+   "When the question is \"rows where some condition about *other* rows holds\", e.g. cards never reviewed"
+  ],
+  "w": [
+   "When you need to show columns from both of the two tables side by side in one single combined result set",
+   "When the two tables have no foreign key linking them, so a join can't be written at all",
+   "When you want to combine the contents of two tables into one new permanent table",
+   "When you only need to sort the result of the query rather than filter any of its rows"
+  ]
+ },
+ "c38-4": {
+  "r": [
+   "Cards 2 and 4"
+  ],
+  "w": [
+   "Cards 1 and 3",
+   "Cards 1, 1, and 3",
+   "Cards 1, 2, 3, and 4",
+   "Card 2 only"
+  ]
+ },
+ "c39-4": {
+  "r": [
+   "`UNION` removes duplicate rows from the result; `UNION ALL` keeps every row, duplicates included"
+  ],
+  "w": [
+   "`UNION` keeps all of the duplicate rows in the result; `UNION ALL` is the one that removes them all",
+   "`UNION` combines exactly two queries; `UNION ALL` is used to combine three or more queries",
+   "`UNION ALL` also sorts the combined result by its first column; `UNION` leaves it unsorted",
+   "They're identical; the word `ALL` is optional decoration that changes nothing about the result"
+  ]
+ },
+ "c39-5": {
+  "r": [
+   "`UNION` = {1, 2, 3, 4}; `INTERSECT` = {2, 3}; `A EXCEPT B` = {1}"
+  ],
+  "w": [
+   "`UNION` = {2, 3}; `INTERSECT` = {1, 2, 3, 4}; `A EXCEPT B` = {1}",
+   "`UNION` = {1, 2, 3, 4}; `INTERSECT` = {2, 3}; `A EXCEPT B` = {4}",
+   "`UNION` = {1, 4}; `INTERSECT` = {2, 3}; `A EXCEPT B` = {1}",
+   "`UNION` = {1, 2, 3, 4}; `INTERSECT` = {1, 4}; `A EXCEPT B` = {1}"
+  ]
+ },
+ "c41-1": {
+  "r": [
+   "A database that stores flexible, JSON-like documents; each can have its own shape"
+  ],
+  "w": [
+   "A database that stores word-processor files and lets you search inside them by keyword",
+   "A relational database in which each table is stored as a separate PDF file",
+   "A database that stores nothing but pairs of a key and a short piece of text",
+   "A database that stores nodes and edges, with relationships as connections"
+  ]
+ },
+ "c41-2": {
+  "r": [
+   "A document can nest related data inside itself; a row points to related data in other tables via foreign keys"
+  ],
+  "w": [
+   "A row can nest related data inside itself as an array; a document only points to other documents using foreign keys",
+   "A document must have the same fields as every other document in its collection; a row can differ",
+   "There's no difference except the name",
+   "A document can only hold text; a row can hold numbers"
+  ]
+ },
+ "c41-3": {
+  "r": [
+   "A giant dictionary: you look up a value instantly by its key"
+  ],
+  "w": [
+   "A table where every column is a key",
+   "A set of documents with nested fields",
+   "A graph of connected key nodes",
+   "A relational table with a composite primary key and no other columns"
+  ]
+ },
+ "c41-4": {
+  "r": [
+   "Caching, e.g. using Redis to remember whether a card is due"
+  ],
+  "w": [
+   "Finding friends of friends in a social network",
+   "Storing a product catalog whose items have varying attributes",
+   "Enforcing foreign keys between decks and cards",
+   "Running a monthly report with joins across five tables"
+  ]
+ },
+ "c41-5": {
+  "r": [
+   "Embedding avoids JOINs and reads fast as one unit, e.g. a card with its tags embedded"
+  ],
+  "w": [
+   "Embedding removes duplicate data automatically, so nothing is ever stored twice",
+   "Embedded data is easier to update in one place, since there is only ever one copy of each fact",
+   "Embedding enforces foreign keys between the documents that contain each other",
+   "Documents can't reference other documents by any means other than embedding"
+  ]
+ },
+ "c41-6": {
+  "r": [
+   "The same embedded fact can get duplicated across documents: the redundancy normalization removed"
+  ],
+  "w": [
+   "Embedded documents can't be read at all without first running a JOIN against another collection",
+   "Embedding forces every document in the collection to have exactly the same fields in the same order",
+   "Documents that contain embedded data can't be indexed, so every lookup is always slow",
+   "Embedding forces you to declare a fixed schema up front, exactly as a relational table does"
+  ]
+ },
+ "c43-5": {
+  "r": [
+   "A key-value lookup is one fast read by key; the query would filter `reviews` on every render"
+  ],
+  "w": [
+   "Key-value stores guarantee the flag is always more up to date than the `reviews` table is",
+   "The `reviews` table can't be queried more than once per day without the whole table being locked",
+   "Key-value stores enforce the foreign key from `reviews` to `cards` more strictly than SQL",
+   "The query would return the wrong answer, because SQL can't compare dates correctly"
+  ]
+ },
+ "c43-6": {
+  "r": [
+   "It encodes structure in a flat key space: type (`card`), id (`1`), field (`due_today`)"
+  ],
+  "w": [
+   "The colons split the key into separate columns, the way a table row is split",
+   "The colons mark which part of the key acts as the primary key of the value",
+   "Redis requires colons, and keys that don't contain them are rejected outright with an error",
+   "The colons encrypt the key so that other applications can't guess it"
+  ]
+ },
+ "c44-1": {
+  "r": [
+   "One document per recipe, with its ingredients (and steps) nested inside it"
+  ],
+  "w": [
+   "One document per ingredient, listing the names of every recipe that uses it",
+   "One document for the whole app, holding every recipe in a single list",
+   "Separate documents for recipes and ingredients, linked by foreign keys the database enforces"
+  ]
+ },
+ "c44-2": {
+  "r": [
+   "A user's session or the \"recipe of the day\": read very often by one simple key"
+  ],
+  "w": [
+   "Every recipe's complete edit history, which is mostly queried by a date range",
+   "The relationships between recipes that use similar ingredients, explored by traversal",
+   "A monthly report of ingredient totals, grouped by recipe and by category"
+  ]
+ },
+ "c44-3": {
+  "r": [
+   "When one fact (e.g. an ingredient's details) is copied into many documents, or you must query across recipes by shared ingredient"
+  ],
+  "w": [
+   "As soon as a recipe has more than one ingredient, since embedded arrays only work when they hold a single item in each document of the collection",
+   "When recipes start to have slightly different sets of fields from one another within the collection of documents",
+   "When the app reads a whole recipe at once, because embedded documents are slow to read as a single unit",
+   "When the app needs fast reads, because embedding always makes reads slower than joined tables would be"
+  ]
+ },
+ "c44-4": {
+  "p": "A recipe app stores each recipe as one document: `{ \"name\": \"Pancakes\", \"ingredients\": [...], \"steps\": [...] }`. Which statement about a second recipe document is correct?",
+  "r": [
+   "It can have an extra `\"serves\": 4` field and no `\"steps\"`; documents needn't share the same fields"
+  ],
+  "w": [
+   "It must repeat `\"steps\"` even when it is empty, since every document needs the same fields",
+   "It must have the same fields in the same order as the first one, since the collection enforces a single shape",
+   "Its ingredients must be stored in a separate table and referenced from the document by id"
+  ]
+ },
+ "c44-5": {
+  "r": [
+   "At least `recipes`, `ingredients` and a junction table `recipe_ingredients` (plus `steps`): about 2–3 JOINs"
+  ],
+  "w": [
+   "A single `recipes` table holding every ingredient and step in columns; no JOINs are needed",
+   "Two tables, `recipes` and `ingredients`, with no junction table between them; one single JOIN reads a whole recipe",
+   "Dozens of small tables, one for every kind of ingredient; about ten JOINs to read a single recipe"
+  ]
+ },
+ "c45-1": {
+  "r": [
+   "An entity, e.g. a Card, a Tag, or a Deck"
+  ],
+  "w": [
+   "A labeled, directed relationship between two entities",
+   "A single property value on an entity",
+   "A table in the graph database",
+   "A query that traverses the graph"
+  ]
+ },
+ "c45-2": {
+  "r": [
+   "A labeled, directed relationship connecting two nodes, e.g. `TAGGED`"
+  ],
+  "w": [
+   "An entity such as a Card or a Tag that the graph stores data about, with its own properties",
+   "A property stored on a node, such as the `question` text of a card",
+   "A column in a table of nodes that holds the name of each node",
+   "A foreign key value that is hidden inside each of the nodes"
+  ]
+ },
+ "c45-3": {
+  "r": [
+   "Relational stores relationships as foreign key values; graphs store them as connections you traverse directly, without JOINs"
+  ],
+  "w": [
+   "Graphs can't store relationships at all; they only store entities and their properties, so every single link between entities needs its own separate table",
+   "Relational databases traverse relationships directly with no JOINs, while graph databases need JOINs on every hop",
+   "Graphs require every node to share the same set of columns, exactly like rows of a relational table",
+   "Relational databases can't have relationships between tables; only graph databases can store them"
+  ]
+ },
+ "c45-4": {
+  "r": [
+   "Deep or variable-length connections, e.g. every card to review before this one, and before those"
+  ],
+  "w": [
+   "Summing the values of a single column across millions of rows to produce one total",
+   "Looking up one stored value instantly when you already know the exact key it lives under in the store",
+   "Storing documents whose fields vary a lot from one document to the next in a collection",
+   "Enforcing that the values in one column are unique across every row of a table"
+  ]
+ },
+ "c45-5": {
+  "r": [
+   "Node: `(Card)`; edge: `(Card)-[:PREREQUISITE_OF]->(Card)`"
+  ],
+  "w": [
+   "Node: `(Card)-[:TAGGED]->(Tag)`; edge: `(Deck)`",
+   "Node: `PREREQUISITE_OF`; edge: `(Card)`",
+   "Node: `(Card)-[:PREREQUISITE_OF]->(Card)`; edge: `(Tag)` or `(Deck)`"
+  ]
+ },
+ "c46-4": {
+  "r": [
+   "`a` must be learned first; the arrow runs from `a` to `b`: \"a is a prerequisite of b\""
+  ],
+  "w": [
+   "`b` must be learned first; the arrow points at whichever card has to come first",
+   "Neither one; the arrow only records which card was created first in the database, not learning order",
+   "They are learned together; the arrow just links the two cards without an order"
+  ]
+ },
+ "c46-5": {
+  "r": [
+   "`a` is a variable naming the node, `Card` is its label (its type), and the braces hold its properties"
+  ],
+  "w": [
+   "`a` is the node's label, `Card` is its id, and the braces hold its edges",
+   "`a` is the table, `Card` is the column, and the braces hold the row",
+   "`a` is the property name, `Card` is its value, and the braces hold the label",
+   "`a` is the node's type, `Card` is a variable, and the braces hold a `WHERE` condition that filters out the matching rows"
+  ]
+ },
+ "c47-5": {
+  "r": [
+   "Follow that kind of edge any number of times (one or more hops), walking the chain"
+  ],
+  "w": [
+   "Match every kind of edge in the graph, not just `PREREQUISITE_OF` edges",
+   "Match exactly zero edges, so that only the starting node itself is returned",
+   "Multiply the number of matches by the total number of nodes in the whole graph at that moment",
+   "Return every node in the entire database, whether or not it is connected"
+  ]
+ },
+ "c47-6": {
+  "r": [
+   "A card can be reachable by several paths, so without `DISTINCT` it could repeat"
+  ],
+  "w": [
+   "`DISTINCT` makes the pattern match edges in both directions instead of one",
+   "`DISTINCT` sorts the returned cards into alphabetical order by their question",
+   "Without `DISTINCT` the query would run forever on any graph with a cycle in it",
+   "The graph stores duplicate nodes, and `DISTINCT` deletes them from the database"
+  ]
+ },
+ "c48-1": {
+  "p": "Which graph model fits a \"course prerequisites\" domain?",
+  "r": [
+   "Nodes: `(Course)`; edge: `(Course)-[:PREREQUISITE_OF]->(Course)`"
+  ],
+  "w": [
+   "Nodes: `(Prerequisite)` only; no edges are needed",
+   "Nodes: `(Course)` with no edges, using a `prerequisites` property that holds a comma-separated list",
+   "Nodes: `(Student)`; edge: `(Student)-[:PREREQUISITE_OF]->(Student)`"
+  ]
+ },
+ "c48-3": {
+  "r": [
+   "Relational needs one self-JOIN per hop, so unknown depth needs a recursive query; the graph query handles any depth"
+  ],
+  "w": [
+   "Both need exactly the same single JOIN, so the number of hops in the chain makes no difference",
+   "Relational needs one JOIN in total, regardless of depth, while the graph version needs one JOIN for every single hop",
+   "The graph version needs one JOIN per hop of the chain, while the relational version needs no JOINs at all",
+   "Both need a fixed number of JOINs that is equal to the number of courses stored in the table"
+  ]
+ },
+ "c48-5": {
+  "p": "Which relational design stores the course-prerequisite data?",
+  "r": [
+   "A `courses` table (id, title) and a `prerequisites` table (course_id, prereq_id), both columns being foreign keys to `courses`"
+  ],
+  "w": [
+   "A single `courses` table with a `prereqs` column holding a comma-separated list",
+   "A `courses` table and a `prerequisites` table with only one column, `title`",
+   "A `prerequisites` table whose primary key is `course_id` alone, so each course can have at most one prerequisite and no more than that"
+  ]
+ },
+ "c49-1": {
+  "r": [
+   "Browser → web server → database, and back out as HTML or JSON; only the web server talks to the database"
+  ],
+  "w": [
+   "Browser → database → web server; the browser sends its own queries straight to the database",
+   "Browser → database and web server in parallel, with both of them answering the same request",
+   "Web server → browser → database; the browser forwards the server's queries on to the database for it to run"
+  ]
+ },
+ "c49-2": {
+  "r": [
+   "Many web servers can share one database, and each can be restarted, moved, or scaled on its own"
+  ],
+  "w": [
+   "A database inside the web server would be slower to start but otherwise identical in every other respect",
+   "Databases can't run on the same machine as a web server",
+   "Web servers can't keep any data in memory",
+   "Browsers can only talk to separate processes"
+  ]
+ },
+ "c49-3": {
+  "r": [
+   "An open session between application code and the database"
+  ],
+  "w": [
+   "A foreign key between two tables",
+   "A saved query that application code runs on a schedule",
+   "A copy of the database held in the application's memory for as long as it runs",
+   "A permission that lets the browser run SQL"
+  ]
+ },
+ "c49-4": {
+  "r": [
+   "Opening a connection is slow, so apps keep open connections and lend one to each request"
+  ],
+  "w": [
+   "The database only allows one connection at a time, so apps must queue their requests behind each other",
+   "Connections are free to open, but pooling makes every single query return more rows",
+   "Pooling encrypts the traffic between the browser and the web server for each request",
+   "Each request needs its own separate copy of the whole database to read from"
+  ]
+ },
+ "c49-5": {
+  "r": [
+   "It would need the database password and could run any query, ignoring every rule the app enforces"
+  ],
+  "w": [
+   "Browsers can't open network connections of any kind to other machines on the network",
+   "Databases can only be queried through local file paths and never through a network connection of any kind at all",
+   "It would make every query return finished HTML pages instead of ordinary rows of data",
+   "It would break the foreign keys between the tables that the browser reads from directly"
+  ]
+ },
+ "c50-4": {
+  "r": [
+   "User input pasted into a query string is read as SQL, so an attacker can run queries the app never intended"
+  ],
+  "w": [
+   "Inserting so many rows at once that the table finally runs out of space on the server's disk",
+   "A query that joins a table to itself, which can return many more rows than the app expects",
+   "Reusing a stale connection from the pool after the database has already closed it from its own side of the link"
+  ]
+ },
+ "c50-5": {
+  "r": [
+   "User input becomes part of the SQL text (SQL injection); pass it as a parameter (`WHERE deck_id = ?`, `[params.id]`) so it is always data"
+  ],
+  "w": [
+   "The query will be too slow because it is built up from text; the fix is to add an index on the `deck_id` column",
+   "The `+` operator isn't allowed when building SQL text inside an application; the fix is to join the pieces together with `CONCAT` instead of using a plus sign",
+   "`params.id` has no quotes around it; the fix is to wrap it in single quotes so the database reads it as a string",
+   "The query returns the wrong number of columns; the fix is to list every column explicitly in the `SELECT`"
+  ]
+ },
+ "c51-1": {
+  "p": "Which checklist correctly maps a feature's needs to a database type?",
+  "r": [
+   "Structured + integrity + complex queries → relational; flexible self-contained items → document; one-key fast lookup → key-value; relationships as the point → graph"
+  ],
+  "w": [
+   "Relational for fast single-key lookups; key-value for complex integrity rules and joins; document for deep relationships; graph for flexible, self-contained items that rarely change",
+   "Always choose by popularity: whichever database has the most users and the most tutorials online is the right one for every feature",
+   "Use a single database type for every feature in the app, to keep operations simple, and only switch types if the whole app starts failing"
+  ]
+ },
+ "c51-2": {
+  "r": [
+   "Key-value (or document): a cart is looked up by one key and handled as a single unit"
+  ],
+  "w": [
+   "Graph: a cart is mostly relationships between the items that a shopper has added to it",
+   "Relational only: carts need complex multi-table reports that only joins can produce",
+   "Document only: carts need foreign keys enforced between the items stored inside them"
+  ]
+ },
+ "c51-3": {
+  "r": [
+   "Document (varying attributes, read as one unit), or relational if it needs strong integrity and complex queries"
+  ],
+  "w": [
+   "Key-value only, since a product catalog needs nothing more than fast lookups of a single product by its key and no queries",
+   "Graph, because the products in a catalog are mainly defined by relationships to one another",
+   "Key-value, since each product needs complex multi-table queries to be answered quickly"
+  ]
+ },
+ "c51-4": {
+  "r": [
+   "Graph: the follow relationships are the data, and \"friends of friends\" needs multi-hop traversal"
+  ],
+  "w": [
+   "Key-value: each user's follower list is stored under one key, so multi-hop traversal is never actually necessary",
+   "Document: embed each user's followers as a list",
+   "Relational: a `follows` table is always faster than any other choice"
+  ]
+ },
+ "c51-5": {
+  "r": [
+   "Relational: structured data that needs integrity (keys, constraints) and complex queries"
+  ],
+  "w": [
+   "Key-value: each card is a single value that is looked up by its key and nothing else is ever needed",
+   "Graph: decks, cards, tags and reviews are mostly connections between one another",
+   "Document: every card needs a different shape, with its own fields and nesting"
+  ]
+ },
+ "c51-6": {
+  "r": [
+   "Key-value: a single fast lookup, with no relationships needed"
+  ],
+  "w": [
+   "Relational: it needs foreign keys to the `reviews` table and complex joins",
+   "Graph: it needs multi-hop traversal",
+   "Document: it needs deeply nested fields"
+  ]
+ },
+ "c51-7": {
+  "r": [
+   "Graph: it needs deep, variable-length relationship traversal"
+  ],
+  "w": [
+   "Key-value: one lookup by key returns the whole chain",
+   "Document: embed every prerequisite inside each card",
+   "Relational: a fixed number of JOINs is enough to find a chain of any length"
+  ]
+ },
+ "c52-1": {
+  "p": "A recipe app has: users and saved recipes; recipe pages with nested steps; a session / \"popular today\" cache; and \"recipes that use similar ingredients\". Which assignment of database types is most sensible?",
+  "r": [
+   "Relational for users and saved recipes; document for recipe pages; key-value for the session / cache; graph for similar-ingredient links"
+  ],
+  "w": [
+   "Graph for users and saved recipes; relational for the session cache; document for similar-ingredient links; key-value for the recipe pages themselves",
+   "Key-value for everything, since all of it can be looked up by an id",
+   "Relational for everything, since tables can model any data",
+   "Document for users, key-value for recipe pages, graph for the cache, relational for similar-ingredient links"
+  ]
+ },
+ "c52-2": {
+  "r": [
+   "Browser request → web server takes a pooled connection and runs a parameterized query → database returns rows → server builds HTML/JSON → browser displays it"
+  ],
+  "w": [
+   "The browser opens its own connection to the database and runs the query itself, while the web server only serves static files and images, and writes each request to its log",
+   "The database sends the rows straight to the browser, while the web server only logs that a request happened and returns nothing at all",
+   "The server builds the SQL by pasting in the user's input, and then hands the finished query to the browser to run against the database"
+  ]
+ },
+ "c52-3": {
+  "p": "What should a good short pitch for an app's data architecture contain?",
+  "r": [
+   "It names each data store, the data and access pattern it serves, and why it fits (e.g. relational for the integrity-critical core, key-value for hot lookups)"
+  ],
+  "w": [
+   "It picks the single most popular database and uses it for everything, because that is the safest and simplest choice for any team, whatever data it holds, now and later",
+   "It lists every database product by name, with its version number, the licence it is under, and the date each was installed",
+   "It describes only the tables and columns of the main database, without saying why each store was chosen for its job"
+  ]
+ },
+ "c52-4": {
+  "p": "Which of these are realistic problems caused by choosing the wrong database type for a feature? (Select all that apply.)",
+  "r": [
+   "Storing a deep follower network in relational tables forces many JOINs and slow queries",
+   "Using a key-value store for data that needs complex queries and constraints forces the app to enforce them by hand"
+  ],
+  "w": [
+   "Choosing a document database makes SQL syntax errors impossible to fix",
+   "A graph database can't store text, so names must be stored elsewhere",
+   "Using a relational database makes the web server unable to restart"
+  ]
+ },
+ "c52-5": {
+  "p": "Which changes might an app's data architecture need when it grows from 100 users to 1,000,000? (Select all that apply.)",
+  "r": [
+   "Caching hot data in a key-value store",
+   "Connection pooling",
+   "Read replicas or sharding for the main database",
+   "Moving high-volume features to a store suited to their access pattern"
+  ],
+  "w": [
+   "Dropping all primary keys to speed up inserts",
+   "Storing every table in a single comma-separated text file",
+   "Letting every browser connect straight to the database",
+   "Removing indexes and constraints entirely"
+  ]
+ }
+}

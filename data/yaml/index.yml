@@ -1,0 +1,17 @@
+# Lists the question files exams.html loads for this class
+# (exams.html?class=cs330), and the tag groups shown in its advanced settings.
+title: CS330
+files:
+  - cards-01-12.yml
+  - cards-13-24.yml
+  - cards-25-36.yml
+  - cards-37-52.yml
+tag_groups:
+  - name: Question type
+    tags: [conceptual, syntax_pattern, writing_prompt, tracing, debugging, design]
+  - name: Concepts
+    tags: [table, key, relationship, er_modeling, normalization, anomaly, constraint, app_architecture, security]
+  - name: SQL operations
+    tags: [create_table, select, where, order_by, limit, join, inner_join, left_join, group_by, aggregate, having, subquery, set_operation, insert, update, delete]
+  - name: Database type
+    tags: [relational, document_db, key_value, graph_db]

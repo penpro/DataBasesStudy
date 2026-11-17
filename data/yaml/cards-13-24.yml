@@ -1,0 +1,863 @@
+# CS330 question bank -- cards 13 through 24 of ../main.yml
+#
+# Schema (one entry per question):
+#   id:          cNN-K   (NN = card number in main.yml, K = 1.. within that card)
+#   card:        card number (1-based position in main.yml)
+#   source_card: the card's title in main.yml
+#   origin:      direct   = taken straight from a question printed on the card front
+#                inferred = derived from the card front/back
+#   tags:        what the question is about (one or more); the full vocabulary and its
+#                groups are listed in index.yml
+#   prompt:      markdown shown to the student
+#   answer:      markdown revealed afterward
+
+questions:
+  # ---------------------------------------------------------------- card 13
+  - id: c13-1
+    card: 13
+    source_card: "What is a JOIN?"
+    origin: direct
+    tags: [conceptual, join]
+    prompt: |
+      What is a **JOIN**?
+    answer: |
+      It combines rows from two tables based on a matching column (e.g. `cards.deck_id = decks.id`).
+
+  - id: c13-2
+    card: 13
+    source_card: "What is a JOIN?"
+    origin: direct
+    tags: [conceptual, join, relationship]
+    prompt: |
+      Why can't you get a card's deck name by querying `cards` alone?
+    answer: |
+      `cards` only has `deck_id`, a number. You need to JOIN to `decks` to get the deck's name.
+
+  - id: c13-3
+    card: 13
+    source_card: "What is a JOIN?"
+    origin: direct
+    tags: [conceptual, inner_join, left_join]
+    prompt: |
+      What is the difference between an **INNER JOIN** and a **LEFT JOIN**?
+    answer: |
+      An INNER JOIN keeps only rows that match in both tables. A LEFT JOIN keeps all rows from the left table, matched or not.
+
+  - id: c13-4
+    card: 13
+    source_card: "What is a JOIN?"
+    origin: direct
+    tags: [conceptual, left_join]
+    prompt: |
+      What happens to a LEFT JOIN row when there is no match on the right side?
+    answer: |
+      The row is kept, and the right-side columns come back as `NULL`.
+
+  - id: c13-5
+    card: 13
+    source_card: "What is a JOIN?"
+    origin: inferred
+    tags: [tracing, inner_join, left_join]
+    prompt: |
+      Given these tables, how many rows does `decks LEFT JOIN cards ON cards.deck_id = decks.id` return, and how many does the INNER JOIN version return?
+
+      `decks`: (1, 'SQL'), (2, 'Joins'), (3, 'Graphs')
+      `cards`: (10, deck_id 1), (11, deck_id 1), (12, deck_id 2)
+    answer: |
+      The LEFT JOIN returns 4 rows: two for deck 1, one for deck 2, and one for deck 3 with `NULL` card columns. The INNER JOIN returns 3 rows (deck 3 has no cards, so it is dropped).
+
+  # ---------------------------------------------------------------- card 14
+  - id: c14-1
+    card: 14
+    source_card: "Syntax for INNER JOIN?"
+    origin: direct
+    tags: [syntax_pattern, join, inner_join]
+    prompt: |
+      Write the syntax pattern for an `INNER JOIN` between two tables.
+    answer: |
+      ```sql
+      SELECT a.col, b.col
+      FROM a
+      INNER JOIN b ON a.fk = b.id;
+      ```
+
+  - id: c14-2
+    card: 14
+    source_card: "Syntax for INNER JOIN?"
+    origin: direct
+    tags: [syntax_pattern, join, inner_join, where]
+    prompt: |
+      Write the syntax pattern for an `INNER JOIN` with a `WHERE` clause.
+    answer: |
+      ```sql
+      SELECT a.col, b.col
+      FROM a
+      INNER JOIN b ON a.fk = b.id
+      WHERE b.col = 'x';
+      ```
+
+  - id: c14-3
+    card: 14
+    source_card: "Syntax for INNER JOIN?"
+    origin: direct
+    tags: [writing_prompt, join, inner_join]
+    prompt: |
+      Write a query that lists every card's question alongside the name of the deck it belongs to.
+    answer: |
+      ```sql
+      SELECT cards.question, decks.name
+      FROM cards
+      INNER JOIN decks ON cards.deck_id = decks.id;
+      ```
+
+  - id: c14-4
+    card: 14
+    source_card: "Syntax for INNER JOIN?"
+    origin: inferred
+    tags: [writing_prompt, join, inner_join, where]
+    prompt: |
+      Write a query that lists the questions of the cards that belong to the deck named 'SQL'.
+    answer: |
+      ```sql
+      SELECT cards.question
+      FROM cards
+      INNER JOIN decks ON cards.deck_id = decks.id
+      WHERE decks.name = 'SQL';
+      ```
+
+  - id: c14-5
+    card: 14
+    source_card: "Syntax for INNER JOIN?"
+    origin: inferred
+    tags: [debugging, join, inner_join]
+    prompt: |
+      What is wrong with this query?
+      ```sql
+      SELECT cards.question, decks.name
+      FROM cards
+      INNER JOIN decks;
+      ```
+    answer: |
+      The `ON` clause is missing, so the database can't tell which rows match. Add `ON cards.deck_id = decks.id`.
+
+  # ---------------------------------------------------------------- card 15
+  - id: c15-1
+    card: 15
+    source_card: "Syntax for LEFT JOIN?"
+    origin: direct
+    tags: [syntax_pattern, join, left_join]
+    prompt: |
+      Write the syntax pattern for a `LEFT JOIN`.
+    answer: |
+      ```sql
+      SELECT a.col, b.col
+      FROM a
+      LEFT JOIN b ON b.fk = a.id;
+      ```
+
+  - id: c15-2
+    card: 15
+    source_card: "Syntax for LEFT JOIN?"
+    origin: direct
+    tags: [syntax_pattern, join, left_join, where]
+    prompt: |
+      Write the syntax pattern for finding rows with no match (`IS NULL`).
+    answer: |
+      ```sql
+      SELECT a.col
+      FROM a
+      LEFT JOIN b ON b.fk = a.id
+      WHERE b.id IS NULL;
+      ```
+
+  - id: c15-3
+    card: 15
+    source_card: "Syntax for LEFT JOIN?"
+    origin: direct
+    tags: [writing_prompt, join, left_join]
+    prompt: |
+      Write a query that lists every deck, including empty decks, alongside any card questions in it.
+    answer: |
+      ```sql
+      SELECT decks.name, cards.question
+      FROM decks
+      LEFT JOIN cards ON cards.deck_id = decks.id;
+      ```
+
+  - id: c15-4
+    card: 15
+    source_card: "Syntax for LEFT JOIN?"
+    origin: inferred
+    tags: [writing_prompt, join, left_join, where]
+    prompt: |
+      Write a query that lists the names of decks that have no cards.
+    answer: |
+      ```sql
+      SELECT decks.name
+      FROM decks
+      LEFT JOIN cards ON cards.deck_id = decks.id
+      WHERE cards.id IS NULL;
+      ```
+
+  - id: c15-5
+    card: 15
+    source_card: "Syntax for LEFT JOIN?"
+    origin: inferred
+    tags: [conceptual, join, left_join, where]
+    prompt: |
+      Why do we test `cards.id IS NULL` rather than `cards.id = NULL` when looking for unmatched rows?
+    answer: |
+      `NULL` means "unknown", and comparing anything to it with `=` is never true. `IS NULL` is the correct test.
+
+  # ---------------------------------------------------------------- card 16
+  - id: c16-1
+    card: 16
+    source_card: "Fluency with JOINs?"
+    origin: inferred
+    tags: [writing_prompt, join, inner_join]
+    prompt: |
+      Given `playlists(id, name)` and `songs(id, title, playlist_id)`, write an INNER JOIN that lists each song title with its playlist name.
+    answer: |
+      ```sql
+      SELECT songs.title, playlists.name
+      FROM songs
+      INNER JOIN playlists ON songs.playlist_id = playlists.id;
+      ```
+
+  - id: c16-2
+    card: 16
+    source_card: "Fluency with JOINs?"
+    origin: inferred
+    tags: [writing_prompt, join, left_join]
+    prompt: |
+      Given `playlists(id, name)` and `songs(id, title, playlist_id)`, write a LEFT JOIN that lists every playlist, including playlists with no songs.
+    answer: |
+      ```sql
+      SELECT playlists.name, songs.title
+      FROM playlists
+      LEFT JOIN songs ON songs.playlist_id = playlists.id;
+      ```
+
+  - id: c16-3
+    card: 16
+    source_card: "Fluency with JOINs?"
+    origin: inferred
+    tags: [writing_prompt, join, inner_join, relationship]
+    prompt: |
+      Given `students(id, name)`, `enrollments(student_id, class_id)` and `classes(id, title)`, write a query listing each student's name with the title of each class they take.
+    answer: |
+      ```sql
+      SELECT students.name, classes.title
+      FROM students
+      INNER JOIN enrollments ON enrollments.student_id = students.id
+      INNER JOIN classes ON classes.id = enrollments.class_id;
+      ```
+
+  - id: c16-4
+    card: 16
+    source_card: "Fluency with JOINs?"
+    origin: inferred
+    tags: [writing_prompt, join, inner_join]
+    prompt: |
+      Rewrite this query using table aliases:
+      ```sql
+      SELECT cards.question, decks.name
+      FROM cards
+      INNER JOIN decks ON cards.deck_id = decks.id;
+      ```
+    answer: |
+      ```sql
+      SELECT c.question, d.name
+      FROM cards c
+      INNER JOIN decks d ON c.deck_id = d.id;
+      ```
+
+  - id: c16-5
+    card: 16
+    source_card: "Fluency with JOINs?"
+    origin: inferred
+    tags: [tracing, join]
+    prompt: |
+      If you remove the `ON` condition from a join of a 3-row table and a 4-row table (using a form that allows it, such as `CROSS JOIN`), how many rows come back?
+    answer: |
+      12 rows (3 x 4): every row of one table is paired with every row of the other.
+
+  - id: c16-6
+    card: 16
+    source_card: "Fluency with JOINs?"
+    origin: inferred
+    tags: [conceptual, join]
+    prompt: |
+      Which of these questions requires a JOIN to answer? (a) How many cards are there? (b) What is the name of the deck each card is in?
+    answer: |
+      (b). The deck name is in the `decks` table and only `deck_id` is in `cards`. Question (a) needs just `cards`.
+
+  # ---------------------------------------------------------------- card 17
+  - id: c17-1
+    card: 17
+    source_card: "What is normalization?"
+    origin: direct
+    tags: [conceptual, normalization, anomaly]
+    prompt: |
+      What is **redundancy** in a database? Why is it a problem?
+    answer: |
+      Redundancy is the same fact stored in more than one row (e.g. a tag's description copied onto every card that uses it). It wastes space and lets the copies disagree with each other.
+
+  - id: c17-2
+    card: 17
+    source_card: "What is normalization?"
+    origin: direct
+    tags: [conceptual, anomaly]
+    prompt: |
+      What is an **update anomaly**?
+    answer: |
+      Fixing a typo in a duplicated fact requires updating many rows. Miss one, and the data disagrees with itself.
+
+  - id: c17-3
+    card: 17
+    source_card: "What is normalization?"
+    origin: direct
+    tags: [conceptual, anomaly]
+    prompt: |
+      What is a **delete anomaly**?
+    answer: |
+      Deleting the only row that references some information deletes that information entirely, even if it is unrelated to what you meant to delete.
+
+  - id: c17-4
+    card: 17
+    source_card: "What is normalization?"
+    origin: direct
+    tags: [conceptual, normalization]
+    prompt: |
+      What is **normalization**?
+    answer: |
+      Organizing tables to minimize redundancy and prevent update and delete anomalies.
+
+  - id: c17-5
+    card: 17
+    source_card: "What is normalization?"
+    origin: direct
+    tags: [conceptual, normalization, join]
+    prompt: |
+      What is the trade-off of normalizing "too much"?
+    answer: |
+      Over-normalizing means more JOINs are needed to answer simple questions, a real performance and complexity cost.
+
+  - id: c17-6
+    card: 17
+    source_card: "What is normalization?"
+    origin: inferred
+    tags: [debugging, normalization, anomaly]
+    prompt: |
+      In this table, which columns are redundant, and which fact is repeated?
+
+      | order_id | item | customer_name | customer_address |
+      |---|---|---|---|
+      | 1 | Pen | Ada | 12 Oak St |
+      | 2 | Ink | Ada | 12 Oak St |
+      | 3 | Pad | Grace | 9 Elm Ave |
+    answer: |
+      `customer_name` and `customer_address` are redundant: Ada's address is stored once per order. The customer facts belong in a separate `customers` table.
+
+  # ---------------------------------------------------------------- card 18
+  - id: c18-1
+    card: 18
+    source_card: "Syntax for spotting redundancy?"
+    origin: direct
+    tags: [syntax_pattern, create_table, normalization]
+    prompt: |
+      Write a `cards` table that stores a tag name and tag description directly on every row (no `tags` table): an "unnormalized" version.
+    answer: |
+      ```sql
+      CREATE TABLE cards_flat (
+        id INTEGER PRIMARY KEY,
+        question TEXT,
+        tag_name TEXT,
+        tag_description TEXT
+      );
+      ```
+
+  - id: c18-2
+    card: 18
+    source_card: "Syntax for spotting redundancy?"
+    origin: direct
+    tags: [conceptual, normalization, anomaly]
+    prompt: |
+      In `cards_flat (id, question, tag_name, tag_description)`, identify which columns are redundant.
+    answer: |
+      `tag_name` and `tag_description` are repeated on every card that has that tag. The description depends on the tag, not on the card.
+
+  - id: c18-3
+    card: 18
+    source_card: "Syntax for spotting redundancy?"
+    origin: direct
+    tags: [writing_prompt, insert, anomaly]
+    prompt: |
+      Write two `INSERT` statements for `cards_flat (id, question, tag_name, tag_description)` that set up an update anomaly: both cards carry the same `tag_name`, but its description is typed two different ways.
+    answer: |
+      ```sql
+      INSERT INTO cards_flat VALUES
+        (1, 'What is a for-loop?', 'loops',
+            'Repeats code a fixed number of times'),
+        (2, 'What is a while-loop?', 'loops',
+            'Repeats code while a condition holds');
+      ```
+      The same tag now has two different descriptions.
+
+  - id: c18-4
+    card: 18
+    source_card: "Syntax for spotting redundancy?"
+    origin: inferred
+    tags: [conceptual, anomaly]
+    prompt: |
+      Two rows are inserted into `cards_flat (id, question, tag_name, tag_description)`. Both have the `tag_name` 'loops', but one has the description 'Repeats code a fixed number of times' and the other 'Repeats code while a condition holds'. What is the "truth" about the description of the `loops` tag?
+    answer: |
+      There is no single answer: the table now disagrees with itself. That is the problem an update anomaly causes.
+
+  - id: c18-5
+    card: 18
+    source_card: "Syntax for spotting redundancy?"
+    origin: inferred
+    tags: [tracing, anomaly, update]
+    prompt: |
+      1,000 rows in `cards_flat` carry the tag `loops` with the same description. How many rows must be updated to change that description? How many once it is in a `tags` table?
+    answer: |
+      1,000 rows in `cards_flat`. In a normalized `tags` table it is stored once, so one row.
+
+  # ---------------------------------------------------------------- card 19
+  - id: c19-1
+    card: 19
+    source_card: "Syntax for splitting a table?"
+    origin: direct
+    tags: [syntax_pattern, create_table, normalization, relationship]
+    prompt: |
+      Write the syntax pattern for creating a normalized replacement of a flat table (two tables plus a foreign key).
+    answer: |
+      ```sql
+      CREATE TABLE tags (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        description TEXT
+      );
+
+      ALTER TABLE cards ADD COLUMN tag_id INTEGER REFERENCES tags(id);
+      ```
+
+  - id: c19-2
+    card: 19
+    source_card: "Syntax for splitting a table?"
+    origin: direct
+    tags: [syntax_pattern, update, normalization]
+    prompt: |
+      Write the syntax pattern for migrating data with `UPDATE`.
+    answer: |
+      ```sql
+      UPDATE cards SET tag_id = 1 WHERE question LIKE '%loop%';
+      ```
+
+  - id: c19-3
+    card: 19
+    source_card: "Syntax for splitting a table?"
+    origin: direct
+    tags: [writing_prompt, create_table, insert, update, normalization]
+    prompt: |
+      Refactor `cards_flat` into `tags` (id, name, description) and a `cards` table that references one tag by id.
+    answer: |
+      ```sql
+      CREATE TABLE tags (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        description TEXT
+      );
+
+      ALTER TABLE cards ADD COLUMN tag_id INTEGER REFERENCES tags(id);
+
+      INSERT INTO tags (id, name, description)
+      VALUES (1, 'loops', 'Repeats code while a condition holds');
+
+      UPDATE cards SET tag_id = 1 WHERE question LIKE '%loop%';
+      ```
+
+  - id: c19-4
+    card: 19
+    source_card: "Syntax for splitting a table?"
+    origin: inferred
+    tags: [conceptual, normalization, update]
+    prompt: |
+      After `cards_flat` has been refactored into a `tags` table and a `cards` table that references it by `tag_id`, how do you correct the description of the `loops` tag?
+    answer: |
+      With one update of one row:
+      ```sql
+      UPDATE tags SET description = 'Repeats code' WHERE id = 1;
+      ```
+
+  - id: c19-5
+    card: 19
+    source_card: "Syntax for splitting a table?"
+    origin: inferred
+    tags: [conceptual, update, where]
+    prompt: |
+      What does `WHERE question LIKE '%loop%'` match in the migration `UPDATE`?
+    answer: |
+      Every card whose question contains the text "loop" anywhere in it (`%` matches any run of characters).
+
+  # ---------------------------------------------------------------- card 20
+  - id: c20-1
+    card: 20
+    source_card: "Fluency with anomalies?"
+    origin: inferred
+    tags: [debugging, normalization, anomaly]
+    prompt: |
+      An `orders` table has columns `(order_id, product, customer_name, customer_address)`. Which columns are redundant, and why?
+    answer: |
+      `customer_name` and `customer_address` repeat on every order that customer places, so the customer's facts are stored many times.
+
+  - id: c20-2
+    card: 20
+    source_card: "Fluency with anomalies?"
+    origin: inferred
+    tags: [writing_prompt, update, anomaly]
+    prompt: |
+      A flat `orders` table has the columns `(order_id, product, customer_name, customer_address)`. Show how an update anomaly could occur when the customer Ada moves to a new address.
+    answer: |
+      ```sql
+      UPDATE orders SET customer_address = '5 Pine Rd'
+      WHERE order_id = 1;
+      ```
+      Only order 1 was changed; Ada's other orders still list the old address, so the table now holds two addresses for one customer.
+
+  - id: c20-3
+    card: 20
+    source_card: "Fluency with anomalies?"
+    origin: inferred
+    tags: [writing_prompt, delete, anomaly]
+    prompt: |
+      A flat `orders` table has the columns `(order_id, product, customer_name, customer_address)`. Write a `DELETE` that would cause a delete anomaly.
+    answer: |
+      ```sql
+      DELETE FROM orders WHERE order_id = 3;
+      ```
+      If order 3 is the only order for a customer (say Grace), deleting it also deletes everything the table knew about Grace, including her address.
+
+  - id: c20-4
+    card: 20
+    source_card: "Fluency with anomalies?"
+    origin: inferred
+    tags: [tracing, anomaly]
+    prompt: |
+      A customer's address is repeated in 40 orders. How many times does that fact appear, and how many rows must change if the address changes?
+    answer: |
+      40 times; 40 rows.
+
+  - id: c20-5
+    card: 20
+    source_card: "Fluency with anomalies?"
+    origin: inferred
+    tags: [design, normalization, create_table]
+    prompt: |
+      Normalize the flat `orders` table `(order_id, product, customer_name, customer_address)` into separate tables.
+    answer: |
+      ```sql
+      CREATE TABLE customers (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        address TEXT
+      );
+
+      CREATE TABLE orders (
+        order_id INTEGER PRIMARY KEY,
+        product TEXT,
+        customer_id INTEGER REFERENCES customers(id)
+      );
+      ```
+
+  # ---------------------------------------------------------------- card 21
+  - id: c21-1
+    card: 21
+    source_card: "What are 1NF/2NF/3NF?"
+    origin: direct
+    tags: [conceptual, normalization]
+    prompt: |
+      What is **First Normal Form (1NF)**?
+    answer: |
+      Every column holds a single value: no comma-separated lists in one cell (e.g. no `tags = "loops, syntax"`).
+
+  - id: c21-2
+    card: 21
+    source_card: "What are 1NF/2NF/3NF?"
+    origin: direct
+    tags: [conceptual, normalization]
+    prompt: |
+      In 1NF, what does "atomic" mean?
+    answer: |
+      A value that can't be meaningfully divided further: one value per cell, not a list.
+
+  - id: c21-3
+    card: 21
+    source_card: "What are 1NF/2NF/3NF?"
+    origin: direct
+    tags: [conceptual, normalization, key]
+    prompt: |
+      What is **Second Normal Form (2NF)**?
+    answer: |
+      1NF, plus every non-key column depends on the *whole* primary key. This matters for multi-column keys.
+
+  - id: c21-4
+    card: 21
+    source_card: "What are 1NF/2NF/3NF?"
+    origin: direct
+    tags: [conceptual, normalization]
+    prompt: |
+      What is **Third Normal Form (3NF)**?
+    answer: |
+      2NF, plus no non-key column depends on another non-key column (e.g. don't store `tag_category` derived from `tag_name` directly on `cards`).
+
+  - id: c21-5
+    card: 21
+    source_card: "What are 1NF/2NF/3NF?"
+    origin: direct
+    tags: [debugging, normalization]
+    prompt: |
+      Give an example of data that violates 1NF.
+    answer: |
+      A `cards` table with a `tags` column containing `"loops, syntax"` in one cell: a card can have more than one tag.
+
+  - id: c21-6
+    card: 21
+    source_card: "What are 1NF/2NF/3NF?"
+    origin: inferred
+    tags: [debugging, normalization, key]
+    prompt: |
+      A table `order_items (order_id, product_id, product_name, quantity)` has the composite primary key `(order_id, product_id)`. Which normal form does it violate and why?
+    answer: |
+      2NF. `product_name` depends only on `product_id`, which is just part of the key. It should live in a `products` table.
+
+  - id: c21-7
+    card: 21
+    source_card: "What are 1NF/2NF/3NF?"
+    origin: inferred
+    tags: [debugging, normalization]
+    prompt: |
+      A `cards` table stores both `tag_name` and `tag_category`, where the category is determined by the tag name. Which normal form does it violate?
+    answer: |
+      3NF: `tag_category` depends on another non-key column (`tag_name`) rather than directly on the key.
+
+  # ---------------------------------------------------------------- card 22
+  - id: c22-1
+    card: 22
+    source_card: "Syntax for fixing 1NF violations?"
+    origin: direct
+    tags: [syntax_pattern, create_table, relationship, normalization]
+    prompt: |
+      Write the syntax pattern for a junction table that replaces a comma-separated column.
+    answer: |
+      ```sql
+      CREATE TABLE card_tags (
+        card_id INTEGER REFERENCES cards(id),
+        tag_id INTEGER REFERENCES tags(id),
+        PRIMARY KEY (card_id, tag_id)
+      );
+      ```
+
+  - id: c22-2
+    card: 22
+    source_card: "Syntax for fixing 1NF violations?"
+    origin: direct
+    tags: [syntax_pattern, insert, relationship]
+    prompt: |
+      Write the syntax pattern for inserting into a junction table.
+    answer: |
+      ```sql
+      INSERT INTO card_tags (card_id, tag_id) VALUES (1, 1), (1, 2);
+      ```
+
+  - id: c22-3
+    card: 22
+    source_card: "Syntax for fixing 1NF violations?"
+    origin: direct
+    tags: [writing_prompt, create_table, insert, normalization, relationship]
+    prompt: |
+      A `cards` table has a `tags` column like `'loops, syntax'`. Refactor it into `tags` and `card_tags` (junction) tables so one card can have many tags.
+    answer: |
+      ```sql
+      CREATE TABLE tags (
+        id INTEGER PRIMARY KEY,
+        name TEXT UNIQUE
+      );
+
+      CREATE TABLE card_tags (
+        card_id INTEGER REFERENCES cards(id),
+        tag_id INTEGER REFERENCES tags(id),
+        PRIMARY KEY (card_id, tag_id)
+      );
+
+      INSERT INTO tags (id, name) VALUES (1, 'loops'), (2, 'syntax');
+      INSERT INTO card_tags (card_id, tag_id) VALUES (1, 1), (1, 2);
+      ```
+
+  - id: c22-4
+    card: 22
+    source_card: "Syntax for fixing 1NF violations?"
+    origin: inferred
+    tags: [conceptual, key, constraint]
+    prompt: |
+      Why is the primary key of `card_tags` the pair `(card_id, tag_id)`?
+    answer: |
+      Each card/tag pair should appear at most once, and the pair itself uniquely identifies the row: it is a composite key.
+
+  - id: c22-5
+    card: 22
+    source_card: "Syntax for fixing 1NF violations?"
+    origin: inferred
+    tags: [conceptual, normalization]
+    prompt: |
+      Why is a comma-separated `tags` column hard to work with, even before thinking about normal forms?
+    answer: |
+      You can't easily find all cards with a given tag, count tags, or enforce that tags exist: the database sees one text value, not separate values.
+
+  # ---------------------------------------------------------------- card 23
+  - id: c23-1
+    card: 23
+    source_card: "Syntax for many-to-many queries?"
+    origin: direct
+    tags: [syntax_pattern, join, inner_join, relationship]
+    prompt: |
+      Write the syntax pattern for joining through a junction table (two JOINs).
+    answer: |
+      ```sql
+      SELECT a.col, b.col
+      FROM a
+      INNER JOIN a_b ON a_b.a_id = a.id
+      INNER JOIN b ON b.id = a_b.b_id;
+      ```
+
+  - id: c23-2
+    card: 23
+    source_card: "Syntax for many-to-many queries?"
+    origin: direct
+    tags: [syntax_pattern, join, inner_join, where]
+    prompt: |
+      Write the syntax pattern for listing all tags for one card.
+    answer: |
+      ```sql
+      SELECT tags.name
+      FROM card_tags
+      INNER JOIN tags ON tags.id = card_tags.tag_id
+      WHERE card_tags.card_id = 1;
+      ```
+
+  - id: c23-3
+    card: 23
+    source_card: "Syntax for many-to-many queries?"
+    origin: direct
+    tags: [writing_prompt, join, inner_join, relationship]
+    prompt: |
+      Write a query that lists every card's question alongside each of its tag names.
+    answer: |
+      ```sql
+      SELECT cards.question, tags.name
+      FROM cards
+      INNER JOIN card_tags ON card_tags.card_id = cards.id
+      INNER JOIN tags ON tags.id = card_tags.tag_id;
+      ```
+
+  - id: c23-4
+    card: 23
+    source_card: "Syntax for many-to-many queries?"
+    origin: inferred
+    tags: [tracing, join, inner_join]
+    prompt: |
+      Given the rows below, how many rows does this query return, and for which cards?
+
+      ```sql
+      SELECT cards.question, tags.name
+      FROM cards
+      INNER JOIN card_tags ON card_tags.card_id = cards.id
+      INNER JOIN tags ON tags.id = card_tags.tag_id;
+      ```
+
+      `cards`: (1, 'A'), (2, 'B'), (3, 'C')
+      `tags`: (1, 'loops'), (2, 'syntax')
+      `card_tags`: (1, 1), (1, 2), (2, 2)
+    answer: |
+      3 rows: card A with `loops`, card A with `syntax`, and card B with `syntax`. Card C has no `card_tags` rows, so the inner join drops it.
+
+  - id: c23-5
+    card: 23
+    source_card: "Syntax for many-to-many queries?"
+    origin: inferred
+    tags: [writing_prompt, join, inner_join, where]
+    prompt: |
+      Write a query that lists the questions of all cards tagged 'loops'.
+    answer: |
+      ```sql
+      SELECT cards.question
+      FROM cards
+      INNER JOIN card_tags ON card_tags.card_id = cards.id
+      INNER JOIN tags ON tags.id = card_tags.tag_id
+      WHERE tags.name = 'loops';
+      ```
+
+  # ---------------------------------------------------------------- card 24
+  - id: c24-1
+    card: 24
+    source_card: "Fluency with normal forms?"
+    origin: inferred
+    tags: [design, create_table, relationship, er_modeling]
+    prompt: |
+      Students take many classes and classes have many students. Design the tables, including the junction table.
+    answer: |
+      ```sql
+      CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT);
+      CREATE TABLE classes  (id INTEGER PRIMARY KEY, title TEXT);
+      CREATE TABLE enrollments (
+        student_id INTEGER REFERENCES students(id),
+        class_id INTEGER REFERENCES classes(id),
+        PRIMARY KEY (student_id, class_id)
+      );
+      ```
+
+  - id: c24-2
+    card: 24
+    source_card: "Fluency with normal forms?"
+    origin: inferred
+    tags: [writing_prompt, join, inner_join, relationship]
+    prompt: |
+      Write a query joining through `enrollments` that lists each student's name with the titles of their classes.
+    answer: |
+      ```sql
+      SELECT students.name, classes.title
+      FROM students
+      INNER JOIN enrollments ON enrollments.student_id = students.id
+      INNER JOIN classes ON classes.id = enrollments.class_id;
+      ```
+
+  - id: c24-3
+    card: 24
+    source_card: "Fluency with normal forms?"
+    origin: inferred
+    tags: [tracing, relationship]
+    prompt: |
+      A student takes 3 classes. How many rows in `enrollments` represent that student?
+    answer: |
+      3: one junction row per student/class pair.
+
+  - id: c24-4
+    card: 24
+    source_card: "Fluency with normal forms?"
+    origin: inferred
+    tags: [conceptual, normalization]
+    prompt: |
+      Check this against 1NF, 2NF, and 3NF in order: `students(id, name)` is split from `enrollments(student_id, class_id)`. Why does each normal form hold?
+    answer: |
+      1NF: every cell holds a single value (one class per enrollment row). 2NF: the table has no non-key columns, so nothing depends on part of the key. 3NF: no non-key column depends on another non-key column.
+
+  - id: c24-5
+    card: 24
+    source_card: "Fluency with normal forms?"
+    origin: inferred
+    tags: [conceptual, normalization]
+    prompt: |
+      In plain language, what does 3NF say about a column that depends on another non-key column?
+    answer: |
+      It shouldn't be there: move that fact (and the column it depends on) into its own table, so each non-key column depends only on the key.

@@ -1,0 +1,1079 @@
+# CS330 question bank -- cards 37 through 52 of ../main.yml
+#
+# Schema (one entry per question):
+#   id:          cNN-K   (NN = card number in main.yml, K = 1.. within that card)
+#   card:        card number (1-based position in main.yml)
+#   source_card: the card's title in main.yml
+#   origin:      direct   = taken straight from a question printed on the card front
+#                inferred = derived from the card front/back
+#   tags:        what the question is about (one or more); the full vocabulary and its
+#                groups are listed in index.yml
+#   prompt:      markdown shown to the student
+#   answer:      markdown revealed afterward
+
+questions:
+  # ---------------------------------------------------------------- card 37
+  - id: c37-1
+    card: 37
+    source_card: "What are subqueries?"
+    origin: direct
+    tags: [conceptual, subquery]
+    prompt: |
+      What is a **subquery**?
+    answer: |
+      A query nested inside another query.
+
+  - id: c37-2
+    card: 37
+    source_card: "What are subqueries?"
+    origin: direct
+    tags: [conceptual, subquery]
+    prompt: |
+      Where can a subquery appear?
+    answer: |
+      Often in `WHERE`, `FROM`, or `SELECT`.
+
+  - id: c37-3
+    card: 37
+    source_card: "What are subqueries?"
+    origin: direct
+    tags: [conceptual, subquery]
+    prompt: |
+      What is a **correlated subquery**? How is it different from a regular subquery?
+    answer: |
+      A correlated subquery references a column from the outer query, so it re-runs once per outer row. A regular subquery doesn't depend on the outer query and runs once.
+
+  - id: c37-4
+    card: 37
+    source_card: "What are subqueries?"
+    origin: direct
+    tags: [conceptual, set_operation]
+    prompt: |
+      What does **UNION** do?
+    answer: |
+      It combines the results of two queries, removing duplicates.
+
+  - id: c37-5
+    card: 37
+    source_card: "What are subqueries?"
+    origin: direct
+    tags: [conceptual, set_operation]
+    prompt: |
+      What does **INTERSECT** do?
+    answer: |
+      It returns only rows that appear in both queries' results.
+
+  - id: c37-6
+    card: 37
+    source_card: "What are subqueries?"
+    origin: direct
+    tags: [conceptual, set_operation]
+    prompt: |
+      What does **EXCEPT** do?
+    answer: |
+      It returns rows in the first query's results but not the second's.
+
+  - id: c37-7
+    card: 37
+    source_card: "What are subqueries?"
+    origin: direct
+    tags: [conceptual, subquery, join]
+    prompt: |
+      When would you reach for a subquery instead of a JOIN?
+    answer: |
+      When the question is naturally "rows where some condition about *other* rows holds", e.g. "cards never reviewed".
+
+  # ---------------------------------------------------------------- card 38
+  - id: c38-1
+    card: 38
+    source_card: "Syntax for subqueries?"
+    origin: direct
+    tags: [syntax_pattern, subquery, where]
+    prompt: |
+      Write the syntax pattern for a subquery inside a `WHERE ... IN`.
+    answer: |
+      ```sql
+      SELECT question FROM cards
+      WHERE id IN (
+        SELECT card_id FROM reviews
+      );
+      ```
+
+  - id: c38-2
+    card: 38
+    source_card: "Syntax for subqueries?"
+    origin: direct
+    tags: [syntax_pattern, subquery, where]
+    prompt: |
+      Write the syntax pattern for a subquery inside a `WHERE ... NOT IN`.
+    answer: |
+      ```sql
+      SELECT question FROM cards
+      WHERE id NOT IN (
+        SELECT card_id FROM reviews
+      );
+      ```
+
+  - id: c38-3
+    card: 38
+    source_card: "Syntax for subqueries?"
+    origin: direct
+    tags: [writing_prompt, subquery, where]
+    prompt: |
+      Write a query that finds every card that has never been reviewed.
+    answer: |
+      ```sql
+      SELECT question FROM cards
+      WHERE id NOT IN (
+        SELECT card_id FROM reviews
+      );
+      ```
+
+  - id: c38-4
+    card: 38
+    source_card: "Syntax for subqueries?"
+    origin: inferred
+    tags: [tracing, subquery]
+    prompt: |
+      `cards` has ids 1, 2, 3, 4 and `reviews.card_id` contains 1, 1, 3. Which cards does the "never reviewed" query return?
+    answer: |
+      Cards 2 and 4.
+
+  - id: c38-5
+    card: 38
+    source_card: "Syntax for subqueries?"
+    origin: inferred
+    tags: [writing_prompt, subquery, left_join, join]
+    prompt: |
+      Rewrite the "never reviewed" query using a LEFT JOIN instead of a subquery.
+    answer: |
+      ```sql
+      SELECT cards.question
+      FROM cards
+      LEFT JOIN reviews ON reviews.card_id = cards.id
+      WHERE reviews.id IS NULL;
+      ```
+
+  # ---------------------------------------------------------------- card 39
+  - id: c39-1
+    card: 39
+    source_card: "Syntax for UNION/set operations?"
+    origin: direct
+    tags: [syntax_pattern, set_operation]
+    prompt: |
+      Write the syntax pattern for `UNION` between two SELECTs.
+    answer: |
+      ```sql
+      SELECT question FROM cards WHERE deck_id = 1
+      UNION
+      SELECT question FROM cards WHERE deck_id = 2;
+      ```
+
+  - id: c39-2
+    card: 39
+    source_card: "Syntax for UNION/set operations?"
+    origin: direct
+    tags: [syntax_pattern, set_operation]
+    prompt: |
+      Write the syntax pattern for `INTERSECT`.
+    answer: |
+      ```sql
+      SELECT question FROM cards WHERE deck_id = 1
+      INTERSECT
+      SELECT question FROM cards WHERE rating >= 4;
+      ```
+
+  - id: c39-3
+    card: 39
+    source_card: "Syntax for UNION/set operations?"
+    origin: direct
+    tags: [writing_prompt, set_operation, subquery, group_by, having]
+    prompt: |
+      Write a query returning a "needs attention" study queue: cards due for review on or before 2026-09-14 OR cards with an average rating below 3.
+    answer: |
+      ```sql
+      SELECT question FROM cards
+      WHERE id IN (
+        SELECT card_id FROM reviews
+        WHERE next_review_date <= '2026-09-14'
+      )
+      UNION
+      SELECT question FROM cards
+      WHERE id IN (
+        SELECT card_id FROM reviews
+        GROUP BY card_id
+        HAVING AVG(rating) < 3
+      );
+      ```
+
+  - id: c39-4
+    card: 39
+    source_card: "Syntax for UNION/set operations?"
+    origin: inferred
+    tags: [conceptual, set_operation]
+    prompt: |
+      What is the difference between `UNION` and `UNION ALL`?
+    answer: |
+      `UNION` removes duplicate rows from the combined result; `UNION ALL` keeps every row, duplicates included.
+
+  - id: c39-5
+    card: 39
+    source_card: "Syntax for UNION/set operations?"
+    origin: inferred
+    tags: [tracing, set_operation]
+    prompt: |
+      Query A returns {1, 2, 3} and query B returns {2, 3, 4}. What do `UNION`, `INTERSECT`, and `A EXCEPT B` return?
+    answer: |
+      `UNION` = {1, 2, 3, 4}; `INTERSECT` = {2, 3}; `A EXCEPT B` = {1}.
+
+  # ---------------------------------------------------------------- card 40
+  - id: c40-1
+    card: 40
+    source_card: "Fluency with subqueries/set ops?"
+    origin: inferred
+    tags: [writing_prompt, subquery, where]
+    prompt: |
+      Given `products(id, name)` and `order_items(product_id, order_id)`, write a query for products that were never ordered.
+    answer: |
+      ```sql
+      SELECT name FROM products
+      WHERE id NOT IN (SELECT product_id FROM order_items);
+      ```
+
+  - id: c40-2
+    card: 40
+    source_card: "Fluency with subqueries/set ops?"
+    origin: inferred
+    tags: [writing_prompt, set_operation]
+    prompt: |
+      Write a UNION that combines "customers in Seattle" and "customers with more than 5 orders" into one list of names. Use `customers(name, city, order_count)`.
+    answer: |
+      ```sql
+      SELECT name FROM customers WHERE city = 'Seattle'
+      UNION
+      SELECT name FROM customers WHERE order_count > 5;
+      ```
+
+  - id: c40-3
+    card: 40
+    source_card: "Fluency with subqueries/set ops?"
+    origin: inferred
+    tags: [writing_prompt, subquery, where]
+    prompt: |
+      Given `products(id, name)` and `order_items(product_id, order_id)`, write a `WHERE ... IN` subquery that finds products that *were* ordered, and say how the result relates to the products a `NOT IN` version returns.
+    answer: |
+      ```sql
+      SELECT name FROM products
+      WHERE id IN (SELECT product_id FROM order_items);
+      ```
+      It returns exactly the products the `NOT IN` version leaves out.
+
+  - id: c40-4
+    card: 40
+    source_card: "Fluency with subqueries/set ops?"
+    origin: inferred
+    tags: [writing_prompt, set_operation]
+    prompt: |
+      Use `EXCEPT` to find product ids that appear in `products` but not in `order_items`.
+    answer: |
+      ```sql
+      SELECT id FROM products
+      EXCEPT
+      SELECT product_id FROM order_items;
+      ```
+
+  - id: c40-5
+    card: 40
+    source_card: "Fluency with subqueries/set ops?"
+    origin: inferred
+    tags: [writing_prompt, subquery, where, aggregate]
+    prompt: |
+      Write a correlated subquery that finds each employee earning more than the average salary of their own department. Use `employees(id, name, dept, salary)`.
+    answer: |
+      ```sql
+      SELECT name FROM employees e
+      WHERE salary > (
+        SELECT AVG(salary) FROM employees
+        WHERE dept = e.dept
+      );
+      ```
+
+  # ---------------------------------------------------------------- card 41
+  - id: c41-1
+    card: 41
+    source_card: "What are document/KV stores?"
+    origin: direct
+    tags: [conceptual, document_db]
+    prompt: |
+      What is a **document database**?
+    answer: |
+      A database that stores flexible, JSON-like documents (e.g. MongoDB); each document can have its own shape.
+
+  - id: c41-2
+    card: 41
+    source_card: "What are document/KV stores?"
+    origin: direct
+    tags: [conceptual, document_db, relational]
+    prompt: |
+      How does a "document" differ from a row?
+    answer: |
+      A document can nest related data inside itself; a row points to related data in other tables via foreign keys.
+
+  - id: c41-3
+    card: 41
+    source_card: "What are document/KV stores?"
+    origin: direct
+    tags: [conceptual, key_value]
+    prompt: |
+      What is a **key-value store**?
+    answer: |
+      A giant dictionary: you look up a value instantly by its key.
+
+  - id: c41-4
+    card: 41
+    source_card: "What are document/KV stores?"
+    origin: direct
+    tags: [conceptual, key_value]
+    prompt: |
+      Give a use case for a key-value store.
+    answer: |
+      Caching, e.g. using Redis to remember whether a card is due.
+
+  - id: c41-5
+    card: 41
+    source_card: "What are document/KV stores?"
+    origin: direct
+    tags: [conceptual, document_db, join]
+    prompt: |
+      Why might you embed related data in one document instead of joining tables?
+    answer: |
+      Embedding avoids JOINs and is fast to read as one unit (e.g. a card with its tags embedded).
+
+  - id: c41-6
+    card: 41
+    source_card: "What are document/KV stores?"
+    origin: direct
+    tags: [conceptual, document_db, normalization, anomaly]
+    prompt: |
+      What is a downside of embedding, compared with relational normalization?
+    answer: |
+      The same embedded fact (e.g. a tag's description) can get duplicated across documents: the redundancy problem normalization solved, right back again.
+
+  # ---------------------------------------------------------------- card 42
+  - id: c42-1
+    card: 42
+    source_card: "Syntax for document queries?"
+    origin: direct
+    tags: [syntax_pattern, document_db]
+    prompt: |
+      Write the syntax pattern (Mongo-style) for a document representing a card with embedded tags.
+    answer: |
+      ```js
+      {
+        "_id": 1,
+        "question": "What is a JOIN?",
+        "answer": "Combines rows from two tables on a matching column.",
+        "tags": ["syntax", "joins"]
+      }
+      ```
+
+  - id: c42-2
+    card: 42
+    source_card: "Syntax for document queries?"
+    origin: direct
+    tags: [syntax_pattern, document_db]
+    prompt: |
+      Write the syntax pattern for finding documents matching a field.
+    answer: |
+      ```js
+      db.cards.find({ "question": "What is a JOIN?" })
+      ```
+
+  - id: c42-3
+    card: 42
+    source_card: "Syntax for document queries?"
+    origin: direct
+    tags: [writing_prompt, document_db]
+    prompt: |
+      Write a document for "What is a JOIN?" with its tags embedded directly, and a query that finds it by question text.
+    answer: |
+      ```js
+      // A document (not a row!)
+      {
+        "_id": 1,
+        "question": "What is a JOIN?",
+        "answer": "Combines rows from two tables on a matching column.",
+        "tags": ["syntax", "joins"]
+      }
+
+      // Query: find by question
+      db.cards.find({ "question": "What is a JOIN?" })
+      ```
+
+  - id: c42-4
+    card: 42
+    source_card: "Syntax for document queries?"
+    origin: inferred
+    tags: [writing_prompt, document_db]
+    prompt: |
+      Write a Mongo-style query that finds every card whose `tags` array contains "joins".
+    answer: |
+      ```js
+      db.cards.find({ "tags": "joins" })
+      ```
+
+  - id: c42-5
+    card: 42
+    source_card: "Syntax for document queries?"
+    origin: inferred
+    tags: [syntax_pattern, document_db]
+    prompt: |
+      Write a Mongo-style statement that adds this card to the `cards` collection: `_id` 1, question "What is a JOIN?", answer "Combines rows from two tables on a matching column.", tags "syntax" and "joins".
+    answer: |
+      ```js
+      db.cards.insertOne({
+        "_id": 1,
+        "question": "What is a JOIN?",
+        "answer": "Combines rows from two tables on a matching column.",
+        "tags": ["syntax", "joins"]
+      })
+      ```
+
+  # ---------------------------------------------------------------- card 43
+  - id: c43-1
+    card: 43
+    source_card: "Syntax for key-value lookups?"
+    origin: direct
+    tags: [syntax_pattern, key_value]
+    prompt: |
+      Write the syntax pattern for setting a key-value pair.
+    answer: |
+      ```text
+      SET card:1:due_today true
+      ```
+
+  - id: c43-2
+    card: 43
+    source_card: "Syntax for key-value lookups?"
+    origin: direct
+    tags: [syntax_pattern, key_value]
+    prompt: |
+      Write the syntax pattern for getting a value by key.
+    answer: |
+      ```text
+      GET card:1:due_today
+      -- -> true
+      ```
+
+  - id: c43-3
+    card: 43
+    source_card: "Syntax for key-value lookups?"
+    origin: direct
+    tags: [writing_prompt, key_value]
+    prompt: |
+      Use a key-value store to cache "card #1 is due today" so the app doesn't have to query `reviews` every time it renders the study screen.
+    answer: |
+      ```text
+      SET card:1:due_today true
+      GET card:1:due_today
+      -- -> true
+
+      DEL card:1:due_today
+      ```
+
+  - id: c43-4
+    card: 43
+    source_card: "Syntax for key-value lookups?"
+    origin: inferred
+    tags: [syntax_pattern, key_value]
+    prompt: |
+      Write the syntax pattern for removing a key.
+    answer: |
+      ```text
+      DEL card:1:due_today
+      ```
+
+  - id: c43-5
+    card: 43
+    source_card: "Syntax for key-value lookups?"
+    origin: inferred
+    tags: [conceptual, key_value]
+    prompt: |
+      Why is it useful to cache the "due today" flag in a key-value store instead of querying `reviews` each time?
+    answer: |
+      A key-value lookup is a single fast read by key, while the query would have to search and filter the `reviews` table every time the study screen renders.
+
+  - id: c43-6
+    card: 43
+    source_card: "Syntax for key-value lookups?"
+    origin: inferred
+    tags: [conceptual, key_value]
+    prompt: |
+      In the key `card:1:due_today`, what is the colon-separated naming convention doing?
+    answer: |
+      It encodes structure in a flat key space: the type of thing (`card`), its id (`1`), and the field (`due_today`), so keys stay unique and easy to guess.
+
+  # ---------------------------------------------------------------- card 44
+  - id: c44-1
+    card: 44
+    source_card: "Fluency with document/KV stores?"
+    origin: inferred
+    tags: [design, document_db]
+    prompt: |
+      Design a "recipe" domain as an embedded document instead of normalized tables. What would you nest?
+    answer: |
+      One document per recipe with its ingredients nested inside, e.g. `{ "name": "Pancakes", "ingredients": [ { "item": "flour", "qty": "2 cups" }, ... ], "steps": [ ... ] }`.
+
+  - id: c44-2
+    card: 44
+    source_card: "Fluency with document/KV stores?"
+    origin: inferred
+    tags: [conceptual, key_value]
+    prompt: |
+      Identify one piece of data in a recipe app you would cache in a key-value store, and why.
+    answer: |
+      For example "recipe of the day" or a user's session: it is read very often and by one simple key, so a fast key-value lookup avoids hitting the main database.
+
+  - id: c44-3
+    card: 44
+    source_card: "Fluency with document/KV stores?"
+    origin: inferred
+    tags: [conceptual, document_db]
+    prompt: |
+      A recipe app stores each recipe as one document with its ingredients embedded inside it. When would that design start to break down as the app grows?
+    answer: |
+      When the same data (e.g. an ingredient's details) is embedded in many documents, so changing it means editing every copy, or when you need to query across recipes by shared ingredients.
+
+  - id: c44-4
+    card: 44
+    source_card: "Fluency with document/KV stores?"
+    origin: inferred
+    tags: [design, document_db]
+    prompt: |
+      A recipe app stores each recipe as one document. Write a second recipe document with a slightly different shape from `{ "name": "Pancakes", "ingredients": [...], "steps": [...] }`, and say what stays flexible.
+    answer: |
+      For example a recipe with an extra `"serves": 4` field and no `"steps"`. Documents in a collection don't have to share the same fields.
+
+  - id: c44-5
+    card: 44
+    source_card: "Fluency with document/KV stores?"
+    origin: inferred
+    tags: [design, relational, join, normalization]
+    prompt: |
+      A recipe app stores each recipe as one document with its ingredients and steps embedded. If you rewrote that design as normalized tables, which tables would you need and how many JOINs would reading one full recipe take?
+    answer: |
+      At least `recipes`, `ingredients`, and a junction table `recipe_ingredients` (plus `steps` if they are kept): reading a full recipe takes about two or three JOINs.
+
+  # ---------------------------------------------------------------- card 45
+  - id: c45-1
+    card: 45
+    source_card: "What is a graph database?"
+    origin: direct
+    tags: [conceptual, graph_db]
+    prompt: |
+      What is a **node** in a graph database?
+    answer: |
+      An entity (e.g. a Card, a Tag, a Deck).
+
+  - id: c45-2
+    card: 45
+    source_card: "What is a graph database?"
+    origin: direct
+    tags: [conceptual, graph_db]
+    prompt: |
+      What is an **edge** in a graph database?
+    answer: |
+      A labeled, directed relationship connecting two nodes (e.g. `TAGGED`, `PREREQUISITE_OF`).
+
+  - id: c45-3
+    card: 45
+    source_card: "What is a graph database?"
+    origin: direct
+    tags: [conceptual, graph_db, relational, join]
+    prompt: |
+      How is a graph database different from a relational database with foreign keys?
+    answer: |
+      Relational stores relationships as foreign key *values*; graphs store relationships as first-class connections you can traverse directly, without JOINs.
+
+  - id: c45-4
+    card: 45
+    source_card: "What is a graph database?"
+    origin: direct
+    tags: [conceptual, graph_db]
+    prompt: |
+      What kind of question is a graph database especially good at answering?
+    answer: |
+      Questions about deep or variable-length connections, e.g. "every card you should review before this one, and everything before those."
+
+  - id: c45-5
+    card: 45
+    source_card: "What is a graph database?"
+    origin: direct
+    tags: [conceptual, graph_db]
+    prompt: |
+      Give an example of a node and an edge in this flashcard domain.
+    answer: |
+      Node: `(Card)` or `(Tag)`. Edge: `(Card)-[:PREREQUISITE_OF]->(Card)` or `(Card)-[:TAGGED]->(Tag)`.
+
+  # ---------------------------------------------------------------- card 46
+  - id: c46-1
+    card: 46
+    source_card: "Syntax for graph nodes/edges?"
+    origin: direct
+    tags: [syntax_pattern, graph_db]
+    prompt: |
+      Write the syntax pattern (Cypher-style) for creating a node.
+    answer: |
+      ```cypher
+      CREATE (a:Card {question: 'What is a loop?'})
+      ```
+
+  - id: c46-2
+    card: 46
+    source_card: "Syntax for graph nodes/edges?"
+    origin: direct
+    tags: [syntax_pattern, graph_db]
+    prompt: |
+      Write the syntax pattern for creating an edge between two nodes.
+    answer: |
+      ```cypher
+      CREATE (a)-[:PREREQUISITE_OF]->(b)
+      ```
+
+  - id: c46-3
+    card: 46
+    source_card: "Syntax for graph nodes/edges?"
+    origin: direct
+    tags: [writing_prompt, graph_db]
+    prompt: |
+      Create two Card nodes ("What is a loop?" and "What is a nested loop?") and a `PREREQUISITE_OF` edge showing the first must be learned before the second.
+    answer: |
+      ```cypher
+      CREATE (a:Card {question: 'What is a loop?'})
+      CREATE (b:Card {question: 'What is a nested loop?'})
+      CREATE (a)-[:PREREQUISITE_OF]->(b)
+      ```
+
+  - id: c46-4
+    card: 46
+    source_card: "Syntax for graph nodes/edges?"
+    origin: inferred
+    tags: [conceptual, graph_db]
+    prompt: |
+      In `(a)-[:PREREQUISITE_OF]->(b)`, which card must be learned first, and what does the arrow's direction mean?
+    answer: |
+      `a` must be learned first. The arrow runs from `a` to `b`, so the relationship reads "a is a prerequisite of b".
+
+  - id: c46-5
+    card: 46
+    source_card: "Syntax for graph nodes/edges?"
+    origin: inferred
+    tags: [conceptual, graph_db]
+    prompt: |
+      In `(a:Card {question: 'What is a loop?'})`, what are `a`, `Card`, and the braces?
+    answer: |
+      `a` is a variable naming the node, `Card` is its label (its type), and the braces hold its properties (here `question`).
+
+  - id: c46-6
+    card: 46
+    source_card: "Syntax for graph nodes/edges?"
+    origin: inferred
+    tags: [writing_prompt, graph_db]
+    prompt: |
+      Card nodes "What is a loop?" and "What is a nested loop?" are linked by a `PREREQUISITE_OF` edge. Add a third card "What is recursion?" that has "What is a nested loop?" as a prerequisite.
+    answer: |
+      ```cypher
+      MATCH (b:Card {question: 'What is a nested loop?'})
+      CREATE (c:Card {question: 'What is recursion?'})
+      CREATE (b)-[:PREREQUISITE_OF]->(c)
+      ```
+
+  # ---------------------------------------------------------------- card 47
+  - id: c47-1
+    card: 47
+    source_card: "Syntax for graph pattern matching?"
+    origin: direct
+    tags: [syntax_pattern, graph_db]
+    prompt: |
+      Write the syntax pattern for matching a simple relationship.
+    answer: |
+      ```cypher
+      MATCH (a:Card)-[:PREREQUISITE_OF]->(b:Card)
+      RETURN a.question, b.question;
+      ```
+
+  - id: c47-2
+    card: 47
+    source_card: "Syntax for graph pattern matching?"
+    origin: direct
+    tags: [syntax_pattern, graph_db]
+    prompt: |
+      Write the syntax pattern for a multi-hop match (a prerequisite chain).
+    answer: |
+      ```cypher
+      MATCH (a:Card)-[:PREREQUISITE_OF*]->(b:Card)
+      RETURN a.question, b.question;
+      ```
+
+  - id: c47-3
+    card: 47
+    source_card: "Syntax for graph pattern matching?"
+    origin: direct
+    tags: [writing_prompt, graph_db]
+    prompt: |
+      Write a query that finds every direct prerequisite of "What is a nested loop?".
+    answer: |
+      ```cypher
+      MATCH (prereq:Card)-[:PREREQUISITE_OF]->
+            (:Card {question: 'What is a nested loop?'})
+      RETURN prereq.question;
+      ```
+
+  - id: c47-4
+    card: 47
+    source_card: "Syntax for graph pattern matching?"
+    origin: direct
+    tags: [writing_prompt, graph_db]
+    prompt: |
+      Write a query that finds the *entire* chain of prerequisites of "What is a nested loop?", however many hops deep.
+    answer: |
+      ```cypher
+      MATCH (prereq:Card)-[:PREREQUISITE_OF*]->
+            (:Card {question: 'What is a nested loop?'})
+      RETURN DISTINCT prereq.question;
+      ```
+
+  - id: c47-5
+    card: 47
+    source_card: "Syntax for graph pattern matching?"
+    origin: inferred
+    tags: [conceptual, graph_db]
+    prompt: |
+      What does the `*` in `-[:PREREQUISITE_OF*]->` mean?
+    answer: |
+      Follow that kind of edge any number of times (one or more hops), so the pattern walks the whole chain.
+
+  - id: c47-6
+    card: 47
+    source_card: "Syntax for graph pattern matching?"
+    origin: inferred
+    tags: [conceptual, graph_db]
+    prompt: |
+      Why does the chain query use `RETURN DISTINCT`?
+    answer: |
+      A card can be reachable by more than one path, so without `DISTINCT` it could be returned several times.
+
+  # ---------------------------------------------------------------- card 48
+  - id: c48-1
+    card: 48
+    source_card: "Fluency with graph databases?"
+    origin: inferred
+    tags: [design, graph_db, er_modeling]
+    prompt: |
+      Sketch the nodes and edges for a "course prerequisites" domain.
+    answer: |
+      Nodes: `(Course)`. Edges: `(Course)-[:PREREQUISITE_OF]->(Course)`. Optionally add `(Student)` nodes with `(Student)-[:COMPLETED]->(Course)` edges.
+
+  - id: c48-2
+    card: 48
+    source_card: "Fluency with graph databases?"
+    origin: inferred
+    tags: [writing_prompt, graph_db]
+    prompt: |
+      Write a Cypher-style query that finds every course a student must take before "CS330", however many hops back.
+    answer: |
+      ```cypher
+      MATCH (c:Course)-[:PREREQUISITE_OF*]->(:Course {title: 'CS330'})
+      RETURN DISTINCT c.title;
+      ```
+
+  - id: c48-3
+    card: 48
+    source_card: "Fluency with graph databases?"
+    origin: inferred
+    tags: [conceptual, graph_db, relational, join]
+    prompt: |
+      How would the number of JOINs needed to find every prerequisite of a course, at any depth, compare in a relational schema with the graph version?
+    answer: |
+      The relational version needs one self-JOIN per hop, so a chain of unknown length can't be written as a fixed number of JOINs (it needs a recursive query). The graph query handles any depth.
+
+  - id: c48-4
+    card: 48
+    source_card: "Fluency with graph databases?"
+    origin: inferred
+    tags: [writing_prompt, graph_db]
+    prompt: |
+      Write a Cypher-style query that finds courses with no incoming `PREREQUISITE_OF` edges (courses with no prerequisites).
+    answer: |
+      ```cypher
+      MATCH (c:Course)
+      WHERE NOT ( ()-[:PREREQUISITE_OF]->(c) )
+      RETURN c.title;
+      ```
+
+  - id: c48-5
+    card: 48
+    source_card: "Fluency with graph databases?"
+    origin: inferred
+    tags: [design, relational, graph_db]
+    prompt: |
+      Sketch the course-prerequisite data as relational tables instead.
+    answer: |
+      A `courses` table (id, title) and a `prerequisites` table (course_id, prereq_id), both columns being foreign keys to `courses`.
+
+  # ---------------------------------------------------------------- card 49
+  - id: c49-1
+    card: 49
+    source_card: "Where does a DB fit in an app?"
+    origin: direct
+    tags: [conceptual, app_architecture]
+    prompt: |
+      Trace one request through a web app: where does the **database** sit relative to the **browser** and the **web server**?
+    answer: |
+      Browser -> web server (your application code) -> database -> back out as HTML or JSON. Only the web server talks to the database.
+
+  - id: c49-2
+    card: 49
+    source_card: "Where does a DB fit in an app?"
+    origin: direct
+    tags: [conceptual, app_architecture]
+    prompt: |
+      Why is the database its own separate process, instead of part of the web server?
+    answer: |
+      Many web servers can share one database, and each can be restarted, moved, or scaled on its own.
+
+  - id: c49-3
+    card: 49
+    source_card: "Where does a DB fit in an app?"
+    origin: direct
+    tags: [conceptual, app_architecture]
+    prompt: |
+      What is a **connection** in application code?
+    answer: |
+      An open session between application code and the database.
+
+  - id: c49-4
+    card: 49
+    source_card: "Where does a DB fit in an app?"
+    origin: direct
+    tags: [conceptual, app_architecture]
+    prompt: |
+      Why do apps keep a **pool** of connections?
+    answer: |
+      Opening a connection is slow, so apps hold a pool of connections open and lend one to each request.
+
+  - id: c49-5
+    card: 49
+    source_card: "Where does a DB fit in an app?"
+    origin: direct
+    tags: [conceptual, app_architecture, security]
+    prompt: |
+      Why should the browser never connect to the database directly?
+    answer: |
+      It would need the database password, and could then run *any* query, ignoring every rule the app enforces.
+
+  # ---------------------------------------------------------------- card 50
+  - id: c50-1
+    card: 50
+    source_card: "Syntax for querying from app code?"
+    origin: direct
+    tags: [syntax_pattern, app_architecture]
+    prompt: |
+      Write the syntax pattern for connecting to a database from application code.
+    answer: |
+      ```text
+      connection = connect("postgres://user:pass@localhost:5432/flashcards")
+      ```
+
+  - id: c50-2
+    card: 50
+    source_card: "Syntax for querying from app code?"
+    origin: direct
+    tags: [syntax_pattern, app_architecture, security, select]
+    prompt: |
+      Write the syntax pattern for a query whose value comes from the user (a **parameter**).
+    answer: |
+      ```text
+      rows = connection.query(
+        "SELECT question, answer FROM cards WHERE deck_id = ?",
+        [params.id]
+      )
+      ```
+
+  - id: c50-3
+    card: 50
+    source_card: "Syntax for querying from app code?"
+    origin: direct
+    tags: [writing_prompt, app_architecture, select]
+    prompt: |
+      Write the server-side code behind `GET /decks/:id/cards`: connect, fetch that deck's cards with the id passed in as a parameter, and return them to the browser.
+    answer: |
+      ```text
+      connection = connect("postgres://user:pass@localhost:5432/flashcards")
+
+      -- Endpoint: GET /decks/:id/cards   (pseudocode)
+      rows = connection.query(
+        "SELECT question, answer FROM cards WHERE deck_id = ?",
+        [params.id]
+      )
+      return json(rows)
+      ```
+
+  - id: c50-4
+    card: 50
+    source_card: "Syntax for querying from app code?"
+    origin: inferred
+    tags: [conceptual, security, app_architecture]
+    prompt: |
+      What is SQL injection?
+    answer: |
+      An attack where user input is glued into a query string so that the input is interpreted as SQL, letting the attacker run queries the app never intended.
+
+  - id: c50-5
+    card: 50
+    source_card: "Syntax for querying from app code?"
+    origin: inferred
+    tags: [debugging, security, app_architecture]
+    prompt: |
+      What is dangerous about `"SELECT ... WHERE deck_id = " + params.id`, and what is the fix?
+    answer: |
+      User input becomes part of the SQL text, which allows SQL injection. Pass the value as a parameter instead (`WHERE deck_id = ?` with `[params.id]`) so it is always treated as data.
+
+  # ---------------------------------------------------------------- card 51
+  - id: c51-1
+    card: 51
+    source_card: "Syntax for choosing a DB type?"
+    origin: direct
+    tags: [design, relational, document_db, key_value, graph_db]
+    prompt: |
+      Write out a checklist you'd use to pick relational vs. document vs. key-value vs. graph for a new feature.
+    answer: |
+      Ask: Is the data structured and does it need integrity (keys, constraints, complex queries)? -> relational. Is each item self-contained with a flexible shape? -> document. Is it a simple lookup by one key, needing speed? -> key-value. Are the relationships themselves the point, deep or variable-length? -> graph.
+
+  - id: c51-2
+    card: 51
+    source_card: "Syntax for choosing a DB type?"
+    origin: direct
+    tags: [design, key_value, document_db]
+    prompt: |
+      Which type of store would you pick for a shopping cart, and why?
+    answer: |
+      Key-value (or document): a cart is looked up by one key (the user or session) and read and written as a single unit, with no complex relationships.
+
+  - id: c51-3
+    card: 51
+    source_card: "Syntax for choosing a DB type?"
+    origin: direct
+    tags: [design, document_db, relational]
+    prompt: |
+      Which type of store would you pick for a product catalog, and why?
+    answer: |
+      Document (items have varying attributes and are read as one unit) or relational (if the catalog needs strong integrity and complex queries).
+
+  - id: c51-4
+    card: 51
+    source_card: "Syntax for choosing a DB type?"
+    origin: direct
+    tags: [design, graph_db]
+    prompt: |
+      Which type of store would you pick for a social network's "who follows whom", and why?
+    answer: |
+      Graph: the follow relationships are the data, and questions like "friends of friends" need multi-hop traversal.
+
+  - id: c51-5
+    card: 51
+    source_card: "Syntax for choosing a DB type?"
+    origin: direct
+    tags: [design, relational]
+    prompt: |
+      For the flashcard app, which database type would you assign to the catalog of decks, cards, tags, and reviews, and why?
+    answer: |
+      Relational: the data is structured, needs integrity (foreign keys, constraints), and supports complex queries.
+
+  - id: c51-6
+    card: 51
+    source_card: "Syntax for choosing a DB type?"
+    origin: direct
+    tags: [design, key_value]
+    prompt: |
+      For the flashcard app, which database type would you assign to a "card is due today" flag cache, and why?
+    answer: |
+      Key-value: a single fast lookup, with no relationships needed.
+
+  - id: c51-7
+    card: 51
+    source_card: "Syntax for choosing a DB type?"
+    origin: direct
+    tags: [design, graph_db]
+    prompt: |
+      For the flashcard app, which database type would you assign to a prerequisite-chain feature ("what should I review before this card?"), and why?
+    answer: |
+      Graph: it needs deep, variable-length relationship traversal.
+
+  # ---------------------------------------------------------------- card 52
+  - id: c52-1
+    card: 52
+    source_card: "Fluency in databases?"
+    origin: inferred
+    tags: [design, relational, document_db, key_value, graph_db]
+    prompt: |
+      Pick an app idea of your own and say which of its pieces would be relational, document, key-value, or graph, and why.
+    answer: |
+      Any consistent answer, e.g. for a recipe app: users and saved recipes (relational), recipe pages with nested steps (document), a session or "popular today" cache (key-value), and "recipes that use similar ingredients" (graph).
+
+  - id: c52-2
+    card: 52
+    source_card: "Fluency in databases?"
+    origin: inferred
+    tags: [conceptual, app_architecture]
+    prompt: |
+      Trace one feature of an app you've designed from the browser, through the web server, to the database and back.
+    answer: |
+      The browser sends a request; the web server runs the app code, which takes a connection from the pool and runs a parameterized query; the database returns rows; the server turns them into HTML or JSON; the browser displays them.
+
+  - id: c52-3
+    card: 52
+    source_card: "Fluency in databases?"
+    origin: inferred
+    tags: [design, app_architecture]
+    prompt: |
+      Write a short pitch for an app's data architecture, covering the "why" behind each database choice.
+    answer: |
+      A good answer names each data store, says what kind of data and access pattern it serves, and justifies the choice (e.g. relational for the integrity-critical core, key-value for hot lookups).
+
+  - id: c52-4
+    card: 52
+    source_card: "Fluency in databases?"
+    origin: inferred
+    tags: [conceptual, relational, document_db, key_value, graph_db]
+    prompt: |
+      Give an example of something that could go wrong if you chose the wrong database type for a feature.
+    answer: |
+      For example, storing a deep follower network in relational tables forces many JOINs and slow queries; using a key-value store for data that needs complex queries and constraints forces the app to implement them by hand.
+
+  - id: c52-5
+    card: 52
+    source_card: "Fluency in databases?"
+    origin: inferred
+    tags: [conceptual, app_architecture]
+    prompt: |
+      How might an app's data architecture need to change if it went from 100 users to 1,000,000?
+    answer: |
+      Likely: caching with a key-value store, connection pooling, read replicas or sharding for the main database, and moving hot or high-volume features to a store better suited to that access pattern.
+
+  - id: c52-6
+    card: 52
+    source_card: "Fluency in databases?"
+    origin: inferred
+    tags: [writing_prompt, app_architecture, select, security]
+    prompt: |
+      Write the server-side code for an endpoint `GET /cards/:id` that looks up one card, passing the id in as a parameter.
+    answer: |
+      ```text
+      -- Endpoint: GET /cards/:id   (pseudocode)
+      rows = connection.query(
+        "SELECT question, answer FROM cards WHERE id = ?",
+        [params.id]
+      )
+      return json(rows)
+      ```

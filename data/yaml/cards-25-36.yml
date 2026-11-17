@@ -1,0 +1,814 @@
+# CS330 question bank -- cards 25 through 36 of ../main.yml
+#
+# Schema (one entry per question):
+#   id:          cNN-K   (NN = card number in main.yml, K = 1.. within that card)
+#   card:        card number (1-based position in main.yml)
+#   source_card: the card's title in main.yml
+#   origin:      direct   = taken straight from a question printed on the card front
+#                inferred = derived from the card front/back
+#   tags:        what the question is about (one or more); the full vocabulary and its
+#                groups are listed in index.yml
+#   prompt:      markdown shown to the student
+#   answer:      markdown revealed afterward
+
+questions:
+  # ---------------------------------------------------------------- card 25
+  - id: c25-1
+    card: 25
+    source_card: "What are keys/constraints?"
+    origin: direct
+    tags: [conceptual, key]
+    prompt: |
+      What is a **primary key**?
+    answer: |
+      A column (or set of columns) that uniquely identifies each row. A table has exactly one primary key.
+
+  - id: c25-2
+    card: 25
+    source_card: "What are keys/constraints?"
+    origin: direct
+    tags: [conceptual, key]
+    prompt: |
+      Can more than one column form a table's primary key?
+    answer: |
+      Yes: a primary key can span multiple columns.
+
+  - id: c25-3
+    card: 25
+    source_card: "What are keys/constraints?"
+    origin: direct
+    tags: [conceptual, key]
+    prompt: |
+      What is a **composite key**?
+    answer: |
+      A primary key made of two or more columns together (e.g. `card_id + tag_id` in a junction table).
+
+  - id: c25-4
+    card: 25
+    source_card: "What are keys/constraints?"
+    origin: direct
+    tags: [conceptual, constraint]
+    prompt: |
+      What does the `UNIQUE` constraint do?
+    answer: |
+      No two rows may share the same value in that column.
+
+  - id: c25-5
+    card: 25
+    source_card: "What are keys/constraints?"
+    origin: direct
+    tags: [conceptual, constraint]
+    prompt: |
+      What does the `NOT NULL` constraint do?
+    answer: |
+      The column can never be left empty.
+
+  - id: c25-6
+    card: 25
+    source_card: "What are keys/constraints?"
+    origin: direct
+    tags: [conceptual, constraint, insert]
+    prompt: |
+      What happens if you try to insert a row that violates a constraint?
+    answer: |
+      The database rejects the INSERT/UPDATE with an error and the row is not saved.
+
+  # ---------------------------------------------------------------- card 26
+  - id: c26-1
+    card: 26
+    source_card: "Syntax for constraints?"
+    origin: direct
+    tags: [syntax_pattern, constraint]
+    prompt: |
+      Write the syntax pattern for a `UNIQUE` column.
+    answer: |
+      ```sql
+      ALTER TABLE tags ADD CONSTRAINT tags_name_unique UNIQUE (name);
+      -- or inline: name TEXT UNIQUE
+      ```
+
+  - id: c26-2
+    card: 26
+    source_card: "Syntax for constraints?"
+    origin: direct
+    tags: [syntax_pattern, constraint]
+    prompt: |
+      Write the syntax pattern for a `NOT NULL` column.
+    answer: |
+      ```sql
+      ALTER TABLE cards ALTER COLUMN question SET NOT NULL;
+      -- or inline: question TEXT NOT NULL
+      ```
+
+  - id: c26-3
+    card: 26
+    source_card: "Syntax for constraints?"
+    origin: direct
+    tags: [syntax_pattern, constraint, key]
+    prompt: |
+      Write the syntax pattern for a composite primary key.
+    answer: |
+      ```sql
+      CREATE TABLE card_tags (
+        card_id INTEGER REFERENCES cards(id),
+        tag_id INTEGER REFERENCES tags(id),
+        PRIMARY KEY (card_id, tag_id)
+      );
+      ```
+
+  - id: c26-4
+    card: 26
+    source_card: "Syntax for constraints?"
+    origin: direct
+    tags: [writing_prompt, constraint]
+    prompt: |
+      Ensure `tags.name` must be unique, and `cards.question` and `cards.answer` can never be null.
+    answer: |
+      ```sql
+      ALTER TABLE tags ADD CONSTRAINT tags_name_unique UNIQUE (name);
+
+      ALTER TABLE cards ALTER COLUMN question SET NOT NULL;
+      ALTER TABLE cards ALTER COLUMN answer SET NOT NULL;
+      ```
+
+  - id: c26-5
+    card: 26
+    source_card: "Syntax for constraints?"
+    origin: inferred
+    tags: [writing_prompt, create_table, constraint]
+    prompt: |
+      Write one `CREATE TABLE users` statement with columns `id`, `email`, and `name` where `id` is the primary key, `email` is unique, and `name` is required.
+    answer: |
+      ```sql
+      CREATE TABLE users (
+        id INTEGER PRIMARY KEY,
+        email TEXT UNIQUE,
+        name TEXT NOT NULL
+      );
+      ```
+
+  # ---------------------------------------------------------------- card 27
+  - id: c27-1
+    card: 27
+    source_card: "Syntax for testing constraints?"
+    origin: direct
+    tags: [writing_prompt, insert, constraint]
+    prompt: |
+      Write an `INSERT` that would violate a `UNIQUE` constraint on `tags.name`, given that a tag named 'loops' already exists.
+    answer: |
+      ```sql
+      INSERT INTO tags (name) VALUES ('loops');
+      ```
+      It fails because the name 'loops' is already used.
+
+  - id: c27-2
+    card: 27
+    source_card: "Syntax for testing constraints?"
+    origin: direct
+    tags: [writing_prompt, insert, constraint]
+    prompt: |
+      Write an `INSERT` into `cards` that would violate a `NOT NULL` constraint on `answer`.
+    answer: |
+      ```sql
+      INSERT INTO cards (question, deck_id) VALUES ('What is a JOIN?', 1);
+      ```
+      It fails because `answer` is NOT NULL and no value was given.
+
+  - id: c27-3
+    card: 27
+    source_card: "Syntax for testing constraints?"
+    origin: direct
+    tags: [writing_prompt, insert, constraint]
+    prompt: |
+      Write two INSERT statements that each fail: one for a duplicate tag name, one for a card missing an answer.
+    answer: |
+      ```sql
+      -- Fails: tag name already used
+      INSERT INTO tags (name) VALUES ('loops');
+
+      -- Fails: answer is NOT NULL
+      INSERT INTO cards (question, deck_id) VALUES ('What is a JOIN?', 1);
+      ```
+
+  - id: c27-4
+    card: 27
+    source_card: "Syntax for testing constraints?"
+    origin: inferred
+    tags: [conceptual, insert, constraint]
+    prompt: |
+      When an INSERT violates a constraint, what is the state of the table afterwards?
+    answer: |
+      Unchanged: the statement is rejected with an error and no partial row is saved.
+
+  - id: c27-5
+    card: 27
+    source_card: "Syntax for testing constraints?"
+    origin: inferred
+    tags: [debugging, insert, key, constraint]
+    prompt: |
+      What happens when you insert a second row with the same primary key value as an existing row?
+    answer: |
+      The insert fails with a duplicate (primary key / unique) violation, because a primary key must be unique.
+
+  # ---------------------------------------------------------------- card 28
+  - id: c28-1
+    card: 28
+    source_card: "Fluency with keys/constraints?"
+    origin: inferred
+    tags: [design, constraint, key]
+    prompt: |
+      A `members(id, email, name, joined_on)` table is being designed. Which columns need PRIMARY KEY, UNIQUE, and NOT NULL? Justify each.
+    answer: |
+      `id` is the PRIMARY KEY (identifies a row). `email` should be UNIQUE (no two members share an email) and probably NOT NULL (it is how you contact them). `name` should be NOT NULL (a member must have a name). `joined_on` can be NOT NULL if every member has a join date.
+
+  - id: c28-2
+    card: 28
+    source_card: "Fluency with keys/constraints?"
+    origin: inferred
+    tags: [writing_prompt, create_table, constraint]
+    prompt: |
+      Write the full `CREATE TABLE` statement for `members(id, email, name, joined_on)` where `id` is the primary key, `email` is required and unique, and `name` and `joined_on` are required.
+    answer: |
+      ```sql
+      CREATE TABLE members (
+        id INTEGER PRIMARY KEY,
+        email TEXT NOT NULL UNIQUE,
+        name TEXT NOT NULL,
+        joined_on TEXT NOT NULL
+      );
+      ```
+
+  - id: c28-3
+    card: 28
+    source_card: "Fluency with keys/constraints?"
+    origin: inferred
+    tags: [syntax_pattern, constraint]
+    prompt: |
+      Write the syntax for a `CHECK` constraint that requires a `rating` column to be between 1 and 5.
+    answer: |
+      ```sql
+      rating INTEGER CHECK (rating BETWEEN 1 AND 5)
+      ```
+
+  - id: c28-4
+    card: 28
+    source_card: "Fluency with keys/constraints?"
+    origin: inferred
+    tags: [syntax_pattern, constraint]
+    prompt: |
+      Write the syntax for a `DEFAULT` value that sets `joined_on` to a fixed date when none is given.
+    answer: |
+      ```sql
+      joined_on TEXT DEFAULT '2026-01-01'
+      ```
+
+  - id: c28-5
+    card: 28
+    source_card: "Fluency with keys/constraints?"
+    origin: inferred
+    tags: [conceptual, key]
+    prompt: |
+      When would a composite primary key need a third column? Give an example.
+    answer: |
+      When the first two columns can legitimately repeat. For example, a student may take the same class in two different terms, so an `enrollments` key may need `(student_id, class_id, term)`.
+
+  # ---------------------------------------------------------------- card 29
+  - id: c29-1
+    card: 29
+    source_card: "What are INSERT/UPDATE/DELETE?"
+    origin: direct
+    tags: [conceptual, insert]
+    prompt: |
+      What does **INSERT** do?
+    answer: |
+      It adds new row(s) to a table.
+
+  - id: c29-2
+    card: 29
+    source_card: "What are INSERT/UPDATE/DELETE?"
+    origin: direct
+    tags: [conceptual, update]
+    prompt: |
+      What does **UPDATE** do?
+    answer: |
+      It changes existing column values on matching rows.
+
+  - id: c29-3
+    card: 29
+    source_card: "What are INSERT/UPDATE/DELETE?"
+    origin: direct
+    tags: [conceptual, delete]
+    prompt: |
+      What does **DELETE** do?
+    answer: |
+      It removes matching rows entirely.
+
+  - id: c29-4
+    card: 29
+    source_card: "What are INSERT/UPDATE/DELETE?"
+    origin: direct
+    tags: [conceptual, update, delete, where]
+    prompt: |
+      Why is a `WHERE` clause critical on UPDATE and DELETE?
+    answer: |
+      Without `WHERE`, UPDATE and DELETE apply to every row in the table.
+
+  - id: c29-5
+    card: 29
+    source_card: "What are INSERT/UPDATE/DELETE?"
+    origin: direct
+    tags: [conceptual, delete, where]
+    prompt: |
+      What happens if you run `DELETE FROM cards;` with no WHERE?
+    answer: |
+      It deletes every flashcard in the table (every row).
+
+  - id: c29-6
+    card: 29
+    source_card: "What are INSERT/UPDATE/DELETE?"
+    origin: direct
+    tags: [conceptual, update, delete, select, where]
+    prompt: |
+      What is a safe habit for testing UPDATE/DELETE before running them for real?
+    answer: |
+      Run the equivalent `SELECT ... WHERE ...` first to see exactly which rows would be affected.
+
+  # ---------------------------------------------------------------- card 30
+  - id: c30-1
+    card: 30
+    source_card: "Syntax for INSERT/UPDATE?"
+    origin: direct
+    tags: [syntax_pattern, create_table, key, relationship]
+    prompt: |
+      Write the syntax pattern for a `reviews` table (id, card_id, reviewed_at, rating, next_review_date).
+    answer: |
+      ```sql
+      CREATE TABLE reviews (
+        id INTEGER PRIMARY KEY,
+        card_id INTEGER REFERENCES cards(id),
+        reviewed_at TEXT,
+        rating INTEGER,
+        next_review_date TEXT
+      );
+      ```
+
+  - id: c30-2
+    card: 30
+    source_card: "Syntax for INSERT/UPDATE?"
+    origin: direct
+    tags: [syntax_pattern, insert]
+    prompt: |
+      Write the syntax pattern for `INSERT`.
+    answer: |
+      ```sql
+      INSERT INTO reviews (card_id, reviewed_at, rating, next_review_date)
+      VALUES (1, '2026-09-14', 4, '2026-09-17');
+      ```
+
+  - id: c30-3
+    card: 30
+    source_card: "Syntax for INSERT/UPDATE?"
+    origin: direct
+    tags: [syntax_pattern, update]
+    prompt: |
+      Write the syntax pattern for `UPDATE`.
+    answer: |
+      ```sql
+      UPDATE reviews
+      SET rating = 5
+      WHERE id = 1;
+      ```
+
+  - id: c30-4
+    card: 30
+    source_card: "Syntax for INSERT/UPDATE?"
+    origin: direct
+    tags: [writing_prompt, create_table, insert]
+    prompt: |
+      Create `reviews`, then "study" card #1 by inserting a review with a rating and a next review date 3 days out.
+    answer: |
+      ```sql
+      CREATE TABLE reviews (
+        id INTEGER PRIMARY KEY,
+        card_id INTEGER REFERENCES cards(id),
+        reviewed_at TEXT,
+        rating INTEGER,           -- e.g. 1 (hard) - 5 (easy)
+        next_review_date TEXT
+      );
+
+      INSERT INTO reviews (card_id, reviewed_at, rating, next_review_date)
+      VALUES (1, '2026-09-14', 4, '2026-09-17');
+      ```
+
+  - id: c30-5
+    card: 30
+    source_card: "Syntax for INSERT/UPDATE?"
+    origin: inferred
+    tags: [tracing, update, where]
+    prompt: |
+      A `reviews` table has ratings 2, 3, 5 for ids 1, 2, 3. After `UPDATE reviews SET rating = rating + 1 WHERE rating < 5;`, what are the ratings?
+    answer: |
+      3, 4, 5. Ids 1 and 2 matched (rating below 5) and were increased by one; id 3 was left alone.
+
+  # ---------------------------------------------------------------- card 31
+  - id: c31-1
+    card: 31
+    source_card: "Syntax for DELETE?"
+    origin: direct
+    tags: [syntax_pattern, update, where]
+    prompt: |
+      Write the syntax pattern for an `UPDATE` that corrects a mis-entered rating.
+    answer: |
+      ```sql
+      UPDATE reviews
+      SET rating = 5
+      WHERE id = 1;
+      ```
+
+  - id: c31-2
+    card: 31
+    source_card: "Syntax for DELETE?"
+    origin: direct
+    tags: [syntax_pattern, delete, where]
+    prompt: |
+      Write the syntax pattern for `DELETE` with a `WHERE` clause.
+    answer: |
+      ```sql
+      DELETE FROM reviews
+      WHERE reviewed_at < '2025-01-01';
+      ```
+
+  - id: c31-3
+    card: 31
+    source_card: "Syntax for DELETE?"
+    origin: direct
+    tags: [writing_prompt, update, delete]
+    prompt: |
+      Write an UPDATE that fixes review #1's rating to 5, then a DELETE that removes any review older than 2025-01-01.
+    answer: |
+      ```sql
+      UPDATE reviews
+      SET rating = 5
+      WHERE id = 1;
+
+      DELETE FROM reviews
+      WHERE reviewed_at < '2025-01-01';
+      ```
+
+  - id: c31-4
+    card: 31
+    source_card: "Syntax for DELETE?"
+    origin: inferred
+    tags: [tracing, delete, where]
+    prompt: |
+      `reviews` has `reviewed_at` values 2024-12-31, 2025-01-01, and 2025-06-01. Which rows does `DELETE FROM reviews WHERE reviewed_at < '2025-01-01';` remove?
+    answer: |
+      Only the 2024-12-31 row. The 2025-01-01 row is not strictly less than the cutoff.
+
+  - id: c31-5
+    card: 31
+    source_card: "Syntax for DELETE?"
+    origin: inferred
+    tags: [writing_prompt, select, delete, where]
+    prompt: |
+      Write the `SELECT` you would run first to see which rows `DELETE FROM reviews WHERE reviewed_at < '2025-01-01';` would remove.
+    answer: |
+      ```sql
+      SELECT * FROM reviews
+      WHERE reviewed_at < '2025-01-01';
+      ```
+
+  - id: c31-6
+    card: 31
+    source_card: "Syntax for DELETE?"
+    origin: inferred
+    tags: [debugging, update, where]
+    prompt: |
+      What is wrong with `UPDATE reviews SET rating = 5;` if the goal was to fix one review?
+    answer: |
+      There is no `WHERE`, so every review's rating becomes 5. Add `WHERE id = 1`.
+
+  # ---------------------------------------------------------------- card 32
+  - id: c32-1
+    card: 32
+    source_card: "Fluency with INSERT/UPDATE?"
+    origin: inferred
+    tags: [design, create_table, insert]
+    prompt: |
+      Design a table for gym check-ins (an "event log").
+    answer: |
+      ```sql
+      CREATE TABLE checkins (
+        id INTEGER PRIMARY KEY,
+        member_id INTEGER REFERENCES members(id),
+        checked_in_at TEXT NOT NULL
+      );
+      ```
+
+  - id: c32-2
+    card: 32
+    source_card: "Fluency with INSERT/UPDATE?"
+    origin: inferred
+    tags: [writing_prompt, insert, update, delete]
+    prompt: |
+      Write an INSERT that records a check-in for member 7, an UPDATE that corrects its time, and a DELETE that removes it. Use `checkins(id, member_id, checked_in_at)`.
+    answer: |
+      ```sql
+      INSERT INTO checkins (member_id, checked_in_at) VALUES (7, '2026-10-05 09:00');
+      UPDATE checkins SET checked_in_at = '2026-10-05 09:15' WHERE id = 1;
+      DELETE FROM checkins WHERE id = 1;
+      ```
+
+  - id: c32-3
+    card: 32
+    source_card: "Fluency with INSERT/UPDATE?"
+    origin: inferred
+    tags: [writing_prompt, update, where]
+    prompt: |
+      Write an UPDATE that affects only check-ins that match two conditions: member 7 and before 2026-01-01. Set `checked_in_at` to '2026-01-01 00:00'.
+    answer: |
+      ```sql
+      UPDATE checkins
+      SET checked_in_at = '2026-01-01 00:00'
+      WHERE member_id = 7 AND checked_in_at < '2026-01-01';
+      ```
+
+  - id: c32-4
+    card: 32
+    source_card: "Fluency with INSERT/UPDATE?"
+    origin: inferred
+    tags: [writing_prompt, delete, where]
+    prompt: |
+      Write a DELETE that removes only check-ins older than 2025-01-01.
+    answer: |
+      ```sql
+      DELETE FROM checkins WHERE checked_in_at < '2025-01-01';
+      ```
+
+  - id: c32-5
+    card: 32
+    source_card: "Fluency with INSERT/UPDATE?"
+    origin: inferred
+    tags: [writing_prompt, select, aggregate, where]
+    prompt: |
+      Write a `SELECT` that counts how many rows an `UPDATE checkins ... WHERE member_id = 7` would affect.
+    answer: |
+      ```sql
+      SELECT COUNT(*) FROM checkins WHERE member_id = 7;
+      ```
+
+  # ---------------------------------------------------------------- card 33
+  - id: c33-1
+    card: 33
+    source_card: "What is GROUP BY?"
+    origin: direct
+    tags: [conceptual, group_by]
+    prompt: |
+      What does **GROUP BY** do?
+    answer: |
+      It collapses rows sharing a value into one summary row per group.
+
+  - id: c33-2
+    card: 33
+    source_card: "What is GROUP BY?"
+    origin: direct
+    tags: [conceptual, group_by, order_by]
+    prompt: |
+      How is GROUP BY different from ORDER BY?
+    answer: |
+      ORDER BY just reorders rows; it doesn't merge them. GROUP BY merges rows into groups.
+
+  - id: c33-3
+    card: 33
+    source_card: "What is GROUP BY?"
+    origin: direct
+    tags: [conceptual, aggregate]
+    prompt: |
+      What are **aggregate functions**? Name a few.
+    answer: |
+      Functions that compute one value from many rows: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`.
+
+  - id: c33-4
+    card: 33
+    source_card: "What is GROUP BY?"
+    origin: direct
+    tags: [conceptual, having, where, group_by]
+    prompt: |
+      What does **HAVING** do, and how is it different from **WHERE**?
+    answer: |
+      HAVING filters *groups* (after aggregation); WHERE filters individual rows (before aggregation).
+
+  - id: c33-5
+    card: 33
+    source_card: "What is GROUP BY?"
+    origin: direct
+    tags: [conceptual, where, aggregate, having]
+    prompt: |
+      Why can't you filter on an aggregate with WHERE?
+    answer: |
+      WHERE runs before grouping happens, so the aggregate value doesn't exist yet to filter on. Use HAVING.
+
+  # ---------------------------------------------------------------- card 34
+  - id: c34-1
+    card: 34
+    source_card: "Syntax for GROUP BY/COUNT?"
+    origin: direct
+    tags: [syntax_pattern, group_by, aggregate]
+    prompt: |
+      Write the syntax pattern for `GROUP BY` with `COUNT`.
+    answer: |
+      ```sql
+      SELECT deck_id, COUNT(*) AS num_cards
+      FROM cards
+      GROUP BY deck_id;
+      ```
+
+  - id: c34-2
+    card: 34
+    source_card: "Syntax for GROUP BY/COUNT?"
+    origin: direct
+    tags: [syntax_pattern, group_by, aggregate]
+    prompt: |
+      Write the syntax pattern for `GROUP BY` with more than one aggregate function.
+    answer: |
+      ```sql
+      SELECT card_id, COUNT(*) AS times, AVG(rating) AS avg_rating, MAX(rating) AS best
+      FROM reviews
+      GROUP BY card_id;
+      ```
+
+  - id: c34-3
+    card: 34
+    source_card: "Syntax for GROUP BY/COUNT?"
+    origin: direct
+    tags: [writing_prompt, join, left_join, group_by, aggregate]
+    prompt: |
+      Write a query showing each card's question alongside how many times it has been reviewed.
+    answer: |
+      ```sql
+      SELECT cards.question, COUNT(reviews.id) AS times_reviewed
+      FROM cards
+      LEFT JOIN reviews ON reviews.card_id = cards.id
+      GROUP BY cards.id, cards.question;
+      ```
+
+  - id: c34-4
+    card: 34
+    source_card: "Syntax for GROUP BY/COUNT?"
+    origin: inferred
+    tags: [tracing, group_by, aggregate]
+    prompt: |
+      Given `cards(id, deck_id)` with rows (1,1), (2,1), (3,2), (4,1), what does `SELECT deck_id, COUNT(*) FROM cards GROUP BY deck_id;` return?
+    answer: |
+      Two rows: deck 1 with count 3, and deck 2 with count 1.
+
+  - id: c34-5
+    card: 34
+    source_card: "Syntax for GROUP BY/COUNT?"
+    origin: inferred
+    tags: [conceptual, left_join, group_by, aggregate]
+    prompt: |
+      In a query that LEFT JOINs `cards` to `reviews` and counts how many times each card has been reviewed, why is it `COUNT(reviews.id)` and not `COUNT(*)`?
+    answer: |
+      With a LEFT JOIN, a card with no reviews still produces one row (with NULL review columns). `COUNT(*)` would count that row as 1; `COUNT(reviews.id)` ignores NULLs and correctly gives 0.
+
+  # ---------------------------------------------------------------- card 35
+  - id: c35-1
+    card: 35
+    source_card: "Syntax for HAVING?"
+    origin: direct
+    tags: [syntax_pattern, having, group_by]
+    prompt: |
+      Write the syntax pattern for `HAVING` after `GROUP BY`.
+    answer: |
+      ```sql
+      SELECT deck_id, COUNT(*) AS num_cards
+      FROM cards
+      GROUP BY deck_id
+      HAVING COUNT(*) > 10;
+      ```
+
+  - id: c35-2
+    card: 35
+    source_card: "Syntax for HAVING?"
+    origin: direct
+    tags: [syntax_pattern, where, group_by, having]
+    prompt: |
+      Write the syntax pattern combining `WHERE`, `GROUP BY`, and `HAVING` in one query.
+    answer: |
+      ```sql
+      SELECT deck_id, COUNT(*) AS num_cards
+      FROM cards
+      WHERE created_at > '2026-01-01'
+      GROUP BY deck_id
+      HAVING COUNT(*) > 10;
+      ```
+
+  - id: c35-3
+    card: 35
+    source_card: "Syntax for HAVING?"
+    origin: direct
+    tags: [writing_prompt, join, inner_join, group_by, aggregate, having]
+    prompt: |
+      Write a query showing only cards whose average rating is below 3: the ones you're struggling with.
+    answer: |
+      ```sql
+      SELECT cards.question, AVG(reviews.rating) AS avg_rating
+      FROM cards
+      INNER JOIN reviews ON reviews.card_id = cards.id
+      GROUP BY cards.id, cards.question
+      HAVING AVG(reviews.rating) < 3;
+      ```
+
+  - id: c35-4
+    card: 35
+    source_card: "Syntax for HAVING?"
+    origin: inferred
+    tags: [debugging, where, aggregate, having]
+    prompt: |
+      This query fails. Why, and how do you fix it?
+      ```sql
+      SELECT deck_id, COUNT(*) FROM cards
+      WHERE COUNT(*) > 10
+      GROUP BY deck_id;
+      ```
+    answer: |
+      `WHERE` can't use an aggregate because it runs before grouping. Move the condition to `HAVING COUNT(*) > 10` after the `GROUP BY`.
+
+  - id: c35-5
+    card: 35
+    source_card: "Syntax for HAVING?"
+    origin: inferred
+    tags: [tracing, group_by, aggregate, having]
+    prompt: |
+      `reviews` has (card 1: ratings 2, 3), (card 2: ratings 5, 4), (card 3: rating 1). Which card ids does `SELECT card_id FROM reviews GROUP BY card_id HAVING AVG(rating) < 3;` return?
+    answer: |
+      Cards 1 and 3: card 1 averages 2.5, card 3 averages 1, and card 2 averages 4.5.
+
+  # ---------------------------------------------------------------- card 36
+  - id: c36-1
+    card: 36
+    source_card: "Fluency with GROUP BY?"
+    origin: inferred
+    tags: [writing_prompt, group_by, aggregate]
+    prompt: |
+      Using `checkins(id, member_id, checked_in_at)`, write a query that shows how many check-ins each member has.
+    answer: |
+      ```sql
+      SELECT member_id, COUNT(*) AS visits
+      FROM checkins
+      GROUP BY member_id;
+      ```
+
+  - id: c36-2
+    card: 36
+    source_card: "Fluency with GROUP BY?"
+    origin: inferred
+    tags: [writing_prompt, group_by, aggregate, having]
+    prompt: |
+      Using `checkins(id, member_id, checked_in_at)`, write a query that shows how many check-ins each member has, but only for members with at least 10 check-ins.
+    answer: |
+      ```sql
+      SELECT member_id, COUNT(*) AS visits
+      FROM checkins
+      GROUP BY member_id
+      HAVING COUNT(*) >= 10;
+      ```
+
+  - id: c36-3
+    card: 36
+    source_card: "Fluency with GROUP BY?"
+    origin: inferred
+    tags: [writing_prompt, group_by, aggregate]
+    prompt: |
+      Using `sales(id, region, amount)`, write a query for the total amount sold in each region.
+    answer: |
+      ```sql
+      SELECT region, SUM(amount) AS total
+      FROM sales
+      GROUP BY region;
+      ```
+
+  - id: c36-4
+    card: 36
+    source_card: "Fluency with GROUP BY?"
+    origin: inferred
+    tags: [writing_prompt, group_by, aggregate]
+    prompt: |
+      Using `sales(id, region, amount)`, write a query that shows the smallest and largest sale in each region.
+    answer: |
+      ```sql
+      SELECT region, MIN(amount) AS smallest, MAX(amount) AS largest
+      FROM sales
+      GROUP BY region;
+      ```
+
+  - id: c36-5
+    card: 36
+    source_card: "Fluency with GROUP BY?"
+    origin: inferred
+    tags: [conceptual, where, group_by, having]
+    prompt: |
+      In a query with WHERE, GROUP BY and HAVING, in what order do they run, and why does HAVING come after WHERE?
+    answer: |
+      WHERE filters rows first, then GROUP BY forms groups, then HAVING filters the groups. HAVING needs the aggregates that only exist after grouping.

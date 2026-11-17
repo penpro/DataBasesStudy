@@ -1,0 +1,93 @@
+[
+ {
+  "unit_id": 1,
+  "title": "Course Overview",
+  "blurb": "Schema vs CRUD, entities and relationships, knowledge vs practical skills.",
+  "first_card": 1,
+  "last_card": 4
+ },
+ {
+  "unit_id": 2,
+  "title": "Tables & Queries",
+  "blurb": "Tables, rows, columns, primary keys; SELECT, WHERE, ORDER BY, LIMIT.",
+  "first_card": 5,
+  "last_card": 8
+ },
+ {
+  "unit_id": 3,
+  "title": "Relationships & Foreign Keys",
+  "blurb": "Has-many / belongs-to, FOREIGN KEY, inserting related rows.",
+  "first_card": 9,
+  "last_card": 12
+ },
+ {
+  "unit_id": 4,
+  "title": "JOINs",
+  "blurb": "INNER JOIN, LEFT JOIN, aliases, finding unmatched rows.",
+  "first_card": 13,
+  "last_card": 16
+ },
+ {
+  "unit_id": 5,
+  "title": "Normalization & Anomalies",
+  "blurb": "Redundancy, update / delete anomalies, splitting a flat table.",
+  "first_card": 17,
+  "last_card": 20
+ },
+ {
+  "unit_id": 6,
+  "title": "Normal Forms & Many-to-Many",
+  "blurb": "1NF / 2NF / 3NF, junction tables, many-to-many queries.",
+  "first_card": 21,
+  "last_card": 24
+ },
+ {
+  "unit_id": 7,
+  "title": "Keys & Constraints",
+  "blurb": "PRIMARY KEY, composite keys, UNIQUE, NOT NULL, DEFAULT, CHECK.",
+  "first_card": 25,
+  "last_card": 28
+ },
+ {
+  "unit_id": 8,
+  "title": "INSERT / UPDATE / DELETE",
+  "blurb": "Changing data safely, the WHERE habit, event-log tables.",
+  "first_card": 29,
+  "last_card": 32
+ },
+ {
+  "unit_id": 9,
+  "title": "GROUP BY & HAVING",
+  "blurb": "Aggregates, grouping, HAVING vs WHERE, order of execution.",
+  "first_card": 33,
+  "last_card": 36
+ },
+ {
+  "unit_id": 10,
+  "title": "Subqueries & Set Operations",
+  "blurb": "IN / NOT IN, correlated subqueries, UNION, INTERSECT, EXCEPT.",
+  "first_card": 37,
+  "last_card": 40
+ },
+ {
+  "unit_id": 11,
+  "title": "Document & Key-Value Stores",
+  "blurb": "Documents, embedding, Mongo-style queries, key-value caching.",
+  "first_card": 41,
+  "last_card": 44
+ },
+ {
+  "unit_id": 12,
+  "title": "Graph Databases",
+  "blurb": "Nodes, edges, Cypher-style patterns, multi-hop traversal.",
+  "first_card": 45,
+  "last_card": 48
+ },
+ {
+  "unit_id": 13,
+  "title": "Apps & Choosing a Database",
+  "blurb": "Connections, parameterized queries, SQL injection, picking a store.",
+  "first_card": 49,
+  "last_card": 52
+ }
+]

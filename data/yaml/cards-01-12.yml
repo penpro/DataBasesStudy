@@ -1,0 +1,792 @@
+# CS330 question bank -- cards 1 through 12 of ../main.yml
+#
+# Schema (one entry per question):
+#   id:          cNN-K   (NN = card number in main.yml, K = 1.. within that card)
+#   card:        card number (1-based position in main.yml)
+#   source_card: the card's title in main.yml
+#   origin:      direct   = taken straight from a question printed on the card front
+#                inferred = derived from the card front/back
+#   tags:        what the question is about (one or more); the full vocabulary and its
+#                groups are listed in index.yml
+#   prompt:      markdown shown to the student
+#   answer:      markdown revealed afterward
+
+questions:
+  # ---------------------------------------------------------------- card 1
+  - id: c01-1
+    card: 1
+    source_card: "What was this course about?"
+    origin: direct
+    tags: [conceptual, relational]
+    prompt: |
+      What are the big-picture **data modeling** concepts in this course?
+    answer: |
+      * **Schema:** concepts related to organizing and modeling how your database stores data.
+      * **CRUD:** concepts related to working with data within that schema.
+
+  - id: c01-2
+    card: 1
+    source_card: "What was this course about?"
+    origin: direct
+    tags: [conceptual, relational, document_db, key_value, graph_db]
+    prompt: |
+      What are the big-picture **database types** covered in this course?
+    answer: |
+      Relational databases and NoSQL databases (document, key-value, and graph).
+
+  - id: c01-3
+    card: 1
+    source_card: "What was this course about?"
+    origin: inferred
+    tags: [conceptual, table]
+    prompt: |
+      What does the word **schema** refer to?
+    answer: |
+      The structure of a database: which tables exist, which columns each has, their types, and how the tables relate (keys and constraints).
+
+  - id: c01-4
+    card: 1
+    source_card: "What was this course about?"
+    origin: inferred
+    tags: [conceptual, select, insert, update, delete]
+    prompt: |
+      CRUD stands for Create, Read, Update, Delete. Which SQL statement does each letter correspond to?
+    answer: |
+      Create = `INSERT`, Read = `SELECT`, Update = `UPDATE`, Delete = `DELETE`.
+
+  - id: c01-5
+    card: 1
+    source_card: "What was this course about?"
+    origin: inferred
+    tags: [conceptual, relational, document_db, key_value, graph_db]
+    prompt: |
+      How do relational and NoSQL databases differ in what they trade off?
+    answer: |
+      They trade off structure, flexibility, and scale differently: relational databases favor structure and integrity, while NoSQL stores (document, key-value, graph) favor flexibility or scale for particular access patterns.
+
+  # ---------------------------------------------------------------- card 2
+  - id: c02-1
+    card: 2
+    source_card: "What did you learn about SQL?"
+    origin: direct
+    tags: [conceptual, table, key, normalization, relational]
+    prompt: |
+      List the core relational concepts covered in this course.
+    answer: |
+      Tables, rows, and keys; and normalization.
+
+  - id: c02-2
+    card: 2
+    source_card: "What did you learn about SQL?"
+    origin: direct
+    tags: [conceptual, create_table, select, where, join, insert, update, delete]
+    prompt: |
+      List the key SQL operations covered in this course, organized by schema and CRUD.
+    answer: |
+      * **Schema:** `CREATE TABLE` / `DROP TABLE`
+      * **CRUD:** `SELECT` / `WHERE` / `JOIN`, and `INSERT` / `UPDATE` / `DELETE`
+
+  - id: c02-3
+    card: 2
+    source_card: "What did you learn about SQL?"
+    origin: inferred
+    tags: [conceptual, create_table, select, insert, update, delete]
+    prompt: |
+      Classify each statement as a schema operation or a CRUD operation: `CREATE TABLE`, `SELECT`, `DROP TABLE`, `UPDATE`.
+    answer: |
+      `CREATE TABLE` and `DROP TABLE` are schema operations (they change the structure). `SELECT` and `UPDATE` are CRUD operations (they work with the data).
+
+  - id: c02-4
+    card: 2
+    source_card: "What did you learn about SQL?"
+    origin: inferred
+    tags: [conceptual, select, insert, update, delete]
+    prompt: |
+      Which of `SELECT`, `INSERT`, `UPDATE`, and `DELETE` only read data, and which modify it?
+    answer: |
+      `SELECT` only reads. `INSERT`, `UPDATE`, and `DELETE` modify the data.
+
+  - id: c02-5
+    card: 2
+    source_card: "What did you learn about SQL?"
+    origin: inferred
+    tags: [conceptual, normalization, anomaly]
+    prompt: |
+      In one sentence, what problem does normalization solve?
+    answer: |
+      It minimizes redundancy so the same fact isn't stored in many places, preventing update and delete anomalies.
+
+  # ---------------------------------------------------------------- card 3
+  - id: c03-1
+    card: 3
+    source_card: "What did you learn about modeling?"
+    origin: direct
+    tags: [conceptual, table, relationship]
+    prompt: |
+      What is an **entity**?
+    answer: |
+      A real-world (or app) thing you store data about, e.g. a Card or a Deck. A table holds rows representing instances of that entity.
+
+  - id: c03-2
+    card: 3
+    source_card: "What did you learn about modeling?"
+    origin: direct
+    tags: [conceptual, relationship, key]
+    prompt: |
+      What is a **relationship** between entities, and how is it stored?
+    answer: |
+      A link between rows of different tables (e.g. a card belongs to a deck). Rows relate via foreign keys.
+
+  - id: c03-3
+    card: 3
+    source_card: "What did you learn about modeling?"
+    origin: direct
+    tags: [conceptual, relationship]
+    prompt: |
+      What kinds of relationships did we cover?
+    answer: |
+      Has-many / belongs-to (one-to-many), and many-to-many through junction tables.
+
+  - id: c03-4
+    card: 3
+    source_card: "What did you learn about modeling?"
+    origin: direct
+    tags: [conceptual, normalization]
+    prompt: |
+      What's the point of normalization?
+    answer: |
+      Good database hygiene: it keeps the model free of redundancy and anomalies.
+
+  - id: c03-5
+    card: 3
+    source_card: "What did you learn about modeling?"
+    origin: inferred
+    tags: [design, er_modeling, relationship]
+    prompt: |
+      A school stores students and classes. Name the entities and describe the relationship between them.
+    answer: |
+      The entities are Student and Class. A student takes many classes and a class has many students, so it is a many-to-many relationship, stored in a junction table (e.g. `enrollments` with `student_id` and `class_id`).
+
+  # ---------------------------------------------------------------- card 4
+  - id: c04-1
+    card: 4
+    source_card: "What skills did you practice?"
+    origin: direct
+    tags: [conceptual]
+    prompt: |
+      What is **fluent recall**?
+    answer: |
+      Recalling something quickly and effortlessly, without needing to look it up.
+
+  - id: c04-2
+    card: 4
+    source_card: "What skills did you practice?"
+    origin: direct
+    tags: [conceptual]
+    prompt: |
+      What are "knowledge skills"? Give examples from this class.
+    answer: |
+      Fluent recall of database concepts, e.g. What is a foreign key? What is normalization? What does JOIN do?
+
+  - id: c04-3
+    card: 4
+    source_card: "What skills did you practice?"
+    origin: direct
+    tags: [conceptual]
+    prompt: |
+      What are the "practical skills" in this class?
+    answer: |
+      Understanding SQL, schemas, and ER diagrams (reading), and writing them: translating a "spec" into SQL, a schema, and ER diagrams.
+
+  - id: c04-4
+    card: 4
+    source_card: "What skills did you practice?"
+    origin: inferred
+    tags: [conceptual]
+    prompt: |
+      Classify each as a knowledge skill or a practical skill: (a) saying what a primary key is without looking it up, (b) writing a query that joins two tables, (c) explaining what normalization is, (d) drawing an ER diagram from a description.
+    answer: |
+      (a) knowledge, (b) practical, (c) knowledge, (d) practical.
+
+  - id: c04-5
+    card: 4
+    source_card: "What skills did you practice?"
+    origin: inferred
+    tags: [conceptual]
+    prompt: |
+      What is the difference between *understanding* and *writing* as practical skills in this class?
+    answer: |
+      Understanding means reading and interpreting SQL, schemas and ER diagrams that exist. Writing means translating a spec into new SQL, schemas and ER diagrams.
+
+  # ---------------------------------------------------------------- card 5
+  - id: c05-1
+    card: 5
+    source_card: "What are tables/rows/queries?"
+    origin: direct
+    tags: [conceptual, table]
+    prompt: |
+      What is a **table**?
+    answer: |
+      A named collection of rows, all with the same columns (e.g. `cards`).
+
+  - id: c05-2
+    card: 5
+    source_card: "What are tables/rows/queries?"
+    origin: direct
+    tags: [conceptual, table]
+    prompt: |
+      What is a **row**?
+    answer: |
+      One record/instance (e.g. one specific flashcard).
+
+  - id: c05-3
+    card: 5
+    source_card: "What are tables/rows/queries?"
+    origin: direct
+    tags: [conceptual, table]
+    prompt: |
+      What is a **column**?
+    answer: |
+      A named field that every row has (e.g. `question`, `answer`).
+
+  - id: c05-4
+    card: 5
+    source_card: "What are tables/rows/queries?"
+    origin: direct
+    tags: [conceptual, key]
+    prompt: |
+      What is a **primary key**?
+    answer: |
+      A column (or set of columns) that uniquely identifies each row.
+
+  - id: c05-5
+    card: 5
+    source_card: "What are tables/rows/queries?"
+    origin: direct
+    tags: [conceptual, select]
+    prompt: |
+      What does it mean to **query** a database?
+    answer: |
+      To send it a request to retrieve, filter, or sort rows.
+
+  - id: c05-6
+    card: 5
+    source_card: "What are tables/rows/queries?"
+    origin: direct
+    tags: [conceptual, table]
+    prompt: |
+      What is the difference between a **database** and a **table**?
+    answer: |
+      A database is a collection of related tables, e.g. one database holding `cards`, `decks`, `tags`, and `reviews`. A table is just one of them.
+
+  # ---------------------------------------------------------------- card 6
+  - id: c06-1
+    card: 6
+    source_card: "Syntax for SELECT/WHERE?"
+    origin: direct
+    tags: [syntax_pattern, select]
+    prompt: |
+      Write the syntax pattern for selecting all columns from a table.
+    answer: |
+      ```sql
+      SELECT * FROM cards;
+      ```
+
+  - id: c06-2
+    card: 6
+    source_card: "Syntax for SELECT/WHERE?"
+    origin: direct
+    tags: [syntax_pattern, select]
+    prompt: |
+      Write the syntax pattern for selecting specific columns.
+    answer: |
+      ```sql
+      SELECT question, answer FROM cards;
+      ```
+
+  - id: c06-3
+    card: 6
+    source_card: "Syntax for SELECT/WHERE?"
+    origin: direct
+    tags: [syntax_pattern, select, where]
+    prompt: |
+      Write the syntax pattern for filtering rows with `WHERE`.
+    answer: |
+      ```sql
+      SELECT question, answer FROM cards
+      WHERE created_at > '2026-01-01';
+      ```
+
+  - id: c06-4
+    card: 6
+    source_card: "Syntax for SELECT/WHERE?"
+    origin: direct
+    tags: [writing_prompt, select, where]
+    prompt: |
+      Given a `cards` table with columns `id, question, answer, created_at`, write a query that selects the `question` and `answer` of every card created after '2026-01-01'.
+    answer: |
+      ```sql
+      SELECT question, answer FROM cards
+      WHERE created_at > '2026-01-01';
+      ```
+
+  - id: c06-5
+    card: 6
+    source_card: "Syntax for SELECT/WHERE?"
+    origin: inferred
+    tags: [tracing, select, where]
+    prompt: |
+      Given this `cards` table, which `id`s does the query return?
+
+      | id | question | created_at |
+      |---|---|---|
+      | 1 | What is a key? | 2025-12-31 |
+      | 2 | What is a JOIN? | 2026-01-01 |
+      | 3 | What is a row? | 2026-02-10 |
+      | 4 | What is a table? | 2026-03-05 |
+
+      ```sql
+      SELECT id FROM cards WHERE created_at > '2026-01-01';
+      ```
+    answer: |
+      `3` and `4`. The comparison is strictly greater than, so card 2 (created exactly on 2026-01-01) is excluded.
+
+  - id: c06-6
+    card: 6
+    source_card: "Syntax for SELECT/WHERE?"
+    origin: inferred
+    tags: [conceptual, select]
+    prompt: |
+      What is the difference between `SELECT *` and `SELECT question, answer`?
+    answer: |
+      `SELECT *` returns every column of the table; naming columns returns only those columns, in the order listed.
+
+  # ---------------------------------------------------------------- card 7
+  - id: c07-1
+    card: 7
+    source_card: "Syntax for ORDER BY/LIMIT?"
+    origin: direct
+    tags: [syntax_pattern, select, order_by]
+    prompt: |
+      Write the syntax pattern for sorting results with `ORDER BY`.
+    answer: |
+      ```sql
+      SELECT question, created_at FROM cards
+      ORDER BY created_at;
+      ```
+
+  - id: c07-2
+    card: 7
+    source_card: "Syntax for ORDER BY/LIMIT?"
+    origin: direct
+    tags: [syntax_pattern, select, order_by]
+    prompt: |
+      Write the syntax pattern for sorting descending.
+    answer: |
+      ```sql
+      SELECT question, created_at FROM cards
+      ORDER BY created_at DESC;
+      ```
+
+  - id: c07-3
+    card: 7
+    source_card: "Syntax for ORDER BY/LIMIT?"
+    origin: direct
+    tags: [syntax_pattern, select, limit]
+    prompt: |
+      Write the syntax pattern for limiting the number of rows returned.
+    answer: |
+      ```sql
+      SELECT question FROM cards
+      LIMIT 5;
+      ```
+
+  - id: c07-4
+    card: 7
+    source_card: "Syntax for ORDER BY/LIMIT?"
+    origin: direct
+    tags: [writing_prompt, select, order_by, limit]
+    prompt: |
+      Write a query that returns the 5 most recently created cards, newest first.
+    answer: |
+      ```sql
+      SELECT question, created_at FROM cards
+      ORDER BY created_at DESC
+      LIMIT 5;
+      ```
+
+  - id: c07-5
+    card: 7
+    source_card: "Syntax for ORDER BY/LIMIT?"
+    origin: inferred
+    tags: [tracing, select, order_by, limit]
+    prompt: |
+      Given this `cards` table, what does the query return, in order?
+
+      | id | question | rating |
+      |---|---|---|
+      | 1 | A | 3 |
+      | 2 | B | 5 |
+      | 3 | C | 1 |
+      | 4 | D | 4 |
+
+      ```sql
+      SELECT question FROM cards ORDER BY rating DESC LIMIT 2;
+      ```
+    answer: |
+      `B` then `D`: sorted by rating from highest to lowest (5, 4, 3, 1), and `LIMIT 2` keeps only the first two rows.
+
+  - id: c07-6
+    card: 7
+    source_card: "Syntax for ORDER BY/LIMIT?"
+    origin: inferred
+    tags: [conceptual, select, order_by, where, limit]
+    prompt: |
+      In what order do `WHERE`, `ORDER BY`, and `LIMIT` appear in a query?
+    answer: |
+      `WHERE` first, then `ORDER BY`, then `LIMIT`:
+      ```sql
+      SELECT ... FROM ... WHERE ... ORDER BY ... LIMIT ...;
+      ```
+
+  # ---------------------------------------------------------------- card 8
+  - id: c08-1
+    card: 8
+    source_card: "Fluency with SELECT/WHERE?"
+    origin: inferred
+    tags: [design, create_table]
+    prompt: |
+      Design one table for a music playlist app's songs. Name the table and give its columns.
+    answer: |
+      For example:
+      ```sql
+      CREATE TABLE songs (
+        id INTEGER PRIMARY KEY,
+        title TEXT NOT NULL,
+        artist TEXT,
+        duration_seconds INTEGER,
+        rating INTEGER
+      );
+      ```
+
+  - id: c08-2
+    card: 8
+    source_card: "Fluency with SELECT/WHERE?"
+    origin: inferred
+    tags: [writing_prompt, select, where, order_by]
+    prompt: |
+      Given `songs(id, title, artist, duration_seconds, rating)`, write a query for the titles of songs longer than 200 seconds, longest first.
+    answer: |
+      ```sql
+      SELECT title FROM songs
+      WHERE duration_seconds > 200
+      ORDER BY duration_seconds DESC;
+      ```
+
+  - id: c08-3
+    card: 8
+    source_card: "Fluency with SELECT/WHERE?"
+    origin: inferred
+    tags: [tracing, select, where]
+    prompt: |
+      Using this table, which titles does each query return? (a) `... WHERE rating >= 4 AND duration_seconds < 200` (b) `... WHERE rating >= 4 OR duration_seconds < 200`
+
+      | title | rating | duration_seconds |
+      |---|---|---|
+      | Alpha | 5 | 250 |
+      | Beta | 4 | 180 |
+      | Gamma | 2 | 150 |
+      | Delta | 3 | 300 |
+    answer: |
+      (a) only `Beta` (both conditions must hold). (b) `Alpha`, `Beta`, and `Gamma`: a row needs only one condition to hold.
+
+  - id: c08-4
+    card: 8
+    source_card: "Fluency with SELECT/WHERE?"
+    origin: inferred
+    tags: [conceptual, select, order_by]
+    prompt: |
+      A `code` column is stored as text and holds the values '9', '10', and '100'. In what order does `ORDER BY code` put them?
+    answer: |
+      `'10'`, `'100'`, `'9'`. Text sorts alphabetically, character by character, not numerically.
+
+  - id: c08-5
+    card: 8
+    source_card: "Fluency with SELECT/WHERE?"
+    origin: inferred
+    tags: [writing_prompt, select, where, order_by, limit]
+    prompt: |
+      Add a `LIMIT` so this query returns only the three highest-rated songs: `SELECT title FROM songs ORDER BY rating DESC;`
+    answer: |
+      ```sql
+      SELECT title FROM songs ORDER BY rating DESC LIMIT 3;
+      ```
+
+  # ---------------------------------------------------------------- card 9
+  - id: c09-1
+    card: 9
+    source_card: "What are has-many/belongs-to?"
+    origin: direct
+    tags: [conceptual, key, relationship]
+    prompt: |
+      What is a **foreign key**?
+    answer: |
+      A column that stores the primary key of a row in another table, linking the two.
+
+  - id: c09-2
+    card: 9
+    source_card: "What are has-many/belongs-to?"
+    origin: direct
+    tags: [conceptual, relationship]
+    prompt: |
+      What does it mean for a **deck** to **have many** cards?
+    answer: |
+      One row (a deck) is referenced by many rows in another table (its cards).
+
+  - id: c09-3
+    card: 9
+    source_card: "What are has-many/belongs-to?"
+    origin: direct
+    tags: [conceptual, relationship, key]
+    prompt: |
+      What does it mean for a **card** to **belong to** a deck?
+    answer: |
+      A card references exactly one row in another table (its deck) via a foreign key.
+
+  - id: c09-4
+    card: 9
+    source_card: "What are has-many/belongs-to?"
+    origin: direct
+    tags: [conceptual, relationship, normalization]
+    prompt: |
+      Why store `deck_id` on `cards` instead of repeating the deck's name on every card?
+    answer: |
+      Storing `deck_id` avoids repeating (duplicating) deck information on every card row.
+
+  - id: c09-5
+    card: 9
+    source_card: "What are has-many/belongs-to?"
+    origin: inferred
+    tags: [conceptual, relationship, key]
+    prompt: |
+      In a has-many relationship, which table gets the foreign key: the "one" side or the "many" side?
+    answer: |
+      The "many" side (the belongs-to side). Each card row stores `deck_id`; the decks table does not store a list of cards.
+
+  # ---------------------------------------------------------------- card 10
+  - id: c10-1
+    card: 10
+    source_card: "Syntax for foreign keys?"
+    origin: direct
+    tags: [syntax_pattern, create_table, key]
+    prompt: |
+      Write the syntax pattern for creating a `decks` table.
+    answer: |
+      ```sql
+      CREATE TABLE decks (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL
+      );
+      ```
+
+  - id: c10-2
+    card: 10
+    source_card: "Syntax for foreign keys?"
+    origin: direct
+    tags: [syntax_pattern, create_table, key, relationship]
+    prompt: |
+      Write the syntax pattern for creating a `cards` table with a foreign key to `decks`.
+    answer: |
+      ```sql
+      CREATE TABLE cards (
+        id INTEGER PRIMARY KEY,
+        question TEXT NOT NULL,
+        answer TEXT NOT NULL,
+        deck_id INTEGER REFERENCES decks(id)
+      );
+      ```
+
+  - id: c10-3
+    card: 10
+    source_card: "Syntax for foreign keys?"
+    origin: direct
+    tags: [writing_prompt, create_table, relationship]
+    prompt: |
+      Create `decks` (id, name) and `cards` (id, question, answer, deck_id) where `deck_id` references `decks`.
+    answer: |
+      ```sql
+      CREATE TABLE decks (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL
+      );
+
+      CREATE TABLE cards (
+        id INTEGER PRIMARY KEY,
+        question TEXT NOT NULL,
+        answer TEXT NOT NULL,
+        deck_id INTEGER REFERENCES decks(id)
+      );
+      ```
+
+  - id: c10-4
+    card: 10
+    source_card: "Syntax for foreign keys?"
+    origin: inferred
+    tags: [conceptual, create_table, relationship]
+    prompt: |
+      Why must `decks` be created before `cards` in this schema?
+    answer: |
+      `cards.deck_id` references `decks(id)`, so the referenced table must already exist when the foreign key is declared.
+
+  - id: c10-5
+    card: 10
+    source_card: "Syntax for foreign keys?"
+    origin: inferred
+    tags: [conceptual, key, relationship]
+    prompt: |
+      What does `deck_id INTEGER REFERENCES decks(id)` tell the database?
+    answer: |
+      Every value in `cards.deck_id` must be the `id` of an existing row in `decks` (or NULL). It links each card to its deck and lets the database enforce that link.
+
+  # ---------------------------------------------------------------- card 11
+  - id: c11-1
+    card: 11
+    source_card: "Syntax for inserting related rows?"
+    origin: direct
+    tags: [syntax_pattern, insert]
+    prompt: |
+      Write the syntax pattern for inserting a row into `decks`.
+    answer: |
+      ```sql
+      INSERT INTO decks (id, name)
+      VALUES (1, 'Databases 101');
+      ```
+
+  - id: c11-2
+    card: 11
+    source_card: "Syntax for inserting related rows?"
+    origin: direct
+    tags: [syntax_pattern, insert, relationship]
+    prompt: |
+      Write the syntax pattern for inserting a row into `cards` that references that deck.
+    answer: |
+      ```sql
+      INSERT INTO cards (id, question, answer, deck_id)
+      VALUES (1, 'What is a primary key?', 'A column that uniquely identifies each row.', 1);
+      ```
+
+  - id: c11-3
+    card: 11
+    source_card: "Syntax for inserting related rows?"
+    origin: direct
+    tags: [writing_prompt, insert, relationship]
+    prompt: |
+      Insert a deck "Databases 101" and one card in it: question "What is a primary key?", answer "A column that uniquely identifies each row."
+    answer: |
+      ```sql
+      INSERT INTO decks (id, name)
+      VALUES (1, 'Databases 101');
+
+      INSERT INTO cards (id, question, answer, deck_id)
+      VALUES (1, 'What is a primary key?',
+              'A column that uniquely identifies each row.', 1);
+      ```
+
+  - id: c11-4
+    card: 11
+    source_card: "Syntax for inserting related rows?"
+    origin: inferred
+    tags: [conceptual, insert, relationship]
+    prompt: |
+      Why must the deck be inserted before the card that belongs to it?
+    answer: |
+      The card's `deck_id` must refer to a deck row that already exists.
+
+  - id: c11-5
+    card: 11
+    source_card: "Syntax for inserting related rows?"
+    origin: inferred
+    tags: [debugging, insert, relationship]
+    prompt: |
+      With only deck 1 in `decks`, what happens when you run the following, and why?
+      ```sql
+      INSERT INTO cards (id, question, answer, deck_id)
+      VALUES (2, 'What is a row?', 'One record.', 99);
+      ```
+    answer: |
+      The insert is rejected with a foreign key violation: there is no deck with `id` 99, and `deck_id` must reference an existing deck.
+
+  # ---------------------------------------------------------------- card 12
+  - id: c12-1
+    card: 12
+    source_card: "Fluency with has-many/belongs-to?"
+    origin: inferred
+    tags: [design, create_table, relationship]
+    prompt: |
+      A gym has many members. Design the two tables and the foreign key.
+    answer: |
+      ```sql
+      CREATE TABLE gyms (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL
+      );
+
+      CREATE TABLE members (
+        id INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        gym_id INTEGER REFERENCES gyms(id)
+      );
+      ```
+
+  - id: c12-2
+    card: 12
+    source_card: "Fluency with has-many/belongs-to?"
+    origin: inferred
+    tags: [writing_prompt, insert, relationship]
+    prompt: |
+      Given `gyms(id, name)` and `members(id, name, gym_id)`, insert one gym and two members who belong to it.
+    answer: |
+      ```sql
+      INSERT INTO gyms (id, name) VALUES (1, 'Downtown Gym');
+      INSERT INTO members (id, name, gym_id) VALUES (1, 'Ada', 1), (2, 'Grace', 1);
+      ```
+
+  - id: c12-3
+    card: 12
+    source_card: "Fluency with has-many/belongs-to?"
+    origin: inferred
+    tags: [conceptual, relationship]
+    prompt: |
+      In the gym schema, which table "has many" and which "belongs to"? Why doesn't the foreign key go the other way?
+    answer: |
+      A gym has many members; a member belongs to a gym. The foreign key lives on `members` because each member row can point at exactly one gym. A gym row can't hold "many" gym ids in one column without breaking 1NF.
+
+  - id: c12-4
+    card: 12
+    source_card: "Fluency with has-many/belongs-to?"
+    origin: inferred
+    tags: [design, er_modeling, relationship]
+    prompt: |
+      Draw an ER diagram for a playlist that has many songs.
+    answer: |
+      Two boxes, `playlists` (id, name) and `songs` (id, title, playlist_id), joined by a line labeled one-to-many: the "one" end at `playlists`, the "many" end at `songs`. (`songs.playlist_id` is the foreign key.)
+
+  - id: c12-5
+    card: 12
+    source_card: "Fluency with has-many/belongs-to?"
+    origin: inferred
+    tags: [conceptual, relationship, insert, constraint]
+    prompt: |
+      What happens if you insert a row whose foreign key points to a row that doesn't exist?
+    answer: |
+      The database rejects the insert with a foreign key constraint error, and the row is not saved.
+
+  - id: c12-6
+    card: 12
+    source_card: "Fluency with has-many/belongs-to?"
+    origin: inferred
+    tags: [conceptual, relationship, key]
+    prompt: |
+      State a rule for deciding which of two related tables gets the foreign key.
+    answer: |
+      Put the foreign key on the "many" (belongs-to) side: the table whose rows each point at exactly one row of the other table.
